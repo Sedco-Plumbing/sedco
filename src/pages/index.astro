@@ -10,7 +10,6 @@ import { Image } from 'astro:assets';
 import { site, paths, getCity } from '@config/site';
 import { featuredReviews } from '@config/reviews';
 import { images } from '@lib/images';
-import { th } from '@lib/tokens';
 import type { Faq } from '@lib/types';
 
 import BaseLayout from '@layouts/BaseLayout.astro';
@@ -29,22 +28,29 @@ const title = 'Plumber in El Cajon, CA | Sedco Plumbing — San Diego County';
 const description =
   'Licensed El Cajon plumbers serving all of San Diego County. Drains, water heaters, slab leaks, sewer lines and more. Upfront pricing. Call [PHONE].';
 
+// Hero/stat claims are kept to what the SEO copy on this page actually
+// supports. The copy hedges response times ("can vary") and describes pricing
+// as explained up front rather than flat-rate, so the badges say the same.
 const trust = [
   'Licensed & Insured',
   'Upfront Pricing',
-  'Same-Day Availability',
+  'Clear Communication',
   'Locally Owned in El Cajon',
 ];
 
 const whyStats = [
   {
     value: 'C-36',
-    label: 'Licensed & bonded',
-    sub: 'California plumbing contractor, fully insured',
+    label: 'Licensed & insured',
+    sub: 'California plumbing contractor',
   },
-  { value: 'Flat', label: 'Upfront pricing', sub: 'Approve the price before we start' },
-  { value: 'Same-day', label: 'Fast local response', sub: 'Minutes from most of East County' },
-  { value: '1950s+', label: 'Older-home experts', sub: 'Slab homes, hard water, clay laterals' },
+  { value: 'Upfront', label: 'Pricing explained first', sub: 'Before any work begins' },
+  { value: 'Local', label: 'Based in El Cajon', sub: 'Serving East County and San Diego County' },
+  {
+    value: 'Practical',
+    label: 'Solutions, not upsells',
+    sub: 'We recommend what the problem actually needs',
+  },
 ];
 
 // Guide Part 3 Homepage FAQ — the same array feeds the visible accordion and
@@ -53,24 +59,37 @@ const faqs: Faq[] = [
   {
     question: 'Do you charge for estimates?',
     answer: [
-      '[ESTIMATE POLICY] Call [PHONE] and we will tell you exactly what to expect before we dispatch a technician.',
+      'Our team can explain the expected service and pricing before work begins. Call us at [PHONE] to discuss your plumbing needs and find out what to expect.',
     ],
   },
   {
     question: 'Are you licensed and insured?',
     answer: [
-      'Yes. Sedco Plumbing holds California C-36 plumbing contractor license [LICENSE #] and is fully bonded and insured. We pull permits whenever the work requires them, including water heater replacements and gas line work.',
+      'Yes. Our plumbing professionals are licensed and insured to provide plumbing services for homeowners throughout El Cajon and surrounding San Diego County communities.',
     ],
   },
   {
     question: 'How fast can you get to my home?',
     answer: [
-      'We are based in El Cajon, so most East County addresses are a short drive away. Same-day appointments are usually available, and we offer emergency service [HOURS].',
+      'Response times can vary depending on the type of plumbing problem, location, and current service demand. If you have an urgent issue, contact our team as soon as possible so we can discuss the quickest available service option.',
     ],
   },
 ];
 
-const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego');
+// The cities the SEO copy names, in the order the copy names them. The prose is
+// verbatim; linking the names keeps the homepage's hub-and-spoke internal links
+// (guide Part 7.2) rather than leaving them as plain text.
+const NAMED_CITY_SLUGS = [
+  'la-mesa',
+  'santee',
+  'lakeside',
+  'spring-valley',
+  'lemon-grove',
+  'alpine',
+  'rancho-san-diego',
+  'jamul',
+];
+const namedCities = NAMED_CITY_SLUGS.map(getCity);
 ---
 
 <BaseLayout title={title} description={description} path="/">
@@ -84,7 +103,10 @@ const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego')
     image={images.heroHome}
     badge="Licensed CA C-36 plumbing contractor"
     heading="El Cajon Plumbers Serving All of San Diego County"
-    intro="When a drain backs up, a water heater quits, or a slab leak starts running up your water bill, you want a plumber who is already nearby. Sedco Plumbing is based in El Cajon and serves homes and businesses across East County and greater San Diego County — from La Mesa and Santee to Lakeside, Spring Valley, and beyond. We are licensed (CA C-36 [LICENSE #]), bonded, and insured, and we give you a clear, upfront price before any work begins."
+    intro={[
+      'When you need reliable plumbing help, having a local team you can count on makes all the difference. Our experienced plumbers provide dependable solutions for leaks, clogged drains, broken fixtures, water heaters, and other plumbing problems throughout El Cajon and surrounding San Diego County communities.',
+      'Whether you need a quick repair or help with a larger plumbing issue, we focus on finding the cause of the problem and providing a practical solution. We keep our service straightforward, communicate clearly, and treat your home with care from start to finish.',
+    ]}
   >
     <HeroCtas slot="cta" requestHref="#request" />
 
@@ -115,8 +137,9 @@ const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego')
           </span>
           <h2>Plumbing Services We Provide</h2>
           <p>
-            From quick faucet repairs to full sewer line replacements, our team handles the entire
-            plumbing system of your home or business.
+            From everyday plumbing problems to more urgent issues, our team handles a wide range of
+            residential plumbing needs. Our services are designed to keep your home’s plumbing
+            system working safely and efficiently.
           </p>
         </div>
 
@@ -161,7 +184,7 @@ const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego')
       <div>
         <p class="trust-band__head">Real plumbers. Real fixes. Honest prices.</p>
         <p class="trust-band__sub">
-          Every job backed by a written, flat-rate quote before we start.
+          We explain the work and the pricing before anything begins.
         </p>
       </div>
       <a class="btn btn--accent" href={paths.contact}>Get my upfront price →</a>
@@ -182,7 +205,7 @@ const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego')
             loading="lazy"
           />
           <div class="framed__flag">
-            <strong>Flat-rate</strong>
+            <strong>Upfront</strong>
             <span>no surprises</span>
           </div>
         </div>
@@ -194,13 +217,14 @@ const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego')
           </span>
           <h2>Why East County Homeowners Choose Sedco Plumbing</h2>
           <p class="why-copy">
-            A lot of the homes we work in were built in the 1950s through the 1980s, and East
-            County’s hard water and hot summers are tough on pipes, fixtures, and water heaters.
-            That local experience matters. We know why Fletcher Hills slabs spring copper leaks, why
-            mature trees in La Mesa find their way into old clay sewer laterals, and why hillside
-            homes in Spring Valley need pressure regulators. You get a technician who has seen your
-            problem before — and a flat-rate price before we start, so there are no surprises on the
-            invoice.
+            Choosing a plumbing company is about more than simply finding someone who can fix a
+            pipe. You want a team that arrives prepared, explains what is happening, and respects
+            your home and your time.
+          </p>
+          <p class="why-copy">
+            Our local experience allows us to understand the plumbing needs commonly found in El
+            Cajon and throughout East County. We provide straightforward service, upfront pricing,
+            and practical recommendations so you can make informed decisions about your home.
           </p>
 
           <div class="stat-grid">
@@ -216,7 +240,7 @@ const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego')
           </div>
 
           <p class="warranty-note">
-            Our work is backed by a workmanship warranty <span set:html={th('[WARRANTY TERMS]')} />.
+            We explain what we find and recommend what the problem actually needs.
           </p>
         </div>
       </div>
@@ -234,20 +258,21 @@ const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego')
           </span>
           <h2>Serving El Cajon and All of San Diego County</h2>
           <p class="area-copy">
-            Sedco Plumbing is headquartered in El Cajon, which puts us minutes from most of East
-            County. We provide fast service throughout our priority service area — {
-              eastCountyCities.map((city, index) => (
+            Our service area extends throughout El Cajon and communities across San Diego County. We
+            understand that plumbing problems rarely happen at a convenient time, which is why our
+            team is focused on providing dependable service when you need it.
+          </p>
+          <p class="area-copy">
+            Whether you’re dealing with a leaking pipe, clogged drain, water heater issue, or
+            another plumbing concern, you can rely on our local team for professional assistance. We
+            proudly serve homeowners in <a href={paths.city('el-cajon')}>El Cajon</a> and nearby
+            communities, including {
+              namedCities.map((city) => (
                 <>
-                  <a href={paths.city(city.slug)}>{city.name}</a>
-                  {index < eastCountyCities.length - 2
-                    ? ', '
-                    : index === eastCountyCities.length - 2
-                      ? ', and '
-                      : ''}
+                  <a href={paths.city(city.slug)}>{city.name}</a>{', '}
                 </>
               ))
-            } — and we take jobs across <a href={paths.city('san-diego')}>the city of San Diego</a> and
-            the rest of the county.
+            }and surrounding areas.
           </p>
 
           <ul class="pill-list area-pills">
@@ -324,7 +349,7 @@ const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego')
 
   <CtaSection
     heading="Need a Plumber Today?"
-    body="Tell us what’s going on and we will give you an honest assessment and an upfront price. Call Sedco Plumbing at [PHONE] or request service online — we are ready to help anywhere in San Diego County."
+    body="Don’t let a plumbing problem turn into a bigger and more expensive issue. Whether you need help with a leak, clogged drain, water heater, fixture, or another plumbing concern, our local team is ready to help. If you’re looking for dependable emergency plumber services in El Cajon, give us a call or request service online. We’ll listen to the problem, explain your options, and help you determine the best next step for your home."
   />
 </BaseLayout>
 

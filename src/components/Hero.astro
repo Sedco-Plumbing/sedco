@@ -24,8 +24,8 @@ interface Props {
   /** Badge glyph: a droplet by default, or a literal like 📍 */
   badgeGlyph?: 'droplet' | string;
   heading: string;
-  /** Intro paragraph; may contain guide placeholder tokens */
-  intro?: string;
+  /** Intro paragraph(s); may contain guide placeholder tokens */
+  intro?: string | string[];
   /** Vertical focus point of the background photo */
   focus?: string;
   /** Render the H1 as-is rather than through token resolution */
@@ -90,7 +90,12 @@ const hasAside = Astro.slots.has('aside');
 
       <h1 set:html={th(heading)} />
 
-      {intro && <p class="hero__intro" set:html={th(intro)} />}
+      {
+        intro &&
+          (Array.isArray(intro) ? intro : [intro]).map((paragraph) => (
+            <p class="hero__intro" set:html={th(paragraph)} />
+          ))
+      }
 
       <slot name="cta" />
       <slot name="below" />

@@ -16,7 +16,10 @@ interface Props {
 const {
   heading = 'Request Service',
   body = 'Talk to a licensed local plumber and get an upfront price before any work begins.',
-  points = ['Licensed & insured', 'Flat-rate pricing', 'Same-day availability'],
+  // Kept to claims every page's copy supports. The SEO copy describes pricing
+  // as explained up front rather than flat-rate, and hedges response times, so
+  // the shared badges say neither.
+  points = ['Licensed & insured', 'Upfront pricing', 'Local El Cajon team'],
 } = Astro.props;
 ---
 
