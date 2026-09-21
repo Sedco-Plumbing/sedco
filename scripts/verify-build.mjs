@@ -15,12 +15,19 @@
  * Exits non-zero on hard failures. Placeholder counts are reported as warnings
  * so the site can be built and reviewed before the client's details arrive.
  *
- * Usage: node scripts/verify-build.mjs
+ * Usage: node scripts/verify-build.mjs [--strict]
+ *
+ * --strict additionally fails the build if WEB3FORMS_ACCESS_KEY didn't make it
+ * into the HTML. Used by `npm run deploy` so a deploy without the key (e.g. a
+ * Cloudflare auto-build missing the Build-time variable) can't ship silently —
+ * see SETUP.md step 5. Left as a warning otherwise, so `npm run build` and
+ * `npm run verify` stay usable before the key exists yet.
  */
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
+const STRICT = process.argv.includes('--strict');
 const DIST = 'dist/client';
 const IGNORED_PREFIXES = ['/_astro', '/api/'];
 const NON_PAGE_TARGETS = new Set([
@@ -234,10 +241,11 @@ for (const url of pages.keys()) {
 console.log(`Checked ${pages.size} pages in ${DIST}\n`);
 
 if (formsMissingKey.size > 0) {
-  warnings.push(
+  const message =
     `WEB3FORMS_ACCESS_KEY is not set — the contact form on ${formsMissingKey.size} page(s) will ` +
-      `fail silently and leads will be lost. Set it before launch (SETUP.md step 5).`,
-  );
+    `fail silently and leads will be lost. Set it before launch (SETUP.md step 5).`;
+  if (STRICT) failures.push(message);
+  else warnings.push(message);
 }
 
 if (placeholderTotal > 0) {
