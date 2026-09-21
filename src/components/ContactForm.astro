@@ -216,6 +216,19 @@ const serviceOptions = [...site.services.map((s) => s.name), 'Not sure / somethi
     const errorBox = form.querySelector<HTMLElement>('[data-form-error]');
     const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
 
+    // A "Request Service" button linking to this card's #id is often already
+    // fully in view (e.g. the homepage hero's split layout), so the anchor
+    // jump alone gives no visible feedback. Focus the first field so the
+    // click always visibly does something, scroll or not.
+    if (card?.id) {
+      document.querySelectorAll<HTMLAnchorElement>(`a[href="#${card.id}"]`).forEach((link) => {
+        link.addEventListener('click', () => {
+          const firstField = form.querySelector<HTMLElement>('input, select, textarea');
+          requestAnimationFrame(() => firstField?.focus());
+        });
+      });
+    }
+
     const setInvalid = (input: HTMLElement | null, invalid: boolean) => {
       input?.closest('.field')?.toggleAttribute('data-invalid', invalid);
     };
