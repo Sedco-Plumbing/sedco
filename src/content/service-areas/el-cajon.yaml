@@ -20,13 +20,13 @@ heroPoints:
   - Trucks parked here, technicians who live here
   - Permits pulled directly from the City of El Cajon
   - Flat-rate quote before any work begins
-  - Workmanship warranty [WARRANTY TERMS]
+  - Workmanship warranty on every job
 
 h1: Your El Cajon Plumber, Based Right Here in El Cajon
 intro:
   - >-
     Sedco Plumbing doesn’t serve El Cajon from across the county — this is home. Our trucks park here, our
-    technicians live here, and since [YEAR FOUNDED] the same neighbors we run into at the grocery store have
+    technicians live here, and the same neighbors we run into at the grocery store have
     trusted us with their drains, water heaters, and slab leaks. When you call [PHONE], you reach a local
     company, and help is usually only minutes from your door.
 
@@ -34,10 +34,10 @@ sections:
   - heading: A Hometown Company, Not a Franchise
     paragraphs:
       - >-
-        Sedco Plumbing is owned and operated by [OWNER NAME], holds a California C-36 plumbing contractor
-        license ([LICENSE #]), and is bonded and insured. Because we’re not a franchise, there’s no national
+        Sedco Plumbing is locally owned and operated, holds a California C-36 plumbing contractor
+        license, and is bonded and insured. Because we’re not a franchise, there’s no national
         call center between you and the person turning the wrench. You get a flat-rate quote before any work
-        begins, a clean and respectful technician at your door, and a workmanship warranty [WARRANTY TERMS]
+        begins, a clean and respectful technician at your door, and a workmanship warranty
         backed by people you can actually find in town. That accountability is the whole point of hiring local.
 
   - heading: The Plumbing Problems El Cajon Homes Actually Have
@@ -86,8 +86,8 @@ faqs:
     answer:
       - >-
         This is our home base, so El Cajon response times are the fastest we offer — most addresses in the city
-        sit within a 10–15 minute drive of our technicians. Same-day service is the norm, and we’re available
-        [HOURS] for emergencies.
+        sit within a 10–15 minute drive of our technicians. Same-day service is the norm, and emergencies are
+        prioritized on the schedule.
   - question: Do I need a permit for plumbing work in El Cajon?
     answer:
       - >-
@@ -120,7 +120,7 @@ internalLinks:
     anchor: water heater repair and installation
     group: service
   - href: /about/
-    anchor: meet [OWNER NAME] and the team
+    anchor: meet the owner and the team
     group: page
   - href: /service-areas/
     anchor: all communities we serve

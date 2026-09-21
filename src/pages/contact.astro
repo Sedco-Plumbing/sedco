@@ -4,7 +4,7 @@
  * Centered hero → 2-col (request form | NAP, service area, hours cards).
  */
 import { site, paths } from '@config/site';
-import { th, phoneHref, emailHref } from '@lib/tokens';
+import { th, phoneHref, emailHref, isPlaceholder } from '@lib/tokens';
 import { images } from '@lib/images';
 
 import BaseLayout from '@layouts/BaseLayout.astro';
@@ -33,7 +33,7 @@ const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego')
     image={images.heroGeneral}
     badge="Same-day appointments usually available"
     heading="Contact Sedco Plumbing"
-    intro="The fastest way to reach us is by phone: [PHONE]. Prefer to write? Use the form below and we will get back to you promptly during business hours [HOURS]."
+    intro="The fastest way to reach us is by phone: [PHONE]. Prefer to write? Use the form below and we will get back to you promptly."
   >
     <div class="btn-row btn-row--center" slot="cta">
       <a class="btn btn--accent" href={phoneHref()}>
@@ -59,7 +59,9 @@ const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego')
             <span>{site.business.locality}, {site.business.region}</span>
             <a href={phoneHref()}><span set:html={th('[PHONE]')} /></a>
             <a href={emailHref()}><span set:html={th('[EMAIL]')} /></a>
-            <span>License <span set:html={th('[LICENSE #]')} /></span>
+            {!isPlaceholder(site.business.license) && (
+              <span>License <span set:html={th('[LICENSE #]')} /></span>
+            )}
           </address>
           <p>
             We are a mobile service-area business — our technicians come to you, so there is no
@@ -106,8 +108,19 @@ const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego')
         <div class="side-card side-card--warm">
           <h2>Hours</h2>
           <p class="side-copy">
-            <span set:html={th('[HOURS]')} /> — with emergency availability for urgent problems like
-            burst pipes, sewage backups, and gas leaks.
+            {
+              isPlaceholder(site.business.hours) ? (
+                <>
+                  For urgent problems like burst pipes, sewage backups, and gas leaks, call us
+                  right away — those calls get priority.
+                </>
+              ) : (
+                <>
+                  <span set:html={th('[HOURS]')} /> — with emergency availability for urgent
+                  problems like burst pipes, sewage backups, and gas leaks.
+                </>
+              )
+            }
           </p>
           <p class="safety-note">
             <strong>If you smell gas</strong>, leave the building first and call your gas utility,

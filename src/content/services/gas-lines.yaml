@@ -15,7 +15,7 @@ heroBadge: Permitted, pressure-tested, inspected
 heroStat: Zero
 heroStatLabel: Margin for error on gas work
 heroPoints:
-  - 'CA C-36 licensed ([LICENSE #])'
+  - 'CA C-36 licensed'
   - Leak-checked with instruments, not soap and hope
   - Total demand calculated before we quote
   - Permits pulled and inspections scheduled for you

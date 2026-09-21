@@ -19,7 +19,7 @@ heroPoints:
   - Flat-rate pricing with no quiet travel penalty
   - Well pressure tanks, switches, and supply lines
   - Propane and natural gas lines, pressure-tested
-  - Emergency dispatch [HOURS], same as in town
+  - Emergency dispatch prioritized, same as in town
 
 h1: An East County Plumber Who Actually Comes to Alpine
 intro:
@@ -36,7 +36,7 @@ sections:
         Distance is only a problem for companies that aren’t built for it. We schedule Alpine work in efficient
         windows, stock our trucks so a second trip is the exception, and quote flat-rate pricing that doesn’t
         quietly absorb a travel penalty. Emergencies get the same treatment: a burst line or failed water heater
-        in Alpine is dispatched [HOURS], the same as one five minutes from our shop. Being locally owned in East
+        in Alpine gets the same priority dispatch as one five minutes from our shop. Being locally owned in East
         County means Alpine isn’t the edge of our map — it’s the middle of it.
 
   - heading: Rural Systems We Work On Every Week
@@ -76,7 +76,7 @@ faqs:
   - question: Can you install or repair propane lines for my appliances?
     answer:
       - >-
-        Yes — gas line work is part of our C-36 license ([LICENSE #]), and propane-fed ranges, water heaters, and
+        Yes — gas line work is part of our C-36 license, and propane-fed ranges, water heaters, and
         outdoor appliances are routine jobs for us in Alpine. Every line we run is pressure-tested before it goes
         into service.
   - question: My well water stains fixtures and tastes off. Can you fix that?

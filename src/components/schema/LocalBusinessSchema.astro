@@ -20,6 +20,14 @@ const sameAs = [profiles.google, profiles.yelp, profiles.facebook].filter(
   (url) => !isPlaceholder(url) && url.length > 0,
 );
 
+const address: Record<string, unknown> = {
+  '@type': 'PostalAddress',
+  addressLocality: business.locality,
+  addressRegion: business.region,
+  addressCountry: business.country,
+};
+if (!isPlaceholder(business.postalCode)) address.postalCode = business.postalCode;
+
 const data: Record<string, unknown> = {
   '@context': 'https://schema.org',
   '@type': 'Plumber',
@@ -31,22 +39,16 @@ const data: Record<string, unknown> = {
   // SEO team's LocalBusiness schema description, composed from config so it stays correct per client.
   description: `${business.name} is a locally owned plumbing company based in ${business.locality}, ${business.regionName}, serving homeowners and businesses throughout ${business.county}.`,
   image: absolute(images.logo.src.src),
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: business.locality,
-    addressRegion: business.region,
-    postalCode: t('[ZIP]'),
-    addressCountry: business.country,
-  },
+  address,
   areaServed: [
     ...site.cities.map((city) => ({ '@type': 'City', name: city.name })),
     { '@type': 'AdministrativeArea', name: business.county },
   ],
   priceRange: business.priceRange,
-  openingHours: business.hoursSchema,
 };
 
 if (sameAs.length > 0) data.sameAs = sameAs;
+if (!isPlaceholder(business.hoursSchema)) data.openingHours = business.hoursSchema;
 ---
 
 <JsonLd data={data} />

@@ -6,6 +6,7 @@
 import { Image } from 'astro:assets';
 import { site, paths } from '@config/site';
 import { th, phoneHref, emailHref, isPlaceholder } from '@lib/tokens';
+const { license, hours } = site.business;
 import { images } from '@lib/images';
 
 const year = new Date().getFullYear();
@@ -41,8 +42,8 @@ const socials = [
         <span>{site.business.locality}, {site.business.region}</span>
         <a href={phoneHref()}><span set:html={th('[PHONE]')} /></a>
         <a href={emailHref()}><span set:html={th('[EMAIL]')} /></a>
-        <span>CA License <span set:html={th('[LICENSE #]')} /></span>
-        <span>Hours <span set:html={th('[HOURS]')} /></span>
+        {!isPlaceholder(license) && <span>CA License <span set:html={th('[LICENSE #]')} /></span>}
+        {!isPlaceholder(hours) && <span>Hours <span set:html={th('[HOURS]')} /></span>}
       </address>
 
       <p class="nap__note">
