@@ -223,8 +223,8 @@ const serviceOptions = [...site.services.map((s) => s.name), 'Not sure / somethi
     if (card?.id) {
       document.querySelectorAll<HTMLAnchorElement>(`a[href="#${card.id}"]`).forEach((link) => {
         link.addEventListener('click', () => {
-          const firstField = form.querySelector<HTMLElement>('input, select, textarea');
-          requestAnimationFrame(() => firstField?.focus());
+          const nameField = form.querySelector<HTMLElement>('[name="name"]');
+          requestAnimationFrame(() => nameField?.focus());
         });
       });
     }
