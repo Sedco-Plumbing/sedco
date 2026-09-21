@@ -28,6 +28,8 @@ const data: Record<string, unknown> = {
   url: absolute('/'),
   telephone: t('[PHONE]'),
   email: t('[EMAIL]'),
+  // SEO team's LocalBusiness schema description, composed from config so it stays correct per client.
+  description: `${business.name} is a locally owned plumbing company based in ${business.locality}, ${business.regionName}, serving homeowners and businesses throughout ${business.county}.`,
   image: absolute(images.logo.src.src),
   address: {
     '@type': 'PostalAddress',

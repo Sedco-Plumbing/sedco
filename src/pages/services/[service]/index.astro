@@ -55,7 +55,7 @@ const cityLinks = data.internalLinks.filter((link) => link.group === 'city');
 
 <BaseLayout title={data.title} description={data.description} path={path} crumbs={crumbs}>
   <Fragment slot="head">
-    <ServiceSchema serviceType={service.name} path={path} />
+    <ServiceSchema serviceType={service.name} path={path} description={service.schemaDescription} />
     {data.faqs.length > 0 && <FaqSchema faqs={data.faqs} />}
   </Fragment>
 

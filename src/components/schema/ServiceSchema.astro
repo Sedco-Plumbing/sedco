@@ -10,15 +10,17 @@ import { site, absolute, BUSINESS_ID } from '@config/site';
 import JsonLd from './JsonLd.astro';
 
 interface Props {
-  /** Service name, used verbatim as serviceType */
+  /** Service name, used verbatim as serviceType and name */
   serviceType: string;
   /** Site-relative path of this page */
   path: string;
   /** City name for a combo page; omit for a main service page */
   city?: string;
+  /** SEO team's Service schema description; omitted on combo pages, which the doc doesn't cover */
+  description?: string;
 }
 
-const { serviceType, path, city } = Astro.props;
+const { serviceType, path, city, description } = Astro.props;
 
 const areaServed = city
   ? { '@type': 'City', name: city }
@@ -27,14 +29,17 @@ const areaServed = city
       { '@type': 'AdministrativeArea', name: site.business.county },
     ];
 
-const data = {
+const data: Record<string, unknown> = {
   '@context': 'https://schema.org',
   '@type': 'Service',
+  name: serviceType,
   serviceType,
   provider: { '@id': BUSINESS_ID },
   areaServed,
   url: absolute(path),
 };
+
+if (description) data.description = description;
 ---
 
 <JsonLd data={data} />

@@ -52,6 +52,8 @@ export interface ServiceDef {
   hubLabel: string;
   /** Distinct one-line description for the Services hub card (per the design) */
   hubLine: string;
+  /** Service schema `description`, verbatim from the SEO team's schema doc */
+  schemaDescription: string;
   /** Which Services-hub section this card belongs to (guide Part 3) */
   group: ServiceGroup;
   /** City slugs that get a /services/[slug]/[city]/ child page */
@@ -79,7 +81,7 @@ export interface CityDef {
 
 export const site = {
   /** Canonical origin. No trailing slash. */
-  url: 'https://sedcoplumbing.com',
+  url: 'https://www.sedcoplumbing.com',
 
   business: {
     name: 'Sedco Plumbing',
@@ -193,6 +195,7 @@ export const site = {
       cardLine: 'General Plumbing Services — repairs, maintenance, and inspections',
       hubLabel: 'General Plumbing',
       hubLine: 'Repairs, installations, and emergencies for the whole system.',
+      schemaDescription: 'Repairs, installations, and emergency plumbing services for homes and businesses.',
       group: 'repairs',
       cities: [],
     },
@@ -203,6 +206,8 @@ export const site = {
       cardLine: 'Drain Cleaning — clogged sinks, tubs, and main lines',
       hubLabel: 'Drain Cleaning',
       hubLine: 'Snaking, hydro jetting, and camera inspections for any line.',
+      schemaDescription:
+        'Drain cleaning, hydro jetting, and camera inspections to help identify and clear drainage problems.',
       group: 'repairs',
       cities: ['la-mesa', 'santee', 'lakeside', 'spring-valley'],
     },
@@ -213,6 +218,8 @@ export const site = {
       cardLine: 'Toilet Repair & Installation',
       hubLabel: 'Toilet Repair & Installation',
       hubLine: 'Running, leaking, clogged, or cleanly replaced.',
+      schemaDescription:
+        'Toilet repair, replacement, and installation services for residential and commercial properties.',
       group: 'repairs',
       cities: ['la-mesa', 'santee', 'lakeside', 'spring-valley'],
     },
@@ -223,6 +230,7 @@ export const site = {
       cardLine: 'Garbage Disposal repair and replacement',
       hubLabel: 'Garbage Disposal',
       hubLine: 'Jams, leaks, and full replacements — often same day.',
+      schemaDescription: 'Garbage disposal repair, installation, and replacement services.',
       group: 'repairs',
       cities: [],
     },
@@ -233,6 +241,8 @@ export const site = {
       cardLine: 'Grease Trap services for restaurants and commercial kitchens',
       hubLabel: 'Grease Trap (commercial)',
       hubLine: 'Pumping, cleaning, and repair for commercial kitchens.',
+      schemaDescription:
+        'Grease trap plumbing, cleaning, maintenance, repair, and related services for commercial properties.',
       group: 'installs',
       cities: [],
     },
@@ -243,6 +253,7 @@ export const site = {
       cardLine: 'Water Heater repair, replacement, and tankless installation',
       hubLabel: 'Water Heater',
       hubLine: 'Repair, replacement, and tankless upgrades to code.',
+      schemaDescription: 'Water heater repair, replacement, and installation services.',
       group: 'water',
       cities: ['la-mesa', 'santee', 'lakeside', 'spring-valley'],
     },
@@ -253,6 +264,8 @@ export const site = {
       cardLine: "Water Filtration Systems for East County's hard water",
       hubLabel: 'Water Filtration Systems',
       hubLine: 'Softeners and filtration for East County hard water.',
+      schemaDescription:
+        'Water filtration systems and related plumbing services for improving water quality.',
       group: 'water',
       cities: [],
     },
@@ -263,6 +276,7 @@ export const site = {
       cardLine: 'Sink Services — kitchen, bathroom, and utility',
       hubLabel: 'Sink Services',
       hubLine: 'Kitchen, bathroom, and utility sink repair and installs.',
+      schemaDescription: 'Sink repair, replacement, installation, and plumbing services.',
       group: 'repairs',
       cities: [],
     },
@@ -273,6 +287,8 @@ export const site = {
       cardLine: 'Faucet Repair & Installation',
       hubLabel: 'Faucet Services',
       hubLine: 'Drips and stuck valves fixed; new fixtures installed.',
+      schemaDescription:
+        'Faucet repair, replacement, and installation services for residential and commercial plumbing systems.',
       group: 'repairs',
       cities: [],
     },
@@ -283,6 +299,8 @@ export const site = {
       cardLine: 'Slab Leak Detection & Repair',
       hubLabel: 'Slab Leak Detection & Repair',
       hubLine: 'Electronic detection with minimal-dig repairs.',
+      schemaDescription:
+        'Slab leak detection and plumbing repair services for leaks beneath concrete foundations.',
       group: 'lines',
       cities: ['la-mesa', 'santee', 'lakeside', 'spring-valley'],
     },
@@ -293,6 +311,7 @@ export const site = {
       cardLine: 'Gas Line installation and repair',
       hubLabel: 'Gas Lines',
       hubLine: 'Installation and repair, including shutoff valves.',
+      schemaDescription: 'Gas line installation, repair, and plumbing services.',
       group: 'lines',
       cities: [],
     },
@@ -303,6 +322,7 @@ export const site = {
       cardLine: 'Water Line repair and repiping',
       hubLabel: 'Water Lines',
       hubLine: 'Repair and whole-home repiping for galvanized-era homes.',
+      schemaDescription: 'Water line repair, replacement, and installation services.',
       group: 'lines',
       cities: [],
     },
@@ -313,6 +333,7 @@ export const site = {
       cardLine: 'Sewer Line repair and replacement',
       hubLabel: 'Sewer Lines',
       hubLine: 'Repair and replacement, with trenchless options.',
+      schemaDescription: 'Sewer line repair, replacement, and plumbing services.',
       group: 'lines',
       cities: ['la-mesa', 'santee', 'lakeside', 'spring-valley'],
     },
@@ -323,6 +344,7 @@ export const site = {
       cardLine: 'Water Pressure Regulators',
       hubLabel: 'Water Pressure Regulators',
       hubLine: 'Replacement for high-pressure hillside lines.',
+      schemaDescription: 'Water pressure regulator repair, replacement, and installation services.',
       group: 'water',
       cities: [],
     },
@@ -333,6 +355,7 @@ export const site = {
       cardLine: 'Shower Installation',
       hubLabel: 'Shower Installation',
       hubLine: 'New showers, walk-in conversions, and valve work.',
+      schemaDescription: 'Shower installation and plumbing services for residential properties.',
       group: 'installs',
       cities: [],
     },
@@ -343,6 +366,7 @@ export const site = {
       cardLine: 'Kitchen & Bath Remodel plumbing',
       hubLabel: 'Kitchen & Bath Remodels',
       hubLine: 'Rough-in and fixture setting, coordinated with your GC.',
+      schemaDescription: 'Plumbing services for kitchen and bathroom remodeling projects.',
       group: 'installs',
       cities: [],
     },
