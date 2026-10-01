@@ -134,7 +134,9 @@ export const site = {
     /** Keystatic Cloud project, one team per client */
     keystaticProject: 'sedco/sedco',
     /** GA4 measurement ID, e.g. G-XXXXXXXXXX. Empty = no analytics injected. */
-    ga4: '',
+    ga4: 'G-QQP9CBW2KW',
+    /** Google Search Console HTML-tag verification token. Empty = no meta tag. */
+    googleSiteVerification: 'flp6t9tHQwBmEbTIz0nl2VQHSeuXMrMpllLr8wpxRr0',
   },
 
   /** Header navigation, in order (guide Part 2) */

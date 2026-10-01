@@ -230,6 +230,10 @@ layout.
 Set `integrations.ga4` in config to the GA4 measurement ID (`G-XXXXXXXXXX`). Leave it empty and no
 analytics script is injected at all.
 
+For Search Console, either verify the domain with a DNS TXT record (no code), or set
+`integrations.googleSiteVerification` to the token from Google's HTML-tag method — the `content`
+value of the `google-site-verification` meta tag. Leave it empty and no tag is emitted.
+
 > Call tracking: the guide (Part 7.4) allows it **only** with dynamic number insertion that keeps
 > the same number visible to Google. Ask before adding one.
 

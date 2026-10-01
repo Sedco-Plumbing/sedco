@@ -35,6 +35,7 @@ interface Props {
 
 const { title, description, path, crumbs, ogImage, publishedTime, noindex } = Astro.props;
 const ga4 = site.integrations.ga4;
+const googleSiteVerification = site.integrations.googleSiteVerification;
 ---
 
 <!doctype html>
@@ -44,6 +45,7 @@ const ga4 = site.integrations.ga4;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="generator" content={Astro.generator} />
+    {googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
 
     <Seo
       title={title}
