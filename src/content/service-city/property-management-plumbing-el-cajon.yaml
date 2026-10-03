@@ -1,0 +1,88 @@
+service: property-management-plumbing
+city: el-cajon
+
+title: "Property Management Plumbing in El Cajon | Sedco Plumbing"
+description: "Property management plumbing in El Cajon. 24/7 response, low prices, free estimates, and no travel fees. Call (619) 714-0027."
+primaryKeyword: "property management plumbing El Cajon"
+supportingKeywords:
+  - "property management plumbing services El Cajon"
+  - "property management plumber El Cajon"
+
+heroBadge: "For El Cajon landlords, property managers, and HOAs"
+heroStat: "Home base"
+heroStatLabel: "Our quickest response is in El Cajon"
+heroPoints:
+  - "Instant response, 24/7"
+  - "Affordable pricing, free estimates"
+  - "No trip charge"
+  - "Licensed California C-36 plumbing contractor"
+
+h1: "Property Management Plumbing in El Cajon, CA"
+intro:
+  - "Sedco Plumbing does property management plumbing in El Cajon for landlords, property managers and HOAs. Feel free to call at 2 in the afternoon or 2 in the morning, and you'll definitely get a response. The estimate is completely free, there’s no trip fee, and you’ll receive the price in writing beforehand."
+
+sections:
+  - heading: "Why El Cajon Property Managers Call Us"
+    level: 2
+    paragraphs:
+      - "You'll hear the same worries about plumbers if you ask around, it's too pricey. The one good plumber you trust is either fully booked the night a pipe bursts, or he'll come out but charge extra because it's an emergency."
+      - "We've been doing plumbing in East County for 20 years, and we've heard everything. So, this is how we do things. When you call, instant response. Our prices are reasonable, and there will be no surprises at the end because we will confirm the price in writing before we start. There will also be no additional travel charges. If within 30 days of fixing something, it breaks again, we will fix it for free."
+
+  - heading: "Property Management Plumbing Services in El Cajon"
+    level: 2
+    paragraphs:
+      - "Most of the calls we get from renters in El Cajon are about leaks and drains. Every time a new renter moves in, the bathroom drain gets a little slower. Even though they seem like small problems, they can cause a cabinet to break or a tub to get clogged if they are not fixed. The best time to fix them is when the unit is empty."
+      - "[Water heaters](/services/water-heater/) are another big worry. When renters say water is not getting hot, it's usually because the heater is old or broken. Before telling you to get a new one, though, we'll check it out first. It might just be a part. Our services also include fixing [sewer lines](/services/sewer-lines/), [repiping](/services/water-lines/) buildings, and cleaning [grease traps](/services/grease-trap/) for Main Street restaurants and shops."
+
+  - heading: "What We See in Rentals in El Cajon"
+    level: 2
+    paragraphs:
+      - "Due to rusting inside the galvanized line, which causes small leaks, the pressure drops a little every year. The ones under the slab are the hardest. People won't notice those for a while. There may be a problem if you notice your water bill going up, the floor getting warm, or the carpet getting wet without any spills."
+      - "The Helix Water District delivers hard water to El Cajon. Water heaters, faucets, and valves wear down faster since all of those minerals accumulate."
+
+  - heading: "Signs of a Hidden Leak"
+    level: 2
+    list:
+      - "The water bill has gone up, yet no one is using more water."
+      - "A warm spot on concrete or tile."
+      - "Damp carpet or baseboards, but no spills to blame."
+      - "You hear water running and every faucet is turned off."
+      - "Even though everything has been switched off, the meter keeps moving."
+    outro:
+      - "Have you noticed that there are two of these on the same property? Before the tenant gets in touch with you, give us a call."
+
+  - heading: "Property Management Plumbing Near El Cajon"
+    level: 2
+    list:
+      - "[How we collaborate with property managers](/services/property-management-plumbing/): all of our services and how an account operates."
+      - "[Property management plumbing in San Diego](/services/property-management-plumbing/san-diego/) for rental properties in the city."
+      - "We also cover rentals in [La Mesa](/service-areas/la-mesa/), [Santee](/service-areas/santee/), and [Lakeside](/service-areas/lakeside/)."
+
+faqHeading: "Frequently Asked Questions"
+faqs:
+  - question: "When could you get to my El Cajon rental?"
+    answer:
+      - "Because we're based in El Cajon, that's where we're closest. Calling will be answered right away, and if it's an emergency, we'll be there right away, day or night."
+  - question: "Do you work in Lakeside, Santee, or La Mesa?"
+    answer:
+      - "All three of them yes."
+  - question: "Can you finish a job that another plumber started?"
+    answer:
+      - "Yes, we can finish the work if someone worked on it already."
+
+ctaHeading: "Your El Cajon Plumber, Any Hour"
+ctaBody: "Next time a tenant calls about a leak, you won’t have to scroll through your phone praying someone picks up. Call Sedco Plumbing at [PHONE]. We respond immediately, the estimate is free, there is no trip charge and you will know the pricing before we start."
+
+internalLinks:
+  - href: /services/water-heater/
+    anchor: Water Heater Repair & Replacement
+    group: service
+  - href: /services/slab-leak-repair/
+    anchor: Slab Leak Detection & Repair
+    group: service
+  - href: /services/sewer-lines/
+    anchor: Sewer Line Repair & Replacement
+    group: service
+  - href: /services/grease-trap/
+    anchor: Grease Trap Services
+    group: service

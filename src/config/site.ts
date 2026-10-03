@@ -166,6 +166,7 @@ export const site = {
         'garbage-disposal',
         'faucet-services',
         'sink-services',
+        'property-management-plumbing',
       ],
     },
     {
@@ -371,6 +372,18 @@ export const site = {
       schemaDescription: 'Plumbing services for kitchen and bathroom remodeling projects.',
       group: 'installs',
       cities: [],
+    },
+    {
+      slug: 'property-management-plumbing',
+      name: 'Property Management Plumbing',
+      navLabel: 'Property Management Plumbing',
+      cardLine: 'Property Management Plumbing — rentals, HOAs, and managed properties',
+      hubLabel: 'Property Management Plumbing',
+      hubLine: '24/7 plumbing for landlords, property managers, and HOAs.',
+      schemaDescription:
+        'Plumbing repair and maintenance for rental properties, landlords, property managers, and HOAs, including tenant emergencies, unit turnovers, water heaters, drains, and sewer lines.',
+      group: 'repairs',
+      cities: ['el-cajon', 'san-diego'],
     },
   ] satisfies ServiceDef[] as ServiceDef[],
 

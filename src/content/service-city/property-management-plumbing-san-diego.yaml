@@ -1,0 +1,93 @@
+service: property-management-plumbing
+city: san-diego
+
+title: "Property Management Plumbing in San Diego | Sedco Plumbing"
+description: "Property management plumbing in San Diego. 24/7 response, affordable pricing, free estimates, and no trip fee. Call (619) 714-0027."
+primaryKeyword: "property management plumbing San Diego"
+supportingKeywords:
+  - "property management plumbing services San Diego"
+  - "property management plumber San Diego"
+
+heroBadge: "For San Diego landlords, property managers, and HOAs"
+heroStat: "There is no travel charge"
+heroStatLabel: "Despite the drive from El Cajon"
+heroPoints:
+  - "Quick response, round-the-clock"
+  - "Reasonably priced, free quotes"
+  - "No transportation costs anywhere in San Diego"
+  - "California C-36 licensed plumbing contractor"
+
+h1: "Property Management Plumbing in San Diego, CA"
+intro:
+  - "Sedco Plumbing provides San Diego property management plumbing services to HOAs, landlords, and property managers. We'll always be honest about when we can arrive because we're situated in El Cajon and handle rentals throughout the City of San Diego. No matter the time of day or night, someone will answer the phone. Before any work begins, you will receive the pricing in writing, the estimate is free, and there is no trip cost for the drive."
+
+sections:
+  - heading: "Why San Diego Property Managers Call Us"
+    level: 2
+    paragraphs:
+      - "If you manage rentals in San Diego, you probably know a number of plumbers, but not one you'd trust with a midnight call. One never calls you back. Most of them never come on time."
+      - "We realized that property managers don't need a plumber who makes big promises. They need one who's straight with them. So we're not going to tell you we'll be there in fifteen minutes when we're driving in from El Cajon. What we will do is give you an honest arrival time when you call. If we ever run late, we always notify you first. That way, you can actually tell your tenant when to expect someone, and they're not stuck at home all day wondering if anybody's coming."
+      - "And you can reach us whenever something goes wrong, whether it's two in the afternoon or two in the morning, on a weekend or a holiday. When we get there, we take a look and give you a free estimate. There are no travel charges, and no hidden charges after finalizing the price before work. If something we fixed gives out within 30 days, we come back and take care of it again, and it won't cost you a thing. These are the key reasons San Diego property managers work with us."
+
+  - heading: "Property Management Plumbing Services in San Diego"
+    level: 2
+    paragraphs:
+      - "Most of the work we do for San Diego rentals is related to water heaters, leaks, and clogged drains. If you've managed property for a while, you know how these things work. If the supply pipe under the kitchen sink starts leaking and soaking the cabinet, or the drain begins to clog again after the last renter left it clear, we’ll take care of it. And if the water heater, which has been gradually losing strength, stops working as winter begins, we’ll handle that too. We’re here to take care of it all. We always check out a water heater before telling you it needs to be replaced. This is because a part is often all that's needed, and you shouldn't have to pay for a whole new heater when you don't have to."
+      - "Larger jobs are one of our specialties, too. Customers count on us to [repair or replace sewer lines](/services/sewer-lines/), locate hidden [slab leaks](/services/slab-leak-repair/), [repipe](/services/water-lines/) older buildings with worn-out pipes, and install new [water heaters](/services/water-heater/) when needed. To make things easier for you, we’ll take care of the required permits through the City of San Diego's Development Services Department and handle the inspections ourselves."
+
+  - heading: "What We See in San Diego Rentals"
+    level: 2
+    paragraphs:
+      - "Some rental homes still have their original cast iron drains or galvanized water lines in older areas like North Park and City Heights. These pipelines can fail internally well before there is a problem. A tenant may notice a slow-draining kitchen sink or insufficient shower pressure."
+      - "Sometimes a leak behind the wall can be an indicator of problems."
+      - "Clairemont and other mid-century communities experience sewer blockages due to tree roots entering through cracks or joints. After cleaning the drain, wastewater may back up into the tub a few weeks later."
+      - "Newer condominiums have their own plumbing difficulties, such as shared drain pipes and old pressure regulators. When it comes to HOA properties, we will explain whether the issue is with the plumbing that serves the particular apartment or with a common line. That offers you a better starting point when talking about maintenance and responsibility with the HOA."
+
+  - heading: "Signs of a Main Sewer Line Problem"
+    level: 2
+    paragraphs:
+      - "There could be a clog along the drain in one slow sink. If multiple fixtures start to back up at once, the clog could be further down the sewage system. Look for these signs:"
+    list:
+      - "Multiple drains are slow at the same time."
+      - "A toilet gurgles when you drain the sink or tub."
+      - "When you flush the toilet, the water goes into the tub or shower."
+      - "There is a sewage stench in the region of the cleanout or in the drains."
+      - "A spot of yard over the sewer line stays moist or gets considerably greener."
+    outro:
+      - "If a tenant is experiencing some or all of these symptoms, stop using the water and flushing toilets, and call us. We will find the problem and tell you what is needed to get the drains operating again."
+
+  - heading: "Property Management Plumbing Near San Diego"
+    level: 2
+    list:
+      - "[How we work with property managers](/services/property-management-plumbing/): our full list of services and how setting up an account works."
+      - "[Property management plumbing in El Cajon](/services/property-management-plumbing/el-cajon/), our home base."
+      - "We also cover rentals in [La Mesa](/service-areas/la-mesa/), [Lemon Grove](/service-areas/lemon-grove/), and [Spring Valley](/service-areas/spring-valley/)."
+
+faqHeading: "Frequently Asked Questions"
+faqs:
+  - question: "How long does it take to go to a San Diego rental?"
+    answer:
+      - "When you contact us, we will get the location of your property and our schedule and offer you an arrival time that you can pass on to your tenant. Travel times vary all throughout San Diego, so we’d like to check before we make a promise. We will let you know if we are running late. If there’s a leak or sewage backup, that takes priority."
+  - question: "You charge more to come from El Cajon?"
+    answer:
+      - "No. There is no price for coming to a San Diego property, and the estimate is free. Once we have assessed the problem, we will provide you with a quote in writing and await your approval to start the repair."
+  - question: "Do you work on HOA and condo buildings?"
+    answer:
+      - "Yes, in individual units, and in the shared plumbing of a building. That comprises common drains, main sewer lines and pressure regulators. We’ll let you know where the problem is and what units the line serves, so you have the information you need when you talk to the HOA about fixing it."
+
+ctaHeading: "A San Diego Plumber You Can Count On"
+ctaBody: "When a renter calls you about a plumbing problem, you’re usually the one who arranges access, approves the repair and keeps everyone posted. Before we start, we'll let you know when you can expect us to arrive, describe the work to be done and the cost. Contact Sedco Plumbing at [PHONE]. You’ll get to talk to a person who can assist you in scheduling service, with a free estimate and no travel fee. That’s how we’ve done business with our customers for 20 years."
+
+internalLinks:
+  - href: /services/sewer-lines/
+    anchor: Sewer Line Repair/Replacement
+    group: service
+  - href: /services/drain-cleaning/
+    anchor: Drain Cleaning Service
+    group: service
+  - href: /services/water-heater/
+    anchor: Water Heater Repair and Change-out
+    group: service
+  - href: /services/slab-leak-repair/
+    anchor: Slab Leak Detection and Repair
+    group: service

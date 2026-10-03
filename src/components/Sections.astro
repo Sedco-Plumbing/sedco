@@ -35,6 +35,8 @@ const { sections } = Astro.props;
         </ul>
       )}
 
+      {section.outro?.map((paragraph) => <p set:html={th(paragraph)} />)}
+
       {section.links && (
         <ul class="pill-list section-pills">
           {section.links.map((link) => (

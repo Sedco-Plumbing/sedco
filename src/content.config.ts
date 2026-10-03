@@ -35,6 +35,8 @@ const section = z.object({
   level: z.union([z.literal(2), z.literal(3)]).default(2),
   paragraphs: z.array(z.string()).default([]),
   list: z.array(z.string()).default([]),
+  /** Paragraphs rendered after the list */
+  outro: z.array(z.string()).default([]),
   links: z.array(internalLink).default([]),
 });
 

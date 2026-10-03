@@ -1,0 +1,119 @@
+service: property-management-plumbing
+
+title: "Property Management Plumbing Services | Sedco Plumbing"
+description: "Property management plumbing services for rentals in El Cajon, East County and San Diego. 24/7, free estimates, no trip fee. Call (619) 714-0027."
+primaryKeyword: "property management plumbing services"
+supportingKeywords:
+  - "property management plumbing"
+  - "property management plumber"
+
+heroBadge: "For property managers, landlords and HOA boards"
+heroStat: "20 years"
+heroStatLabel: "Plumbing East County"
+heroPoints:
+  - "24/7 instant response"
+  - "No travel charge, free quotes"
+  - "Price in writing before work starts"
+  - "Licensed California C-36 plumbing contractor"
+
+h1: "Property Management Plumbing Services"
+intro:
+  - "Rental plumbing doesn’t have office hours. We don't either. Sedco Plumbing provides property management plumbing services to landlords, property managers and HOAs throughout El Cajon, East County and the City of San Diego. Call at any time and you will receive an instant answer. Our pricing is affordable and straightforward. Free estimate, no trip charge, price in writing before we start. We’ve been doing plumbing out here for 20 years and we guarantee our work for 30 days."
+
+sections:
+  - heading: "What Property Managers Want From A Plumber"
+    level: 2
+    paragraphs:
+      - "Ask every property manager about plumbers and you're going to hear the same thing. The cheap ones show up late and do the work twice. The excellent ones are really expensive and when a pipe breaks at nighttime they are either busy or charge an emergency fee extra."
+      - "You shouldn't have to pick. Sedco Plumbing is a property management plumber that is available when you call day or night and comes immediately out on an emergency. Our rates are simple and affordable: estimate is free, no trip charge and you get to see the pricing in writing before any work begins."
+      - "Real world call: We received a call at 2 a.m. from a property manager regarding a kitchen leak in the unit of one of their rentals. We went right over there and repaired it that night."
+
+  - heading: "Property Management Plumbing Services We Handle"
+    level: 2
+    paragraphs: []
+
+  - heading: "Emergency Plumbing Repair"
+    level: 3
+    paragraphs:
+      - "Burst pipes and overflowing toilets are awful at timing. Those are the calls we handle 24/7, and the other things we do for [typical plumbing repairs](/services/general-plumbing/): [toilets](/services/toilet-repair-installation/), [water lines](/services/water-lines/), [gas lines](/services/gas-lines/). Call us and inform us if it’s still leaking and if the unit below is becoming wet also."
+
+  - heading: "Drain Cleaning & Sewer Lines"
+    level: 3
+    paragraphs:
+      - "Ever had a kitchen sink back up on you? It does happen. If it keeps backing up, or the tub is sluggish too, there's something going on farther down the line. We start off the [drain cleaning](/services/drain-cleaning/) process with a snake or a hydro jetter. If the blockage keeps reoccurring, we run a camera in the pipe so you can see what’s within. We also do [sewage line repair and replacement](/services/sewer-lines/) when the line itself is damaged."
+
+  - heading: "Water Heater Repair & Replacement"
+    level: 3
+    paragraphs:
+      - "The majority of the time, when a tenant does not have access to hot water, it is because the heater itself has failed, which is typically attributable to the fact that it has aged. Before we provide an estimate for a new heater, we check if replacing a part can fix it. We will [replace the water heater](/services/water-heater/), tankless and all, when the time comes."
+
+  - heading: "Repairs Between Tenants"
+    level: 3
+    paragraphs:
+      - "Leaks and drains are the most typical issues that we discover between renters. For example, there may be a seep under the kitchen sink that has been silently soaking the cabinet, or the drain in the bathroom may be becoming a bit slower every month. Dealing with a unit when it is vacant is the most cost-effective moment to do it. In addition to [creating new showers](/services/shower-installation/) and [reworking plumbing for bigger remodels](/services/kitchen-bath-remodels/), we also install and repair [sinks](/services/sink-services/), [faucets](/services/faucet-services/), [trash disposals](/services/garbage-disposal/), and toilets."
+
+  - heading: "HOA and Commercial Plumbing Services"
+    level: 3
+    paragraphs:
+      - "Not all calls are inside a unit. We maintain the bathrooms in the communal areas and the [pressure regulator](/services/water-pressure-regulators/) that feeds the entire building. We also service [grease interceptors](/services/grease-trap/) for restaurant renters."
+      - "Contact us: [Tell us about your property](/contact/)"
+
+  - heading: "How Sedco Plumbing Works With You"
+    level: 2
+    list:
+      - "Send us the property information. Address, unit number, your name and your number. Running more than one place? Just tell us which one."
+      - "Tell us the story. What the tenant told you and how we get in. What you need, when you need it, for scheduled work."
+      - "Approve the price. The estimate is free and the price is quoted before any work is started."
+      - "We do the work and stand behind it. If our repair does not work within 30 days, we come back and fix it free."
+
+  - heading: "What to tell your tenant before we get there"
+    level: 2
+    paragraphs:
+      - "Pass them on or read them out to them over the phone. None of it involves the tenant disassembling anything. It's only a matter of keeping the damage limited until we arrive."
+    list:
+      - "Water leak: If they know where the shutoff valve is and can get to it safely, have them close it slowly. Don’t force a stuck valve. And nobody should be standing in water near anything electrical."
+      - "Toilet overflowing. Do not flush. The supply valve is often located behind the toilet or off to the side. If accessible, it should be turned off. Keep children and pets out of the water."
+      - "Drain Backup: Discontinue use of that sink, tub or toilet. If you have more than one drain backing up, discontinue water use in the unit entirely. Don’t use drain cleaner. Steer clear of sewage."
+      - "No hot water: Ask whether all the hot taps are not working or just one and if there is any water surrounding the heater. That's all. Covers, wiring, gas controls are left alone."
+      - "Smell of gas: Get out quickly. No light switches to flip, no appliances, no fires. If they are outside and away from the building, call 911 or the gas company. Don’t wait for us inside."
+
+faqHeading: "Frequently Asked Questions"
+faqs:
+  - question: "Can I call about a plumbing problem in a rental at night?"
+    answer:
+      - "Yes. Day, night, weekend, holiday, you will get an answer immediately. It helps to have the address and unit number handy and to know if water is still leaking."
+  - question: "Is there a trip fee?"
+    answer:
+      - "No. The estimate is free too, and we’ll give you the pricing in writing before we start."
+  - question: "Why does the renter have no hot water?"
+    answer:
+      - "Usually the water heater itself has gone out, generally simply due to age. Sometimes it’s something we can replace, so we inspect before quoting a new heater."
+  - question: "Can you have a lot of repairs done in one vacant unit?"
+    answer:
+      - "Yeah, and that's typically the sensible way to go. Send us the complete list (leaks, drains, toilets, the water heater, whatever is on it) and the move-in date."
+  - question: "Why Sedco instead of a large firm?"
+    answer:
+      - "You get a response immediately, at any hour and we go directly out when it is essential. We offer inexpensive prices and are upfront. We provide free estimates with no trip fee and a written quote up front. And our work is guaranteed for 30 days."
+
+ctaHeading: "Fix your rental plumbing"
+ctaBody: "Maybe a renter with no hot water. Could be an empty unit with a punch list. Call Sedco Plumbing at [PHONE] either way. You’ll get a response immediately, a free estimate, a written price up front and someone who really shows up the next time things go wrong at 11pm."
+
+internalLinks:
+  - href: /services/water-heater/
+    anchor: Water Heater Repair and Replacement
+    group: service
+  - href: /services/drain-cleaning/
+    anchor: Drain Cleaning
+    group: service
+  - href: /services/sewer-lines/
+    anchor: Sewer Line Repair and Replacement Services
+    group: service
+  - href: /services/slab-leak-repair/
+    anchor: Leak Detection & Slab Leak Repair
+    group: service
+  - href: /service-areas/el-cajon/
+    anchor: property management plumbing near El Cajon
+    group: city
+  - href: /service-areas/san-diego/
+    anchor: plumbers serving San Diego
+    group: city

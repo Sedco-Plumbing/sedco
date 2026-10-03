@@ -32,6 +32,8 @@ export interface Section {
   paragraphs?: string[];
   /** Bulleted list items, rendered after the paragraphs */
   list?: string[];
+  /** Paragraphs rendered after the list */
+  outro?: string[];
   /** Links rendered as pills after the list (e.g. "services in [city]") */
   links?: InternalLink[];
 }

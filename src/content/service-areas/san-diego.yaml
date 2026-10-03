@@ -44,7 +44,8 @@ sections:
   - heading: Countywide Coverage, Scheduled Honestly
     paragraphs:
       - >-
-        Beyond the eastern neighborhoods, we take work across the county — downtown condos, rental properties,
+        Beyond the eastern neighborhoods, we take work across the county — downtown condos, [rental
+        properties](/services/property-management-plumbing/san-diego/),
         commercial grease trap accounts, and homeowners who found us through a referral and don’t want anyone
         else. For those calls we book scheduled appointments with a clear arrival window, and our flat-rate
         pricing works the same at every address: the quote comes before the work, not after it. What we won’t do
@@ -61,7 +62,9 @@ sections:
         lines](/services/gas-lines/), toilet and faucet service, garbage disposals, [water
         filtration](/services/water-filtration/) for the county’s famously hard water, and kitchen and bath
         remodel plumbing. Commercial clients across the city also use our [grease trap
-        services](/services/grease-trap/). Browse the complete list on [the services hub](/services/).
+        services](/services/grease-trap/). Landlords and HOAs use our [property management plumbing in San
+        Diego](/services/property-management-plumbing/san-diego/). Browse the complete list on [the services
+        hub](/services/).
 
 faqs:
   - question: How fast can you get to my San Diego neighborhood from El Cajon?
@@ -85,7 +88,8 @@ ctaHeading: One Call Covers the County
 ctaBody: >-
   Whether you’re in San Carlos five minutes from our trucks or across town and tired of vague pricing, the
   process is the same: a straight answer, a firm quote, and licensed work done right. Call Sedco
-  Plumbing at [PHONE] to book your San Diego service.
+  Plumbing at [PHONE] to book your San Diego service. Managing rentals or an HOA? See our [San Diego
+  property management plumbing](/services/property-management-plumbing/san-diego/).
 
 alsoServing: 'Also serving nearby: La Mesa, Lemon Grove, Santee, and our home base of El Cajon.'
 
@@ -101,6 +105,9 @@ internalLinks:
     group: service
   - href: /services/water-heater/
     anchor: water heater repair and installation
+    group: service
+  - href: /services/property-management-plumbing/san-diego/
+    anchor: property management plumbing in San Diego
     group: service
   - href: /service-areas/la-mesa/
     anchor: neighboring La Mesa
