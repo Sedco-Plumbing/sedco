@@ -129,8 +129,12 @@ export const site = {
   },
 
   integrations: {
-    /** Web3Forms access key — set WEB3FORMS_ACCESS_KEY in .env / Cloudflare secrets */
-    web3formsKey: import.meta.env.WEB3FORMS_ACCESS_KEY ?? '',
+    /**
+     * Web3Forms access key. Public by design (it ships in the page HTML), so it
+     * lives here and every build — including GitHub/Keystatic-triggered ones —
+     * gets it. WEB3FORMS_ACCESS_KEY in .env still overrides it.
+     */
+    web3formsKey: import.meta.env.WEB3FORMS_ACCESS_KEY || '81bb5e94-0bbd-457f-8481-eab65671d6e8',
     /** Keystatic Cloud project, one team per client */
     keystaticProject: 'sedco/sedco',
     /** GA4 measurement ID, e.g. G-XXXXXXXXXX. Empty = no analytics injected. */
