@@ -35,6 +35,7 @@ interface Props {
 
 const { title, description, path, crumbs, ogImage, publishedTime, noindex } = Astro.props;
 const ga4 = site.integrations.ga4;
+const gtm = site.integrations.gtm;
 const googleSiteVerification = site.integrations.googleSiteVerification;
 ---
 
@@ -42,6 +43,22 @@ const googleSiteVerification = site.integrations.googleSiteVerification;
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    {
+      gtm && (
+        <script is:inline define:vars={{ gtm }}>
+          (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+            var f = d.getElementsByTagName(s)[0],
+              j = d.createElement(s),
+              dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+          })(window, document, 'script', 'dataLayer', gtm);
+        </script>
+      )
+    }
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="generator" content={Astro.generator} />
@@ -77,6 +94,18 @@ const googleSiteVerification = site.integrations.googleSiteVerification;
   </head>
 
   <body>
+    {
+      gtm && (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtm}`}
+            height="0"
+            width="0"
+            style="display:none;visibility:hidden"
+          />
+        </noscript>
+      )
+    }
     <a class="skip-link" href="#main">Skip to content</a>
 
     <Header />

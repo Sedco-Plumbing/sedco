@@ -135,6 +135,8 @@ export const site = {
     keystaticProject: 'sedco/sedco',
     /** GA4 measurement ID, e.g. G-XXXXXXXXXX. Empty = no analytics injected. */
     ga4: 'G-QQP9CBW2KW',
+    /** Google Tag Manager container ID, e.g. GTM-XXXXXXX. Empty = no GTM injected. */
+    gtm: 'GTM-TH8MQT7H',
     /** Google Search Console HTML-tag verification token. Empty = no meta tag. */
     googleSiteVerification: 'flp6t9tHQwBmEbTIz0nl2VQHSeuXMrMpllLr8wpxRr0',
   },
