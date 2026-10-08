@@ -286,6 +286,12 @@ const serviceOptions = [...site.services.map((s) => s.name), 'Not sure / somethi
           throw new Error(result.message || 'Submission failed');
         }
 
+        // Lead-conversion event for GTM — fires only once Web3Forms confirms
+        // delivery, never on a click or a failed validation.
+        const w = window as Window & { dataLayer?: unknown[] };
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({ event: 'form_submit_lead', form_name: 'service_request' });
+
         if (panel) panel.hidden = true;
         if (success) success.hidden = false;
         success?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
