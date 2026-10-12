@@ -8,6 +8,12 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   Permissions-Policy: geolocation=(), microphone=(), camera=()
 
+# Pre-optimized images (public/images). Cached for a year: every file name
+# carries its width, so a replaced image must ship under a NEW file name
+# (e.g. -v2) or visitors keep the old one until their cache expires.
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # The Keystatic admin must not be framed or indexed.
 /keystatic/*
   X-Robots-Tag: noindex, nofollow

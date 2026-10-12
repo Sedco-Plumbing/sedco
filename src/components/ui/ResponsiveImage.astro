@@ -1,0 +1,41 @@
+---
+/**
+ * Responsive image from the pre-optimized WebP set in public/images.
+ *
+ * Those files carry Sedco's XMP rights metadata, so they are served as-is
+ * rather than re-encoded by Astro's image pipeline (which would strip it).
+ * src/data/images.json holds each image's srcset, intrinsic size and alt text.
+ *
+ * `priority` is for the one LCP image per page only: it loads eagerly with
+ * high fetch priority. Pair it with <PreloadImage> in the page's head.
+ */
+import images from '../../data/images.json';
+
+export type ImageKey = keyof typeof images;
+
+interface Props {
+  name: ImageKey;
+  /** Override the default alt text from images.json */
+  alt?: string;
+  /** Override the default `sizes` for this layout */
+  sizes?: string;
+  priority?: boolean;
+  class?: string;
+}
+
+const { name, alt, sizes, priority = false, class: className } = Astro.props;
+const img = images[name];
+---
+
+<img
+  src={img.src}
+  srcset={img.srcset}
+  sizes={sizes ?? img.sizes}
+  width={img.width}
+  height={img.height}
+  alt={img.decorative ? '' : (alt ?? img.alt)}
+  loading={priority ? 'eager' : 'lazy'}
+  decoding={priority ? 'sync' : 'async'}
+  fetchpriority={priority ? 'high' : undefined}
+  class={className}
+/>

@@ -24,7 +24,7 @@
  * `npm run verify` stay usable before the key exists yet.
  */
 
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
 const STRICT = process.argv.includes('--strict');
@@ -34,7 +34,6 @@ const NON_PAGE_TARGETS = new Set([
   '/robots.txt',
   '/sitemap-index.xml',
   '/sitemap-0.xml',
-  '/favicon.svg',
   '/keystatic/',
 ]);
 
@@ -188,7 +187,7 @@ for (const [url, html] of pages) {
     if (pages.has(target)) {
       if (!incoming.has(target)) incoming.set(target, new Set());
       incoming.get(target).add(url);
-    } else if (!NON_PAGE_TARGETS.has(target)) {
+    } else if (!NON_PAGE_TARGETS.has(target) && !(hasExtension && existsSync(join(DIST, target)))) {
       failures.push(`${url} links to ${target}, which does not exist`);
     }
   }

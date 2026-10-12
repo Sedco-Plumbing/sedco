@@ -1,0 +1,998 @@
+{
+  "hero/sedco-plumber-el-cajon": {
+    "alt": "Sedco Plumbing plumber at work in El Cajon",
+    "title": "Plumber in El Cajon | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 100vw, 50vw",
+    "width": 1832,
+    "height": 859,
+    "src": "/images/hero/sedco-plumber-el-cajon-1832w.webp",
+    "srcset": "/images/hero/sedco-plumber-el-cajon-480w.webp 480w, /images/hero/sedco-plumber-el-cajon-768w.webp 768w, /images/hero/sedco-plumber-el-cajon-1024w.webp 1024w, /images/hero/sedco-plumber-el-cajon-1440w.webp 1440w, /images/hero/sedco-plumber-el-cajon-1832w.webp 1832w",
+    "files": [
+      {
+        "file": "/images/hero/sedco-plumber-el-cajon-480w.webp",
+        "width": 480,
+        "height": 225,
+        "kb": 19.4
+      },
+      {
+        "file": "/images/hero/sedco-plumber-el-cajon-768w.webp",
+        "width": 768,
+        "height": 360,
+        "kb": 38.6
+      },
+      {
+        "file": "/images/hero/sedco-plumber-el-cajon-1024w.webp",
+        "width": 1024,
+        "height": 480,
+        "kb": 60.3
+      },
+      {
+        "file": "/images/hero/sedco-plumber-el-cajon-1440w.webp",
+        "width": 1440,
+        "height": 675,
+        "kb": 102.5
+      },
+      {
+        "file": "/images/hero/sedco-plumber-el-cajon-1832w.webp",
+        "width": 1832,
+        "height": 859,
+        "kb": 155.5
+      }
+    ]
+  },
+  "about/sedco-plumbing-jobs-san-diego-county": {
+    "alt": "Sedco Plumbing at work: clearing a floor drain, a commercial water heater install, a drum machine on a blocked drain, and a sewer line repair",
+    "title": "Sedco Plumbing jobs across San Diego County | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 100vw, 600px",
+    "width": 900,
+    "height": 760,
+    "src": "/images/about/sedco-plumbing-jobs-san-diego-county-900w.webp",
+    "srcset": "/images/about/sedco-plumbing-jobs-san-diego-county-450w.webp 450w, /images/about/sedco-plumbing-jobs-san-diego-county-900w.webp 900w",
+    "files": [
+      {
+        "file": "/images/about/sedco-plumbing-jobs-san-diego-county-450w.webp",
+        "width": 450,
+        "height": 380,
+        "kb": 49.1
+      },
+      {
+        "file": "/images/about/sedco-plumbing-jobs-san-diego-county-900w.webp",
+        "width": 900,
+        "height": 760,
+        "kb": 144.5
+      }
+    ]
+  },
+  "backgrounds/san-diego-county-terrain-navy": {
+    "alt": "",
+    "title": "San Diego County service area map | Sedco Plumbing",
+    "decorative": true,
+    "sizes": "100vw",
+    "width": 1300,
+    "height": 1495,
+    "src": "/images/backgrounds/san-diego-county-terrain-navy-1300w.webp",
+    "srcset": "/images/backgrounds/san-diego-county-terrain-navy-650w.webp 650w, /images/backgrounds/san-diego-county-terrain-navy-1300w.webp 1300w",
+    "files": [
+      {
+        "file": "/images/backgrounds/san-diego-county-terrain-navy-650w.webp",
+        "width": 650,
+        "height": 748,
+        "kb": 39.4
+      },
+      {
+        "file": "/images/backgrounds/san-diego-county-terrain-navy-1300w.webp",
+        "width": 1300,
+        "height": 1495,
+        "kb": 161.5
+      }
+    ]
+  },
+  "brand/sedco-plumbing-logo": {
+    "alt": "Sedco Plumbing logo",
+    "title": "Sedco Plumbing logo | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "44px",
+    "width": 84,
+    "height": 84,
+    "src": "/images/brand/sedco-plumbing-logo-84w.webp",
+    "srcset": "/images/brand/sedco-plumbing-logo-44w.webp 44w, /images/brand/sedco-plumbing-logo-84w.webp 84w",
+    "files": [
+      {
+        "file": "/images/brand/sedco-plumbing-logo-44w.webp",
+        "width": 44,
+        "height": 44,
+        "kb": 3.3
+      },
+      {
+        "file": "/images/brand/sedco-plumbing-logo-84w.webp",
+        "width": 84,
+        "height": 84,
+        "kb": 3.8
+      }
+    ]
+  },
+  "how-it-works/step-1-call-sedco-plumbing": {
+    "alt": "Homeowner calling Sedco Plumbing about a burst pipe while a Sedco plumber takes the call",
+    "title": "Call Sedco Plumbing | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 100vw, 75vw",
+    "width": 1536,
+    "height": 1024,
+    "src": "/images/how-it-works/step-1-call-sedco-plumbing-1536w.webp",
+    "srcset": "/images/how-it-works/step-1-call-sedco-plumbing-400w.webp 400w, /images/how-it-works/step-1-call-sedco-plumbing-600w.webp 600w, /images/how-it-works/step-1-call-sedco-plumbing-800w.webp 800w, /images/how-it-works/step-1-call-sedco-plumbing-1200w.webp 1200w, /images/how-it-works/step-1-call-sedco-plumbing-1536w.webp 1536w",
+    "files": [
+      {
+        "file": "/images/how-it-works/step-1-call-sedco-plumbing-400w.webp",
+        "width": 400,
+        "height": 267,
+        "kb": 26.3
+      },
+      {
+        "file": "/images/how-it-works/step-1-call-sedco-plumbing-600w.webp",
+        "width": 600,
+        "height": 400,
+        "kb": 46.2
+      },
+      {
+        "file": "/images/how-it-works/step-1-call-sedco-plumbing-800w.webp",
+        "width": 800,
+        "height": 533,
+        "kb": 69.1
+      },
+      {
+        "file": "/images/how-it-works/step-1-call-sedco-plumbing-1200w.webp",
+        "width": 1200,
+        "height": 800,
+        "kb": 121.2
+      },
+      {
+        "file": "/images/how-it-works/step-1-call-sedco-plumbing-1536w.webp",
+        "width": 1536,
+        "height": 1024,
+        "kb": 175.1
+      }
+    ]
+  },
+  "how-it-works/step-2-sedco-plumber-arrives": {
+    "alt": "Sedco plumber arriving in the service van and at the front door",
+    "title": "A Sedco plumber comes to you | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 100vw, 75vw",
+    "width": 1536,
+    "height": 1024,
+    "src": "/images/how-it-works/step-2-sedco-plumber-arrives-1536w.webp",
+    "srcset": "/images/how-it-works/step-2-sedco-plumber-arrives-400w.webp 400w, /images/how-it-works/step-2-sedco-plumber-arrives-600w.webp 600w, /images/how-it-works/step-2-sedco-plumber-arrives-800w.webp 800w, /images/how-it-works/step-2-sedco-plumber-arrives-1200w.webp 1200w, /images/how-it-works/step-2-sedco-plumber-arrives-1536w.webp 1536w",
+    "files": [
+      {
+        "file": "/images/how-it-works/step-2-sedco-plumber-arrives-400w.webp",
+        "width": 400,
+        "height": 267,
+        "kb": 25.9
+      },
+      {
+        "file": "/images/how-it-works/step-2-sedco-plumber-arrives-600w.webp",
+        "width": 600,
+        "height": 400,
+        "kb": 46.8
+      },
+      {
+        "file": "/images/how-it-works/step-2-sedco-plumber-arrives-800w.webp",
+        "width": 800,
+        "height": 533,
+        "kb": 71.8
+      },
+      {
+        "file": "/images/how-it-works/step-2-sedco-plumber-arrives-1200w.webp",
+        "width": 1200,
+        "height": 800,
+        "kb": 130
+      },
+      {
+        "file": "/images/how-it-works/step-2-sedco-plumber-arrives-1536w.webp",
+        "width": 1536,
+        "height": 1024,
+        "kb": 197.2
+      }
+    ]
+  },
+  "how-it-works/step-3-free-plumbing-estimate": {
+    "alt": "Sedco plumber showing the cracked pipe and explaining the free estimate",
+    "title": "Free plumbing estimate | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 100vw, 75vw",
+    "width": 1536,
+    "height": 1024,
+    "src": "/images/how-it-works/step-3-free-plumbing-estimate-1536w.webp",
+    "srcset": "/images/how-it-works/step-3-free-plumbing-estimate-400w.webp 400w, /images/how-it-works/step-3-free-plumbing-estimate-600w.webp 600w, /images/how-it-works/step-3-free-plumbing-estimate-800w.webp 800w, /images/how-it-works/step-3-free-plumbing-estimate-1200w.webp 1200w, /images/how-it-works/step-3-free-plumbing-estimate-1536w.webp 1536w",
+    "files": [
+      {
+        "file": "/images/how-it-works/step-3-free-plumbing-estimate-400w.webp",
+        "width": 400,
+        "height": 267,
+        "kb": 22
+      },
+      {
+        "file": "/images/how-it-works/step-3-free-plumbing-estimate-600w.webp",
+        "width": 600,
+        "height": 400,
+        "kb": 37.5
+      },
+      {
+        "file": "/images/how-it-works/step-3-free-plumbing-estimate-800w.webp",
+        "width": 800,
+        "height": 533,
+        "kb": 55.9
+      },
+      {
+        "file": "/images/how-it-works/step-3-free-plumbing-estimate-1200w.webp",
+        "width": 1200,
+        "height": 800,
+        "kb": 94
+      },
+      {
+        "file": "/images/how-it-works/step-3-free-plumbing-estimate-1536w.webp",
+        "width": 1536,
+        "height": 1024,
+        "kb": 134.3
+      }
+    ]
+  },
+  "how-it-works/step-4-repair-tested-and-guaranteed": {
+    "alt": "Sedco plumber finishing the repair and shaking hands with the homeowner",
+    "title": "Repair tested and guaranteed | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 100vw, 75vw",
+    "width": 1536,
+    "height": 1024,
+    "src": "/images/how-it-works/step-4-repair-tested-and-guaranteed-1536w.webp",
+    "srcset": "/images/how-it-works/step-4-repair-tested-and-guaranteed-400w.webp 400w, /images/how-it-works/step-4-repair-tested-and-guaranteed-600w.webp 600w, /images/how-it-works/step-4-repair-tested-and-guaranteed-800w.webp 800w, /images/how-it-works/step-4-repair-tested-and-guaranteed-1200w.webp 1200w, /images/how-it-works/step-4-repair-tested-and-guaranteed-1536w.webp 1536w",
+    "files": [
+      {
+        "file": "/images/how-it-works/step-4-repair-tested-and-guaranteed-400w.webp",
+        "width": 400,
+        "height": 267,
+        "kb": 23.6
+      },
+      {
+        "file": "/images/how-it-works/step-4-repair-tested-and-guaranteed-600w.webp",
+        "width": 600,
+        "height": 400,
+        "kb": 39.9
+      },
+      {
+        "file": "/images/how-it-works/step-4-repair-tested-and-guaranteed-800w.webp",
+        "width": 800,
+        "height": 533,
+        "kb": 59.4
+      },
+      {
+        "file": "/images/how-it-works/step-4-repair-tested-and-guaranteed-1200w.webp",
+        "width": 1200,
+        "height": 800,
+        "kb": 101.5
+      },
+      {
+        "file": "/images/how-it-works/step-4-repair-tested-and-guaranteed-1536w.webp",
+        "width": 1536,
+        "height": 1024,
+        "kb": 145.7
+      }
+    ]
+  },
+  "services/general-plumbing-el-cajon": {
+    "alt": "Leaking pipe joint and gate valve being repaired with a pipe wrench, general plumbing by Sedco Plumbing",
+    "title": "General plumbing repairs | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/general-plumbing-el-cajon-1200w.webp",
+    "srcset": "/images/services/general-plumbing-el-cajon-200w.webp 200w, /images/services/general-plumbing-el-cajon-400w.webp 400w, /images/services/general-plumbing-el-cajon-600w.webp 600w, /images/services/general-plumbing-el-cajon-800w.webp 800w, /images/services/general-plumbing-el-cajon-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/general-plumbing-el-cajon-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 13.7
+      },
+      {
+        "file": "/images/services/general-plumbing-el-cajon-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 33
+      },
+      {
+        "file": "/images/services/general-plumbing-el-cajon-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 57.5
+      },
+      {
+        "file": "/images/services/general-plumbing-el-cajon-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 88.5
+      },
+      {
+        "file": "/images/services/general-plumbing-el-cajon-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 157.8
+      }
+    ]
+  },
+  "services/faucet-repair-installation": {
+    "alt": "Two-handle bathroom faucet with braided supply lines and shut-off valves, faucet repair by Sedco Plumbing",
+    "title": "Faucet repair and installation | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/faucet-repair-installation-1200w.webp",
+    "srcset": "/images/services/faucet-repair-installation-200w.webp 200w, /images/services/faucet-repair-installation-400w.webp 400w, /images/services/faucet-repair-installation-600w.webp 600w, /images/services/faucet-repair-installation-800w.webp 800w, /images/services/faucet-repair-installation-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/faucet-repair-installation-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 16.8
+      },
+      {
+        "file": "/images/services/faucet-repair-installation-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 43.4
+      },
+      {
+        "file": "/images/services/faucet-repair-installation-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 72.7
+      },
+      {
+        "file": "/images/services/faucet-repair-installation-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 118.7
+      },
+      {
+        "file": "/images/services/faucet-repair-installation-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 212.9
+      }
+    ]
+  },
+  "services/sink-repair-services": {
+    "alt": "Stainless steel kitchen sink with a blue P-trap drain being tightened with a wrench, sink repair by Sedco Plumbing",
+    "title": "Sink repair and installation | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/sink-repair-services-1200w.webp",
+    "srcset": "/images/services/sink-repair-services-200w.webp 200w, /images/services/sink-repair-services-400w.webp 400w, /images/services/sink-repair-services-600w.webp 600w, /images/services/sink-repair-services-800w.webp 800w, /images/services/sink-repair-services-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/sink-repair-services-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 15.3
+      },
+      {
+        "file": "/images/services/sink-repair-services-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 34.9
+      },
+      {
+        "file": "/images/services/sink-repair-services-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 58.7
+      },
+      {
+        "file": "/images/services/sink-repair-services-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 87.1
+      },
+      {
+        "file": "/images/services/sink-repair-services-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 151.7
+      }
+    ]
+  },
+  "services/garbage-disposal-repair": {
+    "alt": "Cutaway of a garbage disposal grinding chamber with a wrench on the mounting ring, disposal repair by Sedco Plumbing",
+    "title": "Garbage disposal repair | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/garbage-disposal-repair-1200w.webp",
+    "srcset": "/images/services/garbage-disposal-repair-200w.webp 200w, /images/services/garbage-disposal-repair-400w.webp 400w, /images/services/garbage-disposal-repair-600w.webp 600w, /images/services/garbage-disposal-repair-800w.webp 800w, /images/services/garbage-disposal-repair-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/garbage-disposal-repair-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 12.9
+      },
+      {
+        "file": "/images/services/garbage-disposal-repair-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 28.8
+      },
+      {
+        "file": "/images/services/garbage-disposal-repair-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 47.7
+      },
+      {
+        "file": "/images/services/garbage-disposal-repair-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 71.3
+      },
+      {
+        "file": "/images/services/garbage-disposal-repair-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 121.6
+      }
+    ]
+  },
+  "services/water-pressure-regulator": {
+    "alt": "Water pressure regulator with adjustment knob and pressure gauge, installed by Sedco Plumbing",
+    "title": "Water pressure regulators | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/water-pressure-regulator-1200w.webp",
+    "srcset": "/images/services/water-pressure-regulator-200w.webp 200w, /images/services/water-pressure-regulator-400w.webp 400w, /images/services/water-pressure-regulator-600w.webp 600w, /images/services/water-pressure-regulator-800w.webp 800w, /images/services/water-pressure-regulator-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/water-pressure-regulator-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 10.9
+      },
+      {
+        "file": "/images/services/water-pressure-regulator-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 23.4
+      },
+      {
+        "file": "/images/services/water-pressure-regulator-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 36.8
+      },
+      {
+        "file": "/images/services/water-pressure-regulator-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 54.8
+      },
+      {
+        "file": "/images/services/water-pressure-regulator-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 94.2
+      }
+    ]
+  },
+  "services/drain-cleaning-el-cajon": {
+    "alt": "Drum drain-cleaning machine feeding a cable into a P-trap, drain cleaning by Sedco Plumbing",
+    "title": "Drain cleaning | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/drain-cleaning-el-cajon-1200w.webp",
+    "srcset": "/images/services/drain-cleaning-el-cajon-200w.webp 200w, /images/services/drain-cleaning-el-cajon-400w.webp 400w, /images/services/drain-cleaning-el-cajon-600w.webp 600w, /images/services/drain-cleaning-el-cajon-800w.webp 800w, /images/services/drain-cleaning-el-cajon-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/drain-cleaning-el-cajon-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 15.9
+      },
+      {
+        "file": "/images/services/drain-cleaning-el-cajon-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 38.3
+      },
+      {
+        "file": "/images/services/drain-cleaning-el-cajon-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 62.1
+      },
+      {
+        "file": "/images/services/drain-cleaning-el-cajon-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 98.1
+      },
+      {
+        "file": "/images/services/drain-cleaning-el-cajon-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 167.8
+      }
+    ]
+  },
+  "services/sewer-line-repair": {
+    "alt": "Cutaway of a buried sewer pipe with a repair coupling being tightened, sewer line repair by Sedco Plumbing",
+    "title": "Sewer line repair | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/sewer-line-repair-1200w.webp",
+    "srcset": "/images/services/sewer-line-repair-200w.webp 200w, /images/services/sewer-line-repair-400w.webp 400w, /images/services/sewer-line-repair-600w.webp 600w, /images/services/sewer-line-repair-800w.webp 800w, /images/services/sewer-line-repair-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/sewer-line-repair-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 14.3
+      },
+      {
+        "file": "/images/services/sewer-line-repair-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 36.4
+      },
+      {
+        "file": "/images/services/sewer-line-repair-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 61.8
+      },
+      {
+        "file": "/images/services/sewer-line-repair-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 99.7
+      },
+      {
+        "file": "/images/services/sewer-line-repair-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 169.5
+      }
+    ]
+  },
+  "services/grease-trap-services": {
+    "alt": "Cutaway of a commercial grease trap separating grease from wastewater, grease trap service by Sedco Plumbing",
+    "title": "Grease trap services | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/grease-trap-services-1200w.webp",
+    "srcset": "/images/services/grease-trap-services-200w.webp 200w, /images/services/grease-trap-services-400w.webp 400w, /images/services/grease-trap-services-600w.webp 600w, /images/services/grease-trap-services-800w.webp 800w, /images/services/grease-trap-services-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/grease-trap-services-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 14.1
+      },
+      {
+        "file": "/images/services/grease-trap-services-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 34.6
+      },
+      {
+        "file": "/images/services/grease-trap-services-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 56
+      },
+      {
+        "file": "/images/services/grease-trap-services-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 86.6
+      },
+      {
+        "file": "/images/services/grease-trap-services-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 144.3
+      }
+    ]
+  },
+  "services/toilet-repair-installation": {
+    "alt": "Toilet with a new supply line and shut-off valve and a wrench on the base bolt, toilet repair by Sedco Plumbing",
+    "title": "Toilet repair and installation | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/toilet-repair-installation-1200w.webp",
+    "srcset": "/images/services/toilet-repair-installation-200w.webp 200w, /images/services/toilet-repair-installation-400w.webp 400w, /images/services/toilet-repair-installation-600w.webp 600w, /images/services/toilet-repair-installation-800w.webp 800w, /images/services/toilet-repair-installation-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/toilet-repair-installation-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 12.1
+      },
+      {
+        "file": "/images/services/toilet-repair-installation-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 26.4
+      },
+      {
+        "file": "/images/services/toilet-repair-installation-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 43.9
+      },
+      {
+        "file": "/images/services/toilet-repair-installation-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 64.2
+      },
+      {
+        "file": "/images/services/toilet-repair-installation-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 108.7
+      }
+    ]
+  },
+  "services/shower-installation": {
+    "alt": "Rain shower head, hand shower and wall mixer valve, shower installation by Sedco Plumbing",
+    "title": "Shower installation | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/shower-installation-1200w.webp",
+    "srcset": "/images/services/shower-installation-200w.webp 200w, /images/services/shower-installation-400w.webp 400w, /images/services/shower-installation-600w.webp 600w, /images/services/shower-installation-800w.webp 800w, /images/services/shower-installation-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/shower-installation-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 14.9
+      },
+      {
+        "file": "/images/services/shower-installation-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 36.9
+      },
+      {
+        "file": "/images/services/shower-installation-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 62.4
+      },
+      {
+        "file": "/images/services/shower-installation-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 105.6
+      },
+      {
+        "file": "/images/services/shower-installation-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 191.8
+      }
+    ]
+  },
+  "services/kitchen-bath-remodel-plumbing": {
+    "alt": "Kitchen and bathroom sinks with new drains and supply lines for a remodel, remodel plumbing by Sedco Plumbing",
+    "title": "Kitchen and bath remodel plumbing | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/kitchen-bath-remodel-plumbing-1200w.webp",
+    "srcset": "/images/services/kitchen-bath-remodel-plumbing-200w.webp 200w, /images/services/kitchen-bath-remodel-plumbing-400w.webp 400w, /images/services/kitchen-bath-remodel-plumbing-600w.webp 600w, /images/services/kitchen-bath-remodel-plumbing-800w.webp 800w, /images/services/kitchen-bath-remodel-plumbing-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/kitchen-bath-remodel-plumbing-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 14.5
+      },
+      {
+        "file": "/images/services/kitchen-bath-remodel-plumbing-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 32.6
+      },
+      {
+        "file": "/images/services/kitchen-bath-remodel-plumbing-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 55.1
+      },
+      {
+        "file": "/images/services/kitchen-bath-remodel-plumbing-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 82.8
+      },
+      {
+        "file": "/images/services/kitchen-bath-remodel-plumbing-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 139.2
+      }
+    ]
+  },
+  "services/water-heater-repair-installation": {
+    "alt": "Tank water heater with hot and cold water lines and shut-off valves, water heater service by Sedco Plumbing",
+    "title": "Water heater repair and installation | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/water-heater-repair-installation-1200w.webp",
+    "srcset": "/images/services/water-heater-repair-installation-200w.webp 200w, /images/services/water-heater-repair-installation-400w.webp 400w, /images/services/water-heater-repair-installation-600w.webp 600w, /images/services/water-heater-repair-installation-800w.webp 800w, /images/services/water-heater-repair-installation-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/water-heater-repair-installation-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 12.9
+      },
+      {
+        "file": "/images/services/water-heater-repair-installation-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 30.1
+      },
+      {
+        "file": "/images/services/water-heater-repair-installation-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 48.3
+      },
+      {
+        "file": "/images/services/water-heater-repair-installation-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 74.2
+      },
+      {
+        "file": "/images/services/water-heater-repair-installation-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 126.5
+      }
+    ]
+  },
+  "services/slab-leak-detection-repair": {
+    "alt": "Leak detector locating a leaking pipe under a concrete slab, slab leak repair by Sedco Plumbing",
+    "title": "Slab leak detection and repair | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/slab-leak-detection-repair-1200w.webp",
+    "srcset": "/images/services/slab-leak-detection-repair-200w.webp 200w, /images/services/slab-leak-detection-repair-400w.webp 400w, /images/services/slab-leak-detection-repair-600w.webp 600w, /images/services/slab-leak-detection-repair-800w.webp 800w, /images/services/slab-leak-detection-repair-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/slab-leak-detection-repair-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 19.7
+      },
+      {
+        "file": "/images/services/slab-leak-detection-repair-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 56.2
+      },
+      {
+        "file": "/images/services/slab-leak-detection-repair-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 100.2
+      },
+      {
+        "file": "/images/services/slab-leak-detection-repair-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 174.4
+      },
+      {
+        "file": "/images/services/slab-leak-detection-repair-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 316.7
+      }
+    ]
+  },
+  "services/water-line-repair-repiping": {
+    "alt": "New water line piping with shut-off valves and a repair coupling, repiping by Sedco Plumbing",
+    "title": "Water line repair and repiping | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/water-line-repair-repiping-1200w.webp",
+    "srcset": "/images/services/water-line-repair-repiping-200w.webp 200w, /images/services/water-line-repair-repiping-400w.webp 400w, /images/services/water-line-repair-repiping-600w.webp 600w, /images/services/water-line-repair-repiping-800w.webp 800w, /images/services/water-line-repair-repiping-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/water-line-repair-repiping-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 15
+      },
+      {
+        "file": "/images/services/water-line-repair-repiping-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 34.7
+      },
+      {
+        "file": "/images/services/water-line-repair-repiping-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 58.5
+      },
+      {
+        "file": "/images/services/water-line-repair-repiping-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 88
+      },
+      {
+        "file": "/images/services/water-line-repair-repiping-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 152.9
+      }
+    ]
+  },
+  "services/gas-line-installation-repair": {
+    "alt": "Gas line with shut-off valve, regulator, pressure gauge and flexible connector, gas line service by Sedco Plumbing",
+    "title": "Gas line installation and repair | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/gas-line-installation-repair-1200w.webp",
+    "srcset": "/images/services/gas-line-installation-repair-200w.webp 200w, /images/services/gas-line-installation-repair-400w.webp 400w, /images/services/gas-line-installation-repair-600w.webp 600w, /images/services/gas-line-installation-repair-800w.webp 800w, /images/services/gas-line-installation-repair-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/gas-line-installation-repair-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 17.3
+      },
+      {
+        "file": "/images/services/gas-line-installation-repair-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 40.8
+      },
+      {
+        "file": "/images/services/gas-line-installation-repair-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 67.3
+      },
+      {
+        "file": "/images/services/gas-line-installation-repair-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 104.3
+      },
+      {
+        "file": "/images/services/gas-line-installation-repair-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 181.1
+      }
+    ]
+  },
+  "services/water-filtration-systems": {
+    "alt": "Three-stage whole-home water filtration system with pressure gauge, installed by Sedco Plumbing",
+    "title": "Water filtration systems | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/water-filtration-systems-1200w.webp",
+    "srcset": "/images/services/water-filtration-systems-200w.webp 200w, /images/services/water-filtration-systems-400w.webp 400w, /images/services/water-filtration-systems-600w.webp 600w, /images/services/water-filtration-systems-800w.webp 800w, /images/services/water-filtration-systems-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/water-filtration-systems-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 13.5
+      },
+      {
+        "file": "/images/services/water-filtration-systems-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 31.7
+      },
+      {
+        "file": "/images/services/water-filtration-systems-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 51.4
+      },
+      {
+        "file": "/images/services/water-filtration-systems-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 77.3
+      },
+      {
+        "file": "/images/services/water-filtration-systems-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 131.3
+      }
+    ]
+  },
+  "services/property-management-plumbing": {
+    "alt": "Two rental homes with a shared water meter box, shut-off valves and keys, property management plumbing by Sedco Plumbing",
+    "title": "Property management plumbing | Sedco Plumbing",
+    "decorative": false,
+    "sizes": "(max-width: 768px) 50vw, 400px",
+    "width": 1200,
+    "height": 1200,
+    "src": "/images/services/property-management-plumbing-1200w.webp",
+    "srcset": "/images/services/property-management-plumbing-200w.webp 200w, /images/services/property-management-plumbing-400w.webp 400w, /images/services/property-management-plumbing-600w.webp 600w, /images/services/property-management-plumbing-800w.webp 800w, /images/services/property-management-plumbing-1200w.webp 1200w",
+    "files": [
+      {
+        "file": "/images/services/property-management-plumbing-200w.webp",
+        "width": 200,
+        "height": 200,
+        "kb": 16
+      },
+      {
+        "file": "/images/services/property-management-plumbing-400w.webp",
+        "width": 400,
+        "height": 400,
+        "kb": 39.7
+      },
+      {
+        "file": "/images/services/property-management-plumbing-600w.webp",
+        "width": 600,
+        "height": 600,
+        "kb": 66.4
+      },
+      {
+        "file": "/images/services/property-management-plumbing-800w.webp",
+        "width": 800,
+        "height": 800,
+        "kb": 106.9
+      },
+      {
+        "file": "/images/services/property-management-plumbing-1200w.webp",
+        "width": 1200,
+        "height": 1200,
+        "kb": 187.2
+      }
+    ]
+  }
+}

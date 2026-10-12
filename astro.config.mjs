@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import node from '@astrojs/node';
 import markdoc from '@astrojs/markdoc';
@@ -80,6 +80,46 @@ export default defineConfig({
       // sitemap lists exactly the public pages we want crawled.
       filter: (page) => !page.includes('/keystatic') && !page.includes('/privacy-policy'),
     }),
+  ],
+
+  /**
+   * Self-hosted variable fonts (Latin subset only), served from this site.
+   * The Fonts API also emits size-adjusted fallback faces, so text laid out in
+   * the fallback font occupies the same space and swapping in the webfont
+   * causes no layout shift. Both are preloaded by <Font preload> in the layout:
+   * Plus Jakarta Sans sets every H1, Inter the body copy above the fold.
+   */
+  fonts: [
+    {
+      provider: fontProviders.local(),
+      name: 'Plus Jakarta Sans',
+      cssVariable: '--font-jakarta',
+      fallbacks: ['system-ui', 'sans-serif'],
+      options: {
+        variants: [
+          {
+            src: ['@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2'],
+            weight: '200 800',
+            style: 'normal',
+          },
+        ],
+      },
+    },
+    {
+      provider: fontProviders.local(),
+      name: 'Inter',
+      cssVariable: '--font-inter',
+      fallbacks: ['system-ui', 'sans-serif'],
+      options: {
+        variants: [
+          {
+            src: ['@fontsource-variable/inter/files/inter-latin-wght-normal.woff2'],
+            weight: '100 900',
+            style: 'normal',
+          },
+        ],
+      },
+    },
   ],
 
   image: {

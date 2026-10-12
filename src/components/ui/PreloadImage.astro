@@ -1,0 +1,28 @@
+---
+/**
+ * <link rel="preload"> for a page's LCP image, so the browser starts fetching
+ * the right srcset candidate before it has parsed the CSS. Render it in the
+ * layout's head (BaseLayout `preloadImage` prop), and give the same image
+ * `priority` where it is rendered. `sizes` must match that <img> exactly, or
+ * the browser downloads two different widths.
+ */
+import images from '../../data/images.json';
+import type { ImageKey } from './ResponsiveImage.astro';
+
+interface Props {
+  name: ImageKey;
+  sizes?: string;
+}
+
+const { name, sizes } = Astro.props;
+const img = images[name];
+---
+
+<link
+  rel="preload"
+  as="image"
+  type="image/webp"
+  imagesrcset={img.srcset}
+  imagesizes={sizes ?? img.sizes}
+  fetchpriority="high"
+/>
