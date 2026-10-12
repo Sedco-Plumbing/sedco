@@ -573,10 +573,7 @@ textarea.input {
  * Article sections — the main column of service and town pages
  * ------------------------------------------------------------------------- */
 
-.article-section {
-  scroll-margin-top: calc(var(--header-h) + 24px);
-}
-
+/* In-page anchors clear the sticky header via html { scroll-padding-top }. */
 .article-section ~ .article-section {
   margin-top: 80px;
 }
