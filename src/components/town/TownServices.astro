@@ -1,0 +1,144 @@
+---
+/**
+ * "Plumbing Services in [Town]": every service as a compact card. A card
+ * links to the service × town page where one exists (and says so), otherwise
+ * to the main service page.
+ */
+import { paths, type CityDef, type ServiceDef } from '@config/site';
+import { catalogServices, serviceHref } from '@config/catalog';
+import Icon from '@components/ui/Icon.astro';
+
+interface Props {
+  id: string;
+  city: CityDef;
+  services: ServiceDef[];
+}
+
+const { id, city, services } = Astro.props;
+const hasCombo = (slug: string) => services.find((s) => s.slug === slug)?.cities.includes(city.slug) ?? false;
+
+const cards = catalogServices.map((service) => {
+  const combo = hasCombo(service.slug);
+  return {
+    href: combo ? paths.serviceCity(service.slug, city.slug) : serviceHref(service),
+    title: combo ? `${service.short} in ${city.name}` : service.name,
+    text: service.summary,
+    icon: service.icon,
+    local: combo,
+  };
+});
+// Pages written for this town first.
+cards.sort((a, b) => Number(b.local) - Number(a.local));
+---
+
+<section class="article-section town-services" id={id} aria-labelledby={`${id}-heading`}>
+  <h2 class="article-h2" id={`${id}-heading`}>Plumbing Services in {city.name}</h2>
+  <p class="article-lead">
+    Every service below is available in {city.name}, with the same free estimate and the same
+    prices you'd get in El Cajon.
+  </p>
+  <ul class="town-services__grid">
+    {
+      cards.map((card) => (
+        <li>
+          <a class="town-services__card" href={card.href}>
+            <span class="town-services__icon"><Icon name={card.icon} size={22} /></span>
+            <span class="town-services__body">
+              <span class="town-services__title">{card.title}</span>
+              {card.local && <span class="town-services__tag">{city.name} page</span>}
+            </span>
+            <Icon name="arrow-right" size={18} class="town-services__arrow" />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .town-services__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 24px;
+    list-style: none;
+  }
+
+  .town-services__card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--white);
+    text-decoration: none;
+    transition:
+      background-color var(--t-base) ease,
+      border-color var(--t-base) ease;
+  }
+
+  .town-services__card:hover {
+    border-color: var(--navy-800);
+    background: var(--navy-800);
+  }
+
+  .town-services__icon {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--r-md);
+    background: var(--blue-50);
+    color: var(--blue-600);
+  }
+
+  .town-services__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .town-services__title {
+    display: block;
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.3;
+    color: var(--navy-800);
+  }
+
+  .town-services__tag {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 2px 8px;
+    border-radius: var(--r-pill);
+    background: var(--yellow-100);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-ink);
+  }
+
+  .town-services__card :global(.town-services__arrow) {
+    flex: none;
+    color: var(--blue-600);
+  }
+
+  .town-services__card:hover .town-services__title,
+  .town-services__card:hover :global(.town-services__arrow) {
+    color: var(--yellow-500);
+  }
+
+  .town-services__card:hover .town-services__icon {
+    background: var(--navy-700);
+    color: var(--yellow-500);
+  }
+
+  @media (max-width: 768px) {
+    .town-services__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
