@@ -1,0 +1,1137 @@
+{
+  "source": "https://docs.google.com/spreadsheets/d/1wHj53K2FhCJW-ehyslLDXK-Rd9HrC0zk1BErtMxk6Wg/edit",
+  "imported": "2026-10-13",
+  "pages": [
+    {
+      "url": "/",
+      "page": "Home",
+      "type": "Main",
+      "priority": "P1",
+      "primary": {
+        "keyword": "plumber El Cajon",
+        "intent": "Local",
+        "volume": "High",
+        "difficulty": "Medium"
+      },
+      "secondary": [
+        {
+          "keyword": "plumbing company El Cajon",
+          "intent": "Local",
+          "volume": "Medium",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "plumbing services San Diego County",
+          "intent": "Commercial",
+          "volume": "Medium",
+          "difficulty": "High"
+        },
+        {
+          "keyword": "licensed plumber East County San Diego",
+          "intent": "Local",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/about/",
+      "page": "About",
+      "type": "Main",
+      "priority": "P3",
+      "primary": {
+        "keyword": "Sedco Plumbing",
+        "intent": "Navigational",
+        "volume": "Low",
+        "difficulty": "Low",
+        "note": "Brand term"
+      },
+      "secondary": [
+        {
+          "keyword": "locally owned plumber El Cajon",
+          "intent": "Local",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "licensed C-36 plumbing contractor San Diego",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "East County plumbing company",
+          "intent": "Local",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/reviews/",
+      "page": "Reviews",
+      "type": "Main",
+      "priority": "P2",
+      "primary": {
+        "keyword": "Sedco Plumbing reviews",
+        "intent": "Navigational",
+        "volume": "Low",
+        "difficulty": "Low",
+        "note": "Brand term"
+      },
+      "secondary": [
+        {
+          "keyword": "best plumber El Cajon",
+          "intent": "Commercial",
+          "volume": "Medium",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "top rated plumber El Cajon",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Medium"
+        }
+      ]
+    },
+    {
+      "url": "/blog/",
+      "page": "Blog",
+      "type": "Main",
+      "priority": "P3",
+      "primary": null,
+      "secondary": [
+        {
+          "keyword": "signs your water heater needs replacing",
+          "intent": "Informational",
+          "volume": "Medium",
+          "difficulty": "Low",
+          "note": "Client focus service – ties to Water Heater page. Replaces hard-water blog topic"
+        },
+        {
+          "keyword": "how to prevent clogged drains",
+          "intent": "Informational",
+          "volume": "Medium",
+          "difficulty": "Medium",
+          "note": "Ties to Drain Cleaning page – client focus service"
+        },
+        {
+          "keyword": "water heater maintenance tips",
+          "intent": "Informational",
+          "volume": "Medium",
+          "difficulty": "Medium",
+          "note": "Ties to Water Heater page – client focus service"
+        }
+      ]
+    },
+    {
+      "url": "/contact/",
+      "page": "Contact",
+      "type": "Main",
+      "priority": "P2",
+      "primary": {
+        "keyword": "contact plumber El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "schedule plumbing service El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "same day plumber El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium",
+          "note": "Site says same-day usually available"
+        },
+        {
+          "keyword": "Sedco Plumbing phone number",
+          "intent": "Navigational",
+          "volume": "Low",
+          "difficulty": "Low",
+          "note": "Brand term"
+        }
+      ]
+    },
+    {
+      "url": "/services/general-plumbing/",
+      "page": "General Plumbing",
+      "type": "Service",
+      "priority": "P1",
+      "primary": {
+        "keyword": "plumbing services El Cajon",
+        "intent": "Transactional",
+        "volume": "Medium",
+        "difficulty": "Medium"
+      },
+      "secondary": [
+        {
+          "keyword": "plumbing repair El Cajon",
+          "intent": "Transactional",
+          "volume": "Medium",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "residential plumber El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "plumbing inspection El Cajon",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/services/drain-cleaning/",
+      "page": "Drain Cleaning",
+      "type": "Service",
+      "priority": "P1 – Focus",
+      "primary": {
+        "keyword": "drain cleaning El Cajon",
+        "intent": "Transactional",
+        "volume": "Medium",
+        "difficulty": "Medium",
+        "note": "Client focus service"
+      },
+      "secondary": [
+        {
+          "keyword": "clogged drain repair El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium",
+          "note": "Client focus service"
+        },
+        {
+          "keyword": "main line drain cleaning San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium",
+          "note": "Client focus service"
+        },
+        {
+          "keyword": "drain cleaning service San Diego",
+          "intent": "Transactional",
+          "volume": "Medium",
+          "difficulty": "Medium",
+          "note": "Client focus service. Replaces 'hydro jetting El Cajon' (removed per client)"
+        },
+        {
+          "keyword": "emergency drain cleaning El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low",
+          "note": "Client focus service – added keyword"
+        },
+        {
+          "keyword": "kitchen drain clog El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low",
+          "note": "Client focus service – added keyword"
+        }
+      ]
+    },
+    {
+      "url": "/services/toilet-repair-installation/",
+      "page": "Toilet Repair & Installation",
+      "type": "Service",
+      "priority": "P2",
+      "primary": {
+        "keyword": "toilet repair El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "toilet installation El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "running toilet repair",
+          "intent": "Transactional",
+          "volume": "Medium",
+          "difficulty": "Medium",
+          "note": "Great for an FAQ section"
+        },
+        {
+          "keyword": "toilet replacement San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium"
+        }
+      ]
+    },
+    {
+      "url": "/services/garbage-disposal/",
+      "page": "Garbage Disposal",
+      "type": "Service",
+      "priority": "P2",
+      "primary": {
+        "keyword": "garbage disposal repair El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "garbage disposal installation El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "garbage disposal replacement San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "garbage disposal not working",
+          "intent": "Informational",
+          "volume": "Medium",
+          "difficulty": "Medium",
+          "note": "Informational – use in FAQ/troubleshooting"
+        }
+      ]
+    },
+    {
+      "url": "/services/grease-trap/",
+      "page": "Grease Trap",
+      "type": "Service",
+      "priority": "P2",
+      "primary": {
+        "keyword": "grease trap services San Diego",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Medium",
+        "note": "Commercial/B2B intent"
+      },
+      "secondary": [
+        {
+          "keyword": "grease trap installation El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "commercial grease trap repair",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "restaurant grease trap plumber",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/services/water-heater/",
+      "page": "Water Heater",
+      "type": "Service",
+      "priority": "P1 – Focus",
+      "primary": {
+        "keyword": "water heater repair El Cajon",
+        "intent": "Transactional",
+        "volume": "Medium",
+        "difficulty": "Medium",
+        "note": "Client focus service – High-value service"
+      },
+      "secondary": [
+        {
+          "keyword": "water heater installation El Cajon",
+          "intent": "Transactional",
+          "volume": "Medium",
+          "difficulty": "Medium",
+          "note": "Client focus service"
+        },
+        {
+          "keyword": "tankless water heater installation San Diego",
+          "intent": "Transactional",
+          "volume": "Medium",
+          "difficulty": "High",
+          "note": "Client focus service"
+        },
+        {
+          "keyword": "water heater replacement El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium",
+          "note": "Client focus service"
+        },
+        {
+          "keyword": "emergency water heater repair El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low",
+          "note": "Client focus service – added keyword"
+        },
+        {
+          "keyword": "tankless water heater repair El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low",
+          "note": "Client focus service – added keyword"
+        }
+      ]
+    },
+    {
+      "url": "/services/water-filtration/",
+      "page": "Water Filtration",
+      "type": "Service",
+      "priority": "P2",
+      "primary": {
+        "keyword": "water filtration system El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "whole house water filter installation San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "water filter installation El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low",
+          "note": "Replaces 'hard water solutions San Diego' (removed per client)"
+        },
+        {
+          "keyword": "water softener installation El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low",
+          "note": "Confirm service is offered before targeting"
+        }
+      ]
+    },
+    {
+      "url": "/services/sink-services/",
+      "page": "Sink Services",
+      "type": "Service",
+      "priority": "P3",
+      "primary": {
+        "keyword": "sink repair El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "kitchen sink installation El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "leaking sink repair",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "bathroom sink plumber San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/services/faucet-services/",
+      "page": "Faucet Repair & Installation",
+      "type": "Service",
+      "priority": "P3",
+      "primary": {
+        "keyword": "faucet repair El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "faucet installation El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "leaky faucet repair",
+          "intent": "Transactional",
+          "volume": "Medium",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "kitchen faucet replacement San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/services/slab-leak-repair/",
+      "page": "Slab Leak Detection & Repair",
+      "type": "Service",
+      "priority": "P1",
+      "primary": {
+        "keyword": "slab leak repair El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Medium",
+        "note": "High-ticket service"
+      },
+      "secondary": [
+        {
+          "keyword": "slab leak detection San Diego",
+          "intent": "Transactional",
+          "volume": "Medium",
+          "difficulty": "High"
+        },
+        {
+          "keyword": "leak detection El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "water leak under foundation",
+          "intent": "Informational",
+          "volume": "Low",
+          "difficulty": "Medium",
+          "note": "Symptom-based – use in FAQ"
+        }
+      ]
+    },
+    {
+      "url": "/services/gas-lines/",
+      "page": "Gas Lines",
+      "type": "Service",
+      "priority": "P2",
+      "primary": {
+        "keyword": "gas line repair El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "gas line installation El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "gas leak repair San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "gas line for stove installation",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low",
+          "note": "Also covers BBQ/dryer hookups"
+        }
+      ]
+    },
+    {
+      "url": "/services/water-lines/",
+      "page": "Water Lines",
+      "type": "Service",
+      "priority": "P1",
+      "primary": {
+        "keyword": "repiping El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Medium",
+        "note": "High-ticket service"
+      },
+      "secondary": [
+        {
+          "keyword": "water line repair El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "whole house repipe San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "main water line replacement",
+          "intent": "Transactional",
+          "volume": "Medium",
+          "difficulty": "Medium"
+        }
+      ]
+    },
+    {
+      "url": "/services/sewer-lines/",
+      "page": "Sewer Lines",
+      "type": "Service",
+      "priority": "P1",
+      "primary": {
+        "keyword": "sewer line repair El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Medium",
+        "note": "High-ticket service"
+      },
+      "secondary": [
+        {
+          "keyword": "sewer line replacement San Diego",
+          "intent": "Transactional",
+          "volume": "Medium",
+          "difficulty": "High"
+        },
+        {
+          "keyword": "broken sewer pipe repair",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "sewer line repair San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium",
+          "note": "Replaces 'sewer camera inspection El Cajon' (removed per client)"
+        }
+      ]
+    },
+    {
+      "url": "/services/water-pressure-regulators/",
+      "page": "Water Pressure Regulators",
+      "type": "Service",
+      "priority": "P3",
+      "primary": {
+        "keyword": "water pressure regulator replacement El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "pressure reducing valve replacement",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "PRV replacement San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "high water pressure in house",
+          "intent": "Informational",
+          "volume": "Low",
+          "difficulty": "Medium",
+          "note": "Symptom-based – use in FAQ"
+        }
+      ]
+    },
+    {
+      "url": "/services/shower-installation/",
+      "page": "Shower Installation",
+      "type": "Service",
+      "priority": "P2",
+      "primary": {
+        "keyword": "shower installation El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "shower valve replacement San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "tub to shower conversion El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "shower remodel plumber",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Medium"
+        }
+      ]
+    },
+    {
+      "url": "/services/kitchen-bath-remodels/",
+      "page": "Kitchen & Bath Remodels",
+      "type": "Service",
+      "priority": "P2",
+      "primary": {
+        "keyword": "remodel plumbing El Cajon",
+        "intent": "Transactional",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "bathroom remodel plumber San Diego",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "kitchen remodel plumbing San Diego",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "plumbing rough-in for remodel",
+          "intent": "Informational",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/services/property-management-plumbing/",
+      "page": "Property Management Plumbing",
+      "type": "Service",
+      "priority": "P2",
+      "primary": {
+        "keyword": "property management plumbing services",
+        "intent": "Commercial",
+        "volume": "Low",
+        "difficulty": "Medium",
+        "note": "New page – B2B intent; keep generic, city pages handle local terms"
+      },
+      "secondary": [
+        {
+          "keyword": "plumber for property managers San Diego County",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "rental property plumbing services",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Low",
+          "note": "Rentals / landlords"
+        },
+        {
+          "keyword": "HOA plumbing services San Diego",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Low",
+          "note": "Site mentions HOAs & managed properties"
+        }
+      ]
+    },
+    {
+      "url": "/services/property-management-plumbing/el-cajon/",
+      "page": "Property Management Plumbing – El Cajon",
+      "type": "Service",
+      "priority": "P2",
+      "primary": {
+        "keyword": "property management plumbing El Cajon",
+        "intent": "Commercial",
+        "volume": "Low",
+        "difficulty": "Low",
+        "note": "New page – client-requested theme"
+      },
+      "secondary": [
+        {
+          "keyword": "property management plumbing services El Cajon",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Low",
+          "note": "Client-requested theme"
+        },
+        {
+          "keyword": "property management plumber El Cajon",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Low",
+          "note": "Client-requested theme"
+        }
+      ]
+    },
+    {
+      "url": "/services/property-management-plumbing/san-diego/",
+      "page": "Property Management Plumbing – San Diego",
+      "type": "Service",
+      "priority": "P2",
+      "primary": {
+        "keyword": "property management plumbing San Diego",
+        "intent": "Commercial",
+        "volume": "Low",
+        "difficulty": "Medium",
+        "note": "New page – client-requested theme"
+      },
+      "secondary": [
+        {
+          "keyword": "property management plumbing services San Diego",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Medium",
+          "note": "Client-requested theme"
+        },
+        {
+          "keyword": "property management plumber San Diego",
+          "intent": "Commercial",
+          "volume": "Low",
+          "difficulty": "Medium",
+          "note": "Client-requested theme"
+        }
+      ]
+    },
+    {
+      "url": "/service-areas/el-cajon/",
+      "page": "El Cajon",
+      "type": "Location",
+      "priority": "P1",
+      "primary": {
+        "keyword": "plumber El Cajon",
+        "intent": "Local",
+        "volume": "High",
+        "difficulty": "Medium",
+        "note": "Avoid cannibalizing Home – focus page on local proof, neighborhoods, zip codes"
+      },
+      "secondary": [
+        {
+          "keyword": "El Cajon plumbing services",
+          "intent": "Local",
+          "volume": "Medium",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "water heater repair El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "drain cleaning El Cajon",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/service-areas/san-diego/",
+      "page": "San Diego",
+      "type": "Location",
+      "priority": "P2",
+      "primary": {
+        "keyword": "plumber San Diego",
+        "intent": "Local",
+        "volume": "High",
+        "difficulty": "High",
+        "note": "Very competitive – supporting target; homepage stays El Cajon-focused"
+      },
+      "secondary": [
+        {
+          "keyword": "San Diego plumbing services",
+          "intent": "Local",
+          "volume": "Medium",
+          "difficulty": "High"
+        },
+        {
+          "keyword": "water heater repair San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium"
+        },
+        {
+          "keyword": "drain cleaning San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Medium"
+        }
+      ]
+    },
+    {
+      "url": "/service-areas/la-mesa/",
+      "page": "La Mesa",
+      "type": "Location",
+      "priority": "P1",
+      "primary": {
+        "keyword": "plumber La Mesa",
+        "intent": "Local",
+        "volume": "Medium",
+        "difficulty": "Medium"
+      },
+      "secondary": [
+        {
+          "keyword": "La Mesa plumbing services",
+          "intent": "Local",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "water heater repair La Mesa",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "drain cleaning La Mesa",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/service-areas/santee/",
+      "page": "Santee",
+      "type": "Location",
+      "priority": "P1",
+      "primary": {
+        "keyword": "plumber Santee",
+        "intent": "Local",
+        "volume": "Medium",
+        "difficulty": "Medium"
+      },
+      "secondary": [
+        {
+          "keyword": "Santee plumbing services",
+          "intent": "Local",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "water heater repair Santee",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "drain cleaning Santee",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/service-areas/spring-valley/",
+      "page": "Spring Valley",
+      "type": "Location",
+      "priority": "P2",
+      "primary": {
+        "keyword": "plumber Spring Valley",
+        "intent": "Local",
+        "volume": "Medium",
+        "difficulty": "Medium"
+      },
+      "secondary": [
+        {
+          "keyword": "Spring Valley plumbing services",
+          "intent": "Local",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "water heater repair Spring Valley",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "drain cleaning Spring Valley",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/service-areas/lakeside/",
+      "page": "Lakeside",
+      "type": "Location",
+      "priority": "P2",
+      "primary": {
+        "keyword": "plumber Lakeside",
+        "intent": "Local",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "Lakeside plumbing services",
+          "intent": "Local",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "water heater repair Lakeside",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "drain cleaning Lakeside",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/service-areas/lemon-grove/",
+      "page": "Lemon Grove",
+      "type": "Location",
+      "priority": "P2",
+      "primary": {
+        "keyword": "plumber Lemon Grove",
+        "intent": "Local",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "Lemon Grove plumbing services",
+          "intent": "Local",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "water heater repair Lemon Grove",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "drain cleaning Lemon Grove",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/service-areas/rancho-san-diego/",
+      "page": "Rancho San Diego",
+      "type": "Location",
+      "priority": "P3",
+      "primary": {
+        "keyword": "plumber Rancho San Diego",
+        "intent": "Local",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "Rancho San Diego plumbing services",
+          "intent": "Local",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "water heater repair Rancho San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "drain cleaning Rancho San Diego",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/service-areas/alpine/",
+      "page": "Alpine",
+      "type": "Location",
+      "priority": "P3",
+      "primary": {
+        "keyword": "plumber Alpine",
+        "intent": "Local",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "Alpine plumbing services",
+          "intent": "Local",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "water heater repair Alpine",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "drain cleaning Alpine",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    },
+    {
+      "url": "/service-areas/jamul/",
+      "page": "Jamul",
+      "type": "Location",
+      "priority": "P3",
+      "primary": {
+        "keyword": "plumber Jamul",
+        "intent": "Local",
+        "volume": "Low",
+        "difficulty": "Low"
+      },
+      "secondary": [
+        {
+          "keyword": "Jamul plumbing services",
+          "intent": "Local",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "water heater repair Jamul",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        },
+        {
+          "keyword": "drain cleaning Jamul",
+          "intent": "Transactional",
+          "volume": "Low",
+          "difficulty": "Low"
+        }
+      ]
+    }
+  ]
+}

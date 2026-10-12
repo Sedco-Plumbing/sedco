@@ -1,0 +1,962 @@
+{
+  "/": {
+    "title": "Plumber in El Cajon, CA | Sedco Plumbing — San Diego County",
+    "description": "Licensed El Cajon plumbers serving all of San Diego County. Drains, water heaters, slab leaks, sewer lines and more. Upfront pricing. Call (619) 714-0027.",
+    "h1": "El Cajon Plumbers Serving All of San Diego County",
+    "canonical": "https://www.sedcoplumbing.com/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "City",
+      "FAQPage",
+      "Plumber",
+      "PostalAddress",
+      "Question"
+    ]
+  },
+  "/about/": {
+    "title": "About Sedco Plumbing | El Cajon, CA Plumbing Company",
+    "description": "Sedco Plumbing is a locally owned El Cajon plumbing company serving San Diego County. Licensed, insured, upfront pricing. Meet the team. Call (619) 714-0027.",
+    "h1": "A Local El Cajon Plumbing Company You Can Count On",
+    "canonical": "https://www.sedcoplumbing.com/about/",
+    "robots": null,
+    "schema": [
+      "AboutPage",
+      "BreadcrumbList",
+      "ListItem",
+      "WebSite"
+    ]
+  },
+  "/blog/": {
+    "title": "Plumbing Tips & Local Guides | Sedco Plumbing Blog",
+    "description": "Practical plumbing advice for El Cajon and East County homeowners — hard water, slab leaks, water heaters, and local costs. Call (619) 714-0027.",
+    "h1": "Plumbing Advice for East County Homes",
+    "canonical": "https://www.sedcoplumbing.com/blog/",
+    "robots": null,
+    "schema": [
+      "Blog",
+      "BreadcrumbList",
+      "ListItem",
+      "WebSite"
+    ]
+  },
+  "/blog/hard-water-east-county-san-diego/": {
+    "title": "Hard Water in East County: What Helix Water District Customers Should Know",
+    "description": "East County water runs 14–18 grains per gallon — among the hardest in San Diego. What that does to your fixtures and water heater, and which fix actually solves it.",
+    "h1": "Hard Water in East County: What Helix Water District Customers Should Know",
+    "canonical": "https://www.sedcoplumbing.com/blog/hard-water-east-county-san-diego/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BlogPosting",
+      "BreadcrumbList",
+      "FAQPage",
+      "ListItem",
+      "Organization",
+      "Question",
+      "WebPage"
+    ]
+  },
+  "/blog/slab-leak-repair-cost-san-diego-county/": {
+    "title": "Slab Leak Repair Cost in San Diego County (2026) | Sedco Plumbing",
+    "description": "What slab leak detection and repair actually costs in San Diego County, broken down by method — spot repair, reroute, and whole-house repipe — plus what drives the price.",
+    "h1": "What Does Slab Leak Repair Cost in San Diego County? (2026 Guide)",
+    "canonical": "https://www.sedcoplumbing.com/blog/slab-leak-repair-cost-san-diego-county/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BlogPosting",
+      "BreadcrumbList",
+      "FAQPage",
+      "ListItem",
+      "Organization",
+      "Question",
+      "WebPage"
+    ]
+  },
+  "/contact/": {
+    "title": "Contact Sedco Plumbing | El Cajon Plumber — (619) 714-0027",
+    "description": "Contact Sedco Plumbing in El Cajon, CA. Request service anywhere in San Diego County — same-day appointments available. Call (619) 714-0027 or book online.",
+    "h1": "Contact Sedco Plumbing",
+    "canonical": "https://www.sedcoplumbing.com/contact/",
+    "robots": null,
+    "schema": [
+      "BreadcrumbList",
+      "ContactPage",
+      "ListItem",
+      "WebSite"
+    ]
+  },
+  "/privacy-policy/": {
+    "title": "Privacy Policy | Sedco Plumbing",
+    "description": "How Sedco Plumbing collects and uses the information you submit through this website.",
+    "h1": "Privacy Policy",
+    "canonical": "https://www.sedcoplumbing.com/privacy-policy/",
+    "robots": "noindex, nofollow",
+    "schema": [
+      "BreadcrumbList",
+      "ListItem"
+    ]
+  },
+  "/reviews/": {
+    "title": "Sedco Plumbing Reviews | El Cajon & San Diego County",
+    "description": "Read reviews from Sedco Plumbing customers across El Cajon, La Mesa, Santee and San Diego County. Licensed, upfront-priced plumbing. Call (619) 714-0027.",
+    "h1": "What Your Neighbors Say About Sedco Plumbing",
+    "canonical": "https://www.sedcoplumbing.com/reviews/",
+    "robots": null,
+    "schema": [
+      "BreadcrumbList",
+      "ListItem",
+      "WebPage",
+      "WebSite"
+    ]
+  },
+  "/service-areas/": {
+    "title": "Service Areas | Sedco Plumbing — San Diego County, CA",
+    "description": "Sedco Plumbing serves El Cajon, La Mesa, Santee, Lakeside, Spring Valley and all of San Diego County. Fast local response. Call (619) 714-0027.",
+    "h1": "Where We Work: San Diego County Plumbing Service Areas",
+    "canonical": "https://www.sedcoplumbing.com/service-areas/",
+    "robots": null,
+    "schema": [
+      "BreadcrumbList",
+      "CollectionPage",
+      "ListItem",
+      "WebSite"
+    ]
+  },
+  "/service-areas/alpine/": {
+    "title": "Plumber in Alpine, CA | Sedco Plumbing",
+    "description": "A plumber who actually comes to Alpine — wells, propane, gas lines, and everyday repairs, straight up I-8 from El Cajon. Call (619) 714-0027 for service.",
+    "h1": "An East County Plumber Who Actually Comes to Alpine",
+    "canonical": "https://www.sedcoplumbing.com/service-areas/alpine/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Plumber",
+      "PostalAddress",
+      "Question"
+    ]
+  },
+  "/service-areas/el-cajon/": {
+    "title": "Plumber in El Cajon, CA | Sedco Plumbing",
+    "description": "Sedco Plumbing is based right here in El Cajon — licensed, with upfront pricing on drains, water heaters, and slab leaks. Call (619) 714-0027 today.",
+    "h1": "Your El Cajon Plumber, Based Right Here in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/service-areas/el-cajon/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Plumber",
+      "PostalAddress",
+      "Question"
+    ]
+  },
+  "/service-areas/jamul/": {
+    "title": "Plumber in Jamul, CA | Sedco Plumbing",
+    "description": "Country property plumbing for Jamul — wells, septic-connected homes, propane and gas lines. Licensed, insured, honest pricing. Call (619) 714-0027 today.",
+    "h1": "A Plumber Built for Jamul’s Country Properties",
+    "canonical": "https://www.sedcoplumbing.com/service-areas/jamul/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Plumber",
+      "PostalAddress",
+      "Question"
+    ]
+  },
+  "/service-areas/la-mesa/": {
+    "title": "Plumber in La Mesa, CA | Sedco Plumbing",
+    "description": "Tree roots in the sewer? Low pressure on Mount Helix? Sedco Plumbing reaches La Mesa in minutes from El Cajon, priced upfront. Call (619) 714-0027.",
+    "h1": "A Plumber for La Mesa’s Older Homes and Hillside Views",
+    "canonical": "https://www.sedcoplumbing.com/service-areas/la-mesa/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Plumber",
+      "PostalAddress",
+      "Question"
+    ]
+  },
+  "/service-areas/lakeside/": {
+    "title": "Plumber in Lakeside, CA | Sedco Plumbing",
+    "description": "Wells, long pipe runs, horse properties — Sedco Plumbing knows Lakeside’s country homes. Licensed, local, minutes from El Cajon. Call (619) 714-0027.",
+    "h1": "The Plumber Lakeside’s Country Properties Call",
+    "canonical": "https://www.sedcoplumbing.com/service-areas/lakeside/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Plumber",
+      "PostalAddress",
+      "Question"
+    ]
+  },
+  "/service-areas/lemon-grove/": {
+    "title": "Plumber in Lemon Grove, CA | Sedco Plumbing",
+    "description": "From 1920s bungalows to modern remodels, Sedco Plumbing serves Lemon Grove with licensed, flat-rate plumbing from nearby El Cajon. Call (619) 714-0027.",
+    "h1": "A Plumber Who Understands Lemon Grove’s Vintage Homes",
+    "canonical": "https://www.sedcoplumbing.com/service-areas/lemon-grove/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Plumber",
+      "PostalAddress",
+      "Question"
+    ]
+  },
+  "/service-areas/rancho-san-diego/": {
+    "title": "Plumber in Rancho San Diego, CA | Sedco Plumbing",
+    "description": "Copper pinhole leaks and aging water heaters — Sedco Plumbing keeps Rancho San Diego’s 80s–2000s homes running. Upfront pricing. Call (619) 714-0027.",
+    "h1": "Plumbing Service for Rancho San Diego’s Not-So-New Homes",
+    "canonical": "https://www.sedcoplumbing.com/service-areas/rancho-san-diego/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Plumber",
+      "PostalAddress",
+      "Question"
+    ]
+  },
+  "/service-areas/san-diego/": {
+    "title": "Plumber in San Diego, CA | Sedco Plumbing",
+    "description": "East County based, countywide reach — Sedco Plumbing serves San Diego from San Carlos to downtown with flat-rate pricing. Call (619) 714-0027 today.",
+    "h1": "San Diego Plumbing Service From an East County Home Base",
+    "canonical": "https://www.sedcoplumbing.com/service-areas/san-diego/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Plumber",
+      "PostalAddress",
+      "Question"
+    ]
+  },
+  "/service-areas/santee/": {
+    "title": "Plumber in Santee, CA | Sedco Plumbing",
+    "description": "Santee’s tract homes are aging together — slab leaks, tired water heaters. Sedco Plumbing arrives in minutes from El Cajon. Call (619) 714-0027 today.",
+    "h1": "Santee Plumbing Help, Minutes From Our El Cajon Shop",
+    "canonical": "https://www.sedcoplumbing.com/service-areas/santee/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Plumber",
+      "PostalAddress",
+      "Question"
+    ]
+  },
+  "/service-areas/spring-valley/": {
+    "title": "Plumber in Spring Valley, CA | Sedco Plumbing",
+    "description": "High pressure on Dictionary Hill? Aging pipes in Casa de Oro? Sedco Plumbing serves Spring Valley with flat-rate pricing. Call (619) 714-0027 today.",
+    "h1": "Spring Valley Plumbing, From the Valley Floor to Dictionary Hill",
+    "canonical": "https://www.sedcoplumbing.com/service-areas/spring-valley/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Plumber",
+      "PostalAddress",
+      "Question"
+    ]
+  },
+  "/services/": {
+    "title": "Plumbing Services in El Cajon & San Diego County | Sedco",
+    "description": "Full-service plumbing for San Diego County homes and businesses — drains, water heaters, slab leaks, sewer, gas lines and more. Call (619) 714-0027.",
+    "h1": "Plumbing Services for San Diego County Homes and Businesses",
+    "canonical": "https://www.sedcoplumbing.com/services/",
+    "robots": null,
+    "schema": [
+      "BreadcrumbList",
+      "CollectionPage",
+      "ListItem",
+      "WebSite"
+    ]
+  },
+  "/services/drain-cleaning/": {
+    "title": "Drain Cleaning in El Cajon, CA | Sedco Plumbing",
+    "description": "Slow or clogged drains in El Cajon? Sedco Plumbing clears kitchen, bath, and main lines with snakes and hydro jetting. Same-day service. Call (619) 714-0027.",
+    "h1": "Drain Cleaning in El Cajon, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/drain-cleaning/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/drain-cleaning/la-mesa/": {
+    "title": "Drain Cleaning in La Mesa, CA | Sedco Plumbing",
+    "description": "Slow or clogged drains in La Mesa? Sedco Plumbing clears kitchen, bath, and main lines with upfront pricing and fast East County response. Call (619) 714-0027.",
+    "h1": "Drain Cleaning in La Mesa, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/drain-cleaning/la-mesa/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/drain-cleaning/lakeside/": {
+    "title": "Drain Cleaning in Lakeside, CA | Sedco Plumbing",
+    "description": "Clogged drain in Lakeside? Sedco Plumbing clears kitchen, bath, and main-line blockages with septic-safe methods for semi-rural homes. Call (619) 714-0027.",
+    "h1": "Drain Cleaning in Lakeside, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/drain-cleaning/lakeside/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/drain-cleaning/santee/": {
+    "title": "Drain Cleaning in Santee, CA | Sedco Plumbing",
+    "description": "Sedco Plumbing clears stubborn clogs in Santee kitchens, bathrooms, and main lines — fast service from nearby El Cajon, priced upfront. Call (619) 714-0027.",
+    "h1": "Drain Cleaning in Santee, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/drain-cleaning/santee/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/drain-cleaning/spring-valley/": {
+    "title": "Drain Cleaning in Spring Valley, CA | Sedco Plumbing",
+    "description": "Slow drains in Spring Valley? Sedco Plumbing safely clears aging cast iron and galvanized lines in older homes. Flat-rate pricing. Call (619) 714-0027.",
+    "h1": "Drain Cleaning in Spring Valley, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/drain-cleaning/spring-valley/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/faucet-services/": {
+    "title": "Faucet Repair & Installation in El Cajon | Sedco Plumbing",
+    "description": "Dripping or stuck faucet? Sedco Plumbing repairs and installs faucets across El Cajon with upfront pricing. Licensed C-36. Call (619) 714-0027.",
+    "h1": "Faucet Repair & Installation in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/faucet-services/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/garbage-disposal/": {
+    "title": "Garbage Disposal Repair El Cajon, CA | Sedco Plumbing",
+    "description": "Garbage disposal jammed, leaking, or humming? Sedco Plumbing repairs and installs disposals across El Cajon and East County, often same day. Call (619) 714-0027.",
+    "h1": "Garbage Disposal Repair in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/garbage-disposal/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/gas-lines/": {
+    "title": "Gas Line Installation & Repair in El Cajon | Sedco Plumbing",
+    "description": "Licensed C-36 gas line installation and repair in El Cajon, CA — BBQ, fire pit, and range lines plus earthquake shutoff valves. Call (619) 714-0027.",
+    "h1": "Gas Line Installation in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/gas-lines/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/general-plumbing/": {
+    "title": "Plumber in El Cajon, CA | Sedco Plumbing",
+    "description": "Licensed, insured El Cajon plumber for repairs, installations, and emergencies. Upfront pricing across all of East County. Call (619) 714-0027.",
+    "h1": "Your Local Plumber in El Cajon, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/general-plumbing/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/grease-trap/": {
+    "title": "Grease Trap Services in El Cajon, CA | Sedco Plumbing",
+    "description": "Grease trap pumping, cleaning, and repair for El Cajon restaurants. Stay ready for county health inspections with a licensed local crew. Call (619) 714-0027.",
+    "h1": "Grease Trap Services in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/grease-trap/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/kitchen-bath-remodels/": {
+    "title": "Kitchen & Bath Remodel Plumbing in El Cajon | Sedco Plumbing",
+    "description": "Remodel plumbing for El Cajon kitchens and baths — rough-in, fixture setting, and CA low-flow compliance, coordinated with your contractor. Call (619) 714-0027.",
+    "h1": "Kitchen & Bathroom Remodel Plumbing in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/kitchen-bath-remodels/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/property-management-plumbing/": {
+    "title": "Property Management Plumbing Services | Sedco Plumbing",
+    "description": "Property management plumbing services for rentals in El Cajon, East County and San Diego. 24/7, free estimates, no trip fee. Call (619) 714-0027.",
+    "h1": "Property Management Plumbing Services",
+    "canonical": "https://www.sedcoplumbing.com/services/property-management-plumbing/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/property-management-plumbing/el-cajon/": {
+    "title": "Property Management Plumbing in El Cajon | Sedco Plumbing",
+    "description": "Property management plumbing in El Cajon. 24/7 response, low prices, free estimates, and no travel fees. Call (619) 714-0027.",
+    "h1": "Property Management Plumbing in El Cajon, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/property-management-plumbing/el-cajon/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/property-management-plumbing/san-diego/": {
+    "title": "Property Management Plumbing in San Diego | Sedco Plumbing",
+    "description": "Property management plumbing in San Diego. 24/7 response, affordable pricing, free estimates, and no trip fee. Call (619) 714-0027.",
+    "h1": "Property Management Plumbing in San Diego, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/property-management-plumbing/san-diego/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/sewer-lines/": {
+    "title": "Sewer Line Repair & Replacement in El Cajon | Sedco Plumbing",
+    "description": "Sewer line repair and replacement in El Cajon, CA, from camera inspections to trenchless options. Local, licensed, and upfront. Call (619) 714-0027.",
+    "h1": "Sewer Line Repair & Replacement in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/sewer-lines/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/sewer-lines/la-mesa/": {
+    "title": "Sewer Line Repair in La Mesa, CA | Sedco Plumbing",
+    "description": "Tree roots in your sewer line? Sedco Plumbing inspects, repairs, and replaces aging clay laterals in La Mesa, with trenchless options. Call (619) 714-0027.",
+    "h1": "Sewer Line Repair & Replacement in La Mesa, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/sewer-lines/la-mesa/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/sewer-lines/lakeside/": {
+    "title": "Sewer Line Repair in Lakeside, CA | Sedco Plumbing",
+    "description": "Sewer line repair and replacement in Lakeside, including trenchless options that protect large lots and landscaping. Upfront pricing. Call (619) 714-0027.",
+    "h1": "Sewer Line Repair & Replacement in Lakeside, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/sewer-lines/lakeside/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/sewer-lines/santee/": {
+    "title": "Sewer Line Repair in Santee, CA | Sedco Plumbing",
+    "description": "Sewer backups or slow drains throughout the house? Sedco Plumbing inspects, spot-repairs, and replaces sewer lines across Santee. Call (619) 714-0027.",
+    "h1": "Sewer Line Repair & Replacement in Santee, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/sewer-lines/santee/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/sewer-lines/spring-valley/": {
+    "title": "Sewer Line Repair in Spring Valley, CA | Sedco Plumbing",
+    "description": "Sewer line repair and replacement in Spring Valley — from root-bound clay laterals to trenchless fixes on sloped lots. Flat-rate quotes. Call (619) 714-0027.",
+    "h1": "Sewer Line Repair & Replacement in Spring Valley, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/sewer-lines/spring-valley/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/shower-installation/": {
+    "title": "Shower Installation & Remodel in El Cajon | Sedco Plumbing",
+    "description": "Shower installation and remodels in El Cajon, CA — walk-in conversions, valve replacements, and tile-ready waterproofing done right. Call (619) 714-0027.",
+    "h1": "Shower Installation in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/shower-installation/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/sink-services/": {
+    "title": "Sink Installation & Repair in El Cajon | Sedco Plumbing",
+    "description": "Kitchen, bathroom, and utility sink installation and repair in El Cajon. Leak fixes, clean installs, and upfront pricing. Call (619) 714-0027.",
+    "h1": "Sink Installation and Repair in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/sink-services/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/slab-leak-repair/": {
+    "title": "Slab Leak Detection & Repair in El Cajon | Sedco Plumbing",
+    "description": "Suspect a slab leak in your El Cajon home? Electronic leak detection, honest repair options, and help with insurance paperwork. Call (619) 714-0027.",
+    "h1": "Slab Leak Detection & Repair in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/slab-leak-repair/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/slab-leak-repair/la-mesa/": {
+    "title": "Slab Leak Repair in La Mesa, CA | Sedco Plumbing",
+    "description": "Warm spots, high water bills, or the sound of running water? Sedco Plumbing finds and fixes slab leaks in La Mesa homes with minimal digging. Call (619) 714-0027.",
+    "h1": "Slab Leak Detection & Repair in La Mesa, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/slab-leak-repair/la-mesa/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/slab-leak-repair/lakeside/": {
+    "title": "Slab Leak Repair in Lakeside, CA | Sedco Plumbing",
+    "description": "Warm floors or a spinning water meter? Sedco Plumbing pinpoints and repairs slab leaks in Lakeside homes with minimal concrete damage. Call (619) 714-0027.",
+    "h1": "Slab Leak Detection & Repair in Lakeside, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/slab-leak-repair/lakeside/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/slab-leak-repair/santee/": {
+    "title": "Slab Leak Repair in Santee, CA | Sedco Plumbing",
+    "description": "Slab leak in your Santee tract home? Sedco Plumbing pinpoints leaks under concrete and repairs them with the least disruption possible. Call (619) 714-0027.",
+    "h1": "Slab Leak Detection & Repair in Santee, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/slab-leak-repair/santee/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/slab-leak-repair/spring-valley/": {
+    "title": "Slab Leak Repair in Spring Valley, CA | Sedco Plumbing",
+    "description": "Sedco Plumbing finds and fixes slab leaks in Spring Valley — precision detection for older hillside homes and mid-century slabs. Call (619) 714-0027.",
+    "h1": "Slab Leak Detection & Repair in Spring Valley, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/slab-leak-repair/spring-valley/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/toilet-repair-installation/": {
+    "title": "Toilet Repair & Installation in El Cajon | Sedco Plumbing",
+    "description": "Running, leaking, or clogged toilet in El Cajon? Fast repairs and clean installs from a licensed local plumber. Upfront flat pricing. Call (619) 714-0027.",
+    "h1": "Toilet Repair and Installation in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/toilet-repair-installation/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/toilet-repair-installation/la-mesa/": {
+    "title": "Toilet Repair in La Mesa, CA | Sedco Plumbing",
+    "description": "Running, leaking, or wobbly toilet? Sedco Plumbing handles toilet repair and installation across La Mesa with flat-rate pricing. Call (619) 714-0027.",
+    "h1": "Toilet Repair & Installation in La Mesa, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/toilet-repair-installation/la-mesa/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/toilet-repair-installation/lakeside/": {
+    "title": "Toilet Repair in Lakeside, CA | Sedco Plumbing",
+    "description": "Running, leaking, or outdated toilet? Sedco Plumbing repairs and installs toilets across Lakeside, including septic properties. Call (619) 714-0027.",
+    "h1": "Toilet Repair & Installation in Lakeside, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/toilet-repair-installation/lakeside/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/toilet-repair-installation/santee/": {
+    "title": "Toilet Repair in Santee, CA | Sedco Plumbing",
+    "description": "From worn-out originals to modern low-flow upgrades, Sedco Plumbing repairs and installs toilets in Santee homes, usually same day. Call (619) 714-0027.",
+    "h1": "Toilet Repair & Installation in Santee, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/toilet-repair-installation/santee/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/toilet-repair-installation/spring-valley/": {
+    "title": "Toilet Repair in Spring Valley, CA | Sedco Plumbing",
+    "description": "Toilet repair and installation for Spring Valley homes — running toilets, worn fill valves, leaks, and full replacements done right. Call (619) 714-0027.",
+    "h1": "Toilet Repair & Installation in Spring Valley, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/toilet-repair-installation/spring-valley/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/water-filtration/": {
+    "title": "Water Filtration & Softeners El Cajon | Sedco Plumbing",
+    "description": "Hard water is tough on East County homes. Whole-house filtration and water softeners installed in El Cajon by a licensed local plumber. Call (619) 714-0027.",
+    "h1": "Water Filtration Systems in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/water-filtration/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/water-heater/": {
+    "title": "Water Heater Repair & Install El Cajon | Sedco Plumbing",
+    "description": "Water heater repair, replacement & tankless installation in El Cajon. Code-compliant work with seismic straps and expansion tanks. Call (619) 714-0027.",
+    "h1": "Water Heater Installation in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/water-heater/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/water-heater/la-mesa/": {
+    "title": "Water Heater Repair in La Mesa, CA | Sedco Plumbing",
+    "description": "Water heater not keeping up? Sedco Plumbing repairs and replaces tank and tankless units across La Mesa, from Grossmont to Mount Helix. Call (619) 714-0027.",
+    "h1": "Water Heater Repair & Installation in La Mesa, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/water-heater/la-mesa/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/water-heater/lakeside/": {
+    "title": "Water Heater Repair in Lakeside, CA | Sedco Plumbing",
+    "description": "Water heater repair and installation across Lakeside, from Winter Gardens to Eucalyptus Hills. Same-day service from nearby El Cajon. Call (619) 714-0027.",
+    "h1": "Water Heater Repair & Installation in Lakeside, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/water-heater/lakeside/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/water-heater/santee/": {
+    "title": "Water Heater Repair in Santee, CA | Sedco Plumbing",
+    "description": "Original water heater still limping along? Sedco Plumbing repairs and replaces tanks in Santee’s 1970s–80s homes, hard-water ready. Call (619) 714-0027.",
+    "h1": "Water Heater Repair & Replacement in Santee, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/water-heater/santee/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/water-heater/spring-valley/": {
+    "title": "Water Heater Repair in Spring Valley, CA | Sedco Plumbing",
+    "description": "Water heater repair and installation in Spring Valley, with pressure checks and expansion tanks for hillside homes over 80 psi. Call (619) 714-0027.",
+    "h1": "Water Heater Repair & Installation in Spring Valley, CA",
+    "canonical": "https://www.sedcoplumbing.com/services/water-heater/spring-valley/",
+    "robots": null,
+    "schema": [
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/water-lines/": {
+    "title": "Water Line Repair & Repiping in El Cajon | Sedco Plumbing",
+    "description": "Water line repair and whole-home repiping in El Cajon, CA. Sedco Plumbing replaces aging galvanized pipe, with pricing explained up front. Call (619) 714-0027.",
+    "h1": "Water Line Repair & Repiping in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/water-lines/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  },
+  "/services/water-pressure-regulators/": {
+    "title": "Water Pressure Regulators in El Cajon, CA | Sedco Plumbing",
+    "description": "Street pressure over 80 psi? Sedco Plumbing replaces failing water pressure regulators in El Cajon homes, with upfront pricing. Call (619) 714-0027.",
+    "h1": "Water Pressure Regulator Replacement in El Cajon",
+    "canonical": "https://www.sedcoplumbing.com/services/water-pressure-regulators/",
+    "robots": null,
+    "schema": [
+      "AdministrativeArea",
+      "Answer",
+      "BreadcrumbList",
+      "City",
+      "FAQPage",
+      "ListItem",
+      "Question",
+      "Service"
+    ]
+  }
+}

@@ -91,6 +91,8 @@ for (const file of files) {
 
 const titles = new Map();
 const descriptions = new Map();
+/** url → { title, description, h1 } as raw HTML strings */
+const meta = new Map();
 const outgoing = new Map();
 const incoming = new Map();
 let placeholderPages = 0;
@@ -129,6 +131,7 @@ for (const [url, html] of pages) {
   if (!description) failures.push(`${url} is missing a meta description`);
   if (title) push(titles, title, url);
   if (description) push(descriptions, description, url);
+  meta.set(url, { title, description, h1: html.match(/<h1[^>]*>(.*?)<\/h1>/s)?.[1] });
 
   // ---- self-referencing canonical ----
   // Strip the origin so only the path is compared against this page's URL.
@@ -235,6 +238,55 @@ for (const url of pages.keys()) {
   const d = depth.get(url);
   if (d === undefined) failures.push(`${url} is unreachable from the homepage`);
   else if (d > 3) failures.push(`${url} is ${d} clicks from the homepage (max 3)`);
+}
+
+// ---- URLs that must keep existing ----
+// The SEO keyword map (src/data/keyword-map.json, imported from the SEO team's
+// sheet) fixes the URL of every page it targets, and scripts/seo-baseline.json
+// lists every page the site had before the 2026 redesign. Losing either kind of
+// URL throws away indexed rankings, so both are hard failures.
+const keywordMap = JSON.parse(readFileSync('src/data/keyword-map.json', 'utf8'));
+for (const entry of keywordMap.pages) {
+  if (!pages.has(entry.url)) {
+    failures.push(`${entry.url} ("${entry.page}") is in the SEO keyword map but was not built`);
+  }
+}
+for (const url of Object.keys(JSON.parse(readFileSync('scripts/seo-baseline.json', 'utf8')))) {
+  if (!pages.has(url)) {
+    failures.push(`${url} existed before the redesign but was not built — keep it or add a 301`);
+  }
+}
+
+// ---- keyword targeting and snippet length ----
+// Words that carry no meaning for matching ("in", "&") are ignored, so
+// "plumbing services El Cajon" matches "Plumbing Services in El Cajon, CA".
+const words = (s) =>
+  (s ?? '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&amp;/g, '&')
+    .toLowerCase()
+    .split(/[^a-z0-9-]+/)
+    .filter((w) => w && !['in', 'and', 'the', 'a', 'of', 'for', 'ca'].includes(w));
+for (const entry of keywordMap.pages) {
+  const page = meta.get(entry.url);
+  if (!page || !entry.primary) continue;
+  const have = new Set([...words(page.title), ...words(page.h1)]);
+  const missing = words(entry.primary.keyword).filter((w) => !have.has(w));
+  if (missing.length) {
+    warnings.push(
+      `${entry.url} primary keyword "${entry.primary.keyword}" is not in its title or H1 ` +
+        `(missing: ${missing.join(', ')})`,
+    );
+  }
+}
+const decodeEntities = (s) => s.replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+for (const [url, page] of meta) {
+  const title = decodeEntities(page.title ?? '');
+  const description = decodeEntities(page.description ?? '');
+  if (title.length > 60) warnings.push(`${url} title is ${title.length} characters (Google shows ~60)`);
+  if (description.length > 155) {
+    warnings.push(`${url} meta description is ${description.length} characters (Google shows ~155)`);
+  }
 }
 
 // ---- report ----
