@@ -1,142 +1,121 @@
 ---
 /**
- * ABOUT — guide Part 3 "About Us", design About.dc.html.
- * Centered hero → 4 stat cards → prose sections → dark final CTA.
+ * ABOUT — design "Sedco About", carrying the page's SEO copy.
+ * Hero → photo split (the founding paragraphs) → How We Work / Licensed /
+ * Rooted in East County → What You Can Count On → reviews → service-area map
+ * → contact (the page's own CTA heading and copy).
  */
-import '../styles/legacy/load'; // pre-redesign styles: remove when this page is rebuilt
 import { paths } from '@config/site';
-import { images } from '@lib/images';
-
+import { PAGE_HERO_SIZES } from '@lib/media';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Hero from '@components/Hero.astro';
-import HeroCtas from '@components/HeroCtas.astro';
-import CtaSection from '@components/CtaSection.astro';
+import PageHero from '@components/PageHero.astro';
+import AboutSplit from '@components/AboutSplit.astro';
+import CopySection from '@components/service/CopySection.astro';
+import CountOn from '@components/CountOn.astro';
+import ServiceReviews from '@components/service/ServiceReviews.astro';
+import ServiceAreasSection from '@components/ServiceAreasSection.astro';
+import ContactSection from '@components/ContactSection.astro';
 import PageSchema from '@components/schema/PageSchema.astro';
+import type { Section } from '@lib/types';
 
 const title = 'About Sedco Plumbing | El Cajon, CA Plumbing Company';
 const description =
   'Sedco Plumbing is a locally owned El Cajon plumbing company serving San Diego County. Licensed, insured, upfront pricing. Meet the team. Call [PHONE].';
 const path = paths.about;
-
 const crumbs = [{ name: 'Home', href: paths.home }, { name: 'About' }];
 
-// Kept to what the SEO copy on this page supports: it describes pricing as
-// straightforward and explained before work begins, and makes no same-day or
-// warranty claim.
-const stats = [
-  { value: 'C-36', label: 'Licensed, bonded & insured' },
-  { value: 'Upfront', label: 'Pricing before work begins' },
-  { value: 'Careful', label: 'Clean work area, every job' },
-  { value: 'Local', label: 'Owned & operated in El Cajon' },
+const sections: Section[] = [
+  {
+    heading: 'How We Work',
+    paragraphs: [
+      'Every job starts with a conversation and a clear plan. We take the time to understand what’s happening, explain the available options, and provide straightforward pricing before work begins. Our technicians respect your home, keep the work area clean, and take care of the details throughout the job.',
+      'We believe good plumbing service should be simple and stress-free. That’s why we focus on clear communication, dependable workmanship, and solutions that address the actual problem rather than unnecessary work.',
+    ],
+  },
+  {
+    heading: 'Licensed, Bonded, and Insured',
+    paragraphs: [
+      'When you invite a plumber into your home, you want to know you’re working with a qualified professional. Sedco Plumbing is a licensed, bonded, and insured California plumbing contractor committed to providing safe and dependable service.',
+      'Our team follows applicable plumbing requirements and pays attention to the details that matter, from proper water heater installation to pressure regulation and other plumbing work throughout your home.',
+      'You can feel confident knowing your plumbing project is being handled by a Licensed Plumber in El Cajon who takes your home and your investment seriously.',
+    ],
+  },
+  {
+    heading: 'Rooted in East County',
+    paragraphs: [
+      `We live and work where you do. Our team understands the homes and plumbing systems found throughout El Cajon, [La Mesa](${paths.city('la-mesa')}), [Santee](${paths.city('santee')}), and surrounding East County communities.`,
+      'From older homes with aging plumbing to properties with mature trees that can affect underground sewer lines, local experience helps us identify potential problems more efficiently and recommend practical solutions. We’re proud to serve the community we call home and to build lasting relationships with local homeowners.',
+      `Explore [every plumbing service we offer](${paths.servicesHub}), see our [plumbing work in El Cajon neighborhoods](${paths.city('el-cajon')}), or read [what your neighbors say about Sedco Plumbing](${paths.reviews}).`,
+    ],
+  },
 ];
 ---
 
-<BaseLayout title={title} description={description} path={path} crumbs={crumbs}>
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  crumbs={crumbs}
+  inlineCrumbs
+  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES }}
+>
   <Fragment slot="head">
     <PageSchema type="AboutPage" name={title} description={description} path={path} />
   </Fragment>
 
-  <Hero
-    variant="center"
-    image={images.heroGeneral}
-    badge="Locally owned in El Cajon"
-    badgeGlyph="📍"
-    heading="A Local El Cajon Plumbing Company You Can Count On"
-    intro={[
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="About Sedco Plumbing"
+    heading="A Local El Cajon Plumber You Can Rely On"
+    intro="We’re a licensed CA C-36 plumbing contractor based in El Cajon, looking after homes, rentals and businesses across San Diego County for 20 years."
+  />
+
+  <AboutSplit
+    heading="An El Cajon Plumbing Company With 20 Years of Experience"
+    paragraphs={[
       'Sedco Plumbing was founded with a simple idea: every home deserves a plumbing company it can rely on. Based in El Cajon, we provide straightforward plumbing service with a focus on honest communication, quality workmanship, and dependable solutions.',
       'Our team serves homeowners and businesses throughout East County and San Diego County. Whether you need help with a routine plumbing issue or a larger repair, we take the time to understand the problem, explain your options, and complete the work with care.',
     ]}
-  >
-    <HeroCtas slot="cta" center />
-  </Hero>
+  />
 
-  <section class="section section--tight">
-    <div class="container">
-      <ul class="grid grid--4 stat-cards" role="list">
-        {
-          stats.map((stat) => (
-            <li class="stat">
-              <div class="stat__value">{stat.value}</div>
-              <div class="stat__label">{stat.label}</div>
-            </li>
-          ))
-        }
-      </ul>
+  <div class="about-copy">
+    <div class="about-copy__inner">
+      {sections.map((section, index) => <CopySection id={`about-${index + 1}`} section={section} />)}
     </div>
-  </section>
+  </div>
 
-  <section class="section section--tight">
-    <div class="container">
-      <article class="prose measure">
-        <h2>How We Work</h2>
-        <p>
-          Every job starts with a conversation and a clear plan. We take the time to understand
-          what’s happening, explain the available options, and provide straightforward pricing
-          before work begins. Our technicians respect your home, keep the work area clean, and take
-          care of the details throughout the job.
-        </p>
-        <p>
-          We believe good plumbing service should be simple and stress-free. That’s why we focus on
-          clear communication, dependable workmanship, and solutions that address the actual problem
-          rather than unnecessary work.
-        </p>
+  <CountOn as="h2" standalone />
 
-        <h2>Licensed, Bonded, and Insured</h2>
-        <p>
-          When you invite a plumber into your home, you want to know you’re working with a qualified
-          professional. Sedco Plumbing is a licensed, bonded, and insured California plumbing
-          contractor committed to providing safe and dependable service.
-        </p>
-        <p>
-          Our team follows applicable plumbing requirements and pays attention to the details that
-          matter, from proper water heater installation to pressure regulation and other plumbing
-          work throughout your home.
-        </p>
-        <p>
-          You can feel confident knowing your plumbing project is being handled by a Licensed Plumber
-          in El Cajon who takes your home and your investment seriously.
-        </p>
-
-        <h2>Rooted in East County</h2>
-        <p>
-          We live and work where you do. Our team understands the homes and plumbing systems found
-          throughout El Cajon, <a href={paths.city('la-mesa')}>La Mesa</a>, <a
-            href={paths.city('santee')}>Santee</a
-          >, and surrounding East County communities.
-        </p>
-        <p>
-          From older homes with aging plumbing to properties with mature trees that can affect
-          underground sewer lines, local experience helps us identify potential problems more
-          efficiently and recommend practical solutions. We’re proud to serve the community we call
-          home and to build lasting relationships with local homeowners.
-        </p>
-
-        <p class="link-row">
-          Explore <a href={paths.servicesHub}>every plumbing service we offer</a>, see our <a
-            href={paths.city('el-cajon')}>plumbing work in El Cajon neighborhoods</a
-          >, or read <a href={paths.reviews}>what your neighbors say about Sedco Plumbing</a>.
-        </p>
-      </article>
+  <div class="about-reviews">
+    <div class="about-reviews__inner">
+      <ServiceReviews id="reviews" match={[]} />
     </div>
-  </section>
+  </div>
 
-  <CtaSection
-    variant="dark"
+  <ServiceAreasSection />
+
+  <ContactSection
     heading="Ready When You Need Us"
-    body="Whether it’s a dripping faucet, a stubborn drain, a water heater problem, or a larger plumbing repair, we’re ready to help. Call Sedco Plumbing at [PHONE] or request service online to discuss your plumbing needs. We proudly serve homeowners and businesses throughout El Cajon and communities across San Diego County with straightforward service and dependable workmanship."
+    intro="Whether it’s a dripping faucet, a stubborn drain, a water heater problem, or a larger plumbing repair, we’re ready to help. Call Sedco Plumbing at {phone} or request service online to discuss your plumbing needs. We proudly serve homeowners and businesses throughout El Cajon and communities across San Diego County with straightforward service and dependable workmanship."
   />
 </BaseLayout>
 
 <style>
-  .stat-cards {
-    list-style: none;
-    padding: 0;
+  .about-copy,
+  .about-reviews {
+    padding: 72px var(--gutter) 56px;
   }
-  .stat-cards .stat {
-    height: 100%;
+
+  .about-copy__inner,
+  .about-reviews__inner {
+    max-width: 820px;
+    margin: 0 auto;
   }
-  .link-row {
-    border-top: 1px solid var(--border);
-    padding-top: 1.5rem;
+
+  @media (max-width: 768px) {
+    .about-copy,
+    .about-reviews {
+      padding: 44px 24px 32px;
+    }
   }
 </style>

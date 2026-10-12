@@ -1,81 +1,95 @@
 ---
 /**
- * REVIEWS — guide Part 3 "Reviews", design Reviews.dc.html (masonry cards).
+ * REVIEWS — design "Sedco Reviews".
+ * Hero with the 5.0 rating card → "Recent Reviews" with source filter tabs
+ * and a masonry of every review → "Had a Job Done by Sedco?" → FAQ → contact.
  *
- * No Review or AggregateRating markup: the guide (Part 7.1) permits it only for
- * genuine first-party reviews collected on the site, never for reviews copied
- * from another platform. These are curated from the client's Yelp and
- * Foursquare profiles (src/config/reviews.ts), so the markup stays off.
- *
- * Each card is tagged with the city the work was done in once that is known —
- * the guide asks reviews to be grouped or tagged by city so visitors see proof
- * from their own area. Cities are unset until the client maps them.
+ * No Review or AggregateRating markup: the reviews are curated from the
+ * client's Yelp and Foursquare profiles (src/config/reviews.ts), and Google
+ * allows that markup only for first-party reviews collected on the site.
  */
-import '../styles/legacy/load'; // pre-redesign styles: remove when this page is rebuilt
-import { paths, getCity } from '@config/site';
+import { site, paths, getCity } from '@config/site';
 import { reviews } from '@config/reviews';
+import { commonFaqs } from '@config/faqs';
 import { isPlaceholder } from '@lib/tokens';
-import { site } from '@config/site';
-import { images } from '@lib/images';
-
+import { PAGE_HERO_SIZES } from '@lib/media';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Hero from '@components/Hero.astro';
-import HeroCtas from '@components/HeroCtas.astro';
-import CtaSection from '@components/CtaSection.astro';
+import PageHero from '@components/PageHero.astro';
+import Faq from '@components/Faq.astro';
+import ContactSection from '@components/ContactSection.astro';
+import Stars from '@components/ui/Stars.astro';
 import PageSchema from '@components/schema/PageSchema.astro';
 
 const title = 'Sedco Plumbing Reviews | El Cajon & San Diego County';
 const description =
   'Read reviews from Sedco Plumbing customers across El Cajon, La Mesa, Santee and San Diego County. Licensed, upfront-priced plumbing. Call [PHONE].';
 const path = paths.reviews;
-
 const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Reviews' }];
 
+const sources = [...new Set(reviews.map((r) => r.source))];
 const reviewLink = site.profiles.googleReview;
 const reviewLinkReady = !isPlaceholder(reviewLink) && reviewLink.length > 0;
 ---
 
-<BaseLayout title={title} description={description} path={path} crumbs={crumbs}>
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  crumbs={crumbs}
+  inlineCrumbs
+  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES }}
+>
   <Fragment slot="head">
     <PageSchema type="WebPage" name={title} description={description} path={path} />
   </Fragment>
 
-  <Hero
-    variant="center"
-    image={images.heroGeneral}
-    badge="What your neighbors say"
-    heading="What Your Neighbors Say About Sedco Plumbing"
-    intro="Nothing means more to us than the word of the families and businesses we serve. Here is what customers across El Cajon, La Mesa, Santee, and the rest of San Diego County have to say about working with us."
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Customer reviews"
+    heading="What Our Customers Say About Sedco Plumbing"
+    intro="Reviews from homeowners, landlords and businesses we've worked for across El Cajon and San Diego County."
   >
-    <HeroCtas slot="cta" center />
-  </Hero>
+    <div class="rating-card" slot="aside">
+      <div class="rating-card__top">
+        <span class="rating-card__score">5.0</span>
+        <span>
+          <Stars size={24} label="Rated 5 out of 5" />
+          <span class="rating-card__label">Rated on Google</span>
+        </span>
+      </div>
+      <p class="rating-card__text">
+        Reviews from homeowners, landlords and businesses across San Diego County, on Google, Yelp
+        and Foursquare.
+      </p>
+    </div>
+  </PageHero>
 
-  <section class="section">
+  <section class="recent" aria-labelledby="recent-heading">
     <div class="container">
-      <ul class="masonry" role="list">
+      <div class="recent__head">
+        <h2 class="recent__title" id="recent-heading">Recent Reviews</h2>
+        <div class="tabs" role="group" aria-label="Filter reviews by source" data-review-filter>
+          <button type="button" aria-pressed="true" data-source="all">All reviews</button>
+          {sources.map((source) => <button type="button" aria-pressed="false" data-source={source}>{source}</button>)}
+        </div>
+      </div>
+
+      <ul class="masonry">
         {
           reviews.map((review) => {
             const city = review.city ? getCity(review.city) : null;
             return (
-              <li class="review">
-                {review.rating && (
-                  <div class="stars" aria-label={`${review.rating} out of 5 stars`}>
-                    {'★'.repeat(review.rating)}
-                  </div>
-                )}
-                <p>“{review.quote}”</p>
-                <div class="review__author">
-                  <span class="avatar" aria-hidden="true">
-                    {review.name.charAt(0)}
-                  </span>
-                  <span>
+              <li class="card" data-source={review.source}>
+                <Stars size={18} label="5 out of 5 stars" />
+                <blockquote>“{review.quote}”</blockquote>
+                <div class="card__who">
+                  <span class="card__avatar" aria-hidden="true">{review.name.charAt(0)}</span>
+                  <span class="card__name">
                     <strong>{review.name}</strong>
-                    <span class="review__detail">
-                      {city ? `${review.service} — ${city.name}` : review.service}
-                    </span>
+                    <span>{city ? `${review.service} · ${city.name}` : review.service}</span>
                   </span>
+                  <span class="card__source">{review.source}</span>
                 </div>
-                <p class="review__source">via {review.source}</p>
               </li>
             );
           })
@@ -84,126 +98,285 @@ const reviewLinkReady = !isPlaceholder(reviewLink) && reviewLink.length > 0;
     </div>
   </section>
 
-  <section class="section section--tight">
-    <div class="container">
-      <div class="ask-card">
-        <div class="side-card">
-          <h2>Had a Great Experience?</h2>
-          <p class="card-copy">
-            Reviews that mention your city and the service we performed help your neighbors find us.
-            If we earned it, we would be grateful for a review on Google.
-          </p>
-          {
-            /*
-             * The guide asks for a "direct Google review link" button here. It
-             * renders once profiles.googleReview is set in src/config/site.ts;
-             * until then the section stands without it rather than printing a
-             * note to the visitor. `npm run verify` reports the missing link.
-             */
-            reviewLinkReady && (
-              <a class="btn btn--primary" href={reviewLink} rel="noopener">
-                Leave a Google review
-              </a>
-            )
-          }
-          <p class="card-copy">
-            While you are here: browse <a href={paths.servicesHub}>our plumbing services</a> or <a
-              href={paths.contact}>request a service call</a
-            >.
-          </p>
-        </div>
+  <section class="ask" aria-labelledby="ask-heading">
+    <div class="ask__panel">
+      <div>
+        <h2 class="ask__title" id="ask-heading">Had a Job Done by Sedco?</h2>
+        <p class="ask__text">We read every review, and it helps other homeowners find a plumber they can trust.</p>
       </div>
+      {
+        reviewLinkReady && (
+          <a class="btn btn--navy btn--md ask__btn" href={reviewLink} target="_blank" rel="noopener">
+            <Stars size={18} />
+            Leave a Google review
+          </a>
+        )
+      }
     </div>
   </section>
 
-  <CtaSection
-    heading="Ready to See for Yourself?"
-    body="Call Sedco Plumbing at [PHONE] or request service online, and let us show you why East County keeps recommending us."
-  />
+  <Faq faqs={commonFaqs} mobileCall />
+
+  <ContactSection />
 </BaseLayout>
 
 <style>
-  .masonry {
-    columns: 3;
-    column-gap: 1.375rem;
-    list-style: none;
-    padding: 0;
+  .rating-card {
+    padding: 32px;
+    border-radius: var(--r-2xl);
+    background: var(--white);
+    box-shadow: var(--shadow-form);
   }
-  .review {
-    break-inside: avoid;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: var(--r-card);
-    padding: 1.5rem;
-    margin-bottom: 1.375rem;
-    box-shadow: var(--sh-card);
-  }
-  .review p {
-    font-size: 0.9375rem;
-    line-height: 1.65;
-    color: var(--text-soft);
-    margin-top: 0.75rem;
-  }
-  .stars {
-    color: var(--star);
-    letter-spacing: 2px;
-  }
-  .review__author {
+
+  .rating-card__top {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-top: 1.125rem;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
   }
-  .review__author > span:last-child {
+
+  .rating-card__score {
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 64px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--navy-800);
+  }
+
+  .rating-card__label {
+    display: block;
+    margin-top: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy-800);
+  }
+
+  .rating-card__text {
+    margin-top: 18px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--slate-600);
+  }
+
+  .recent {
+    padding: 80px 0 40px;
+  }
+
+  .recent__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .recent__title {
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tabs button {
+    height: 44px;
+    padding: 0 18px;
+    border: 1px solid var(--slate-300);
+    border-radius: var(--r-pill);
+    background: var(--white);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy-800);
+    cursor: pointer;
+    transition:
+      background-color var(--t-base) ease,
+      color var(--t-base) ease,
+      border-color var(--t-base) ease;
+  }
+
+  .tabs button:hover {
+    border-color: var(--navy-800);
+  }
+
+  .tabs button[aria-pressed='true'] {
+    border-color: var(--navy-800);
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  .masonry {
+    column-count: 3;
+    column-gap: 18px;
+    margin-top: 28px;
+    list-style: none;
+  }
+
+  .card {
     display: flex;
     flex-direction: column;
+    gap: 16px;
+    margin-bottom: 18px;
+    padding: 28px;
+    break-inside: avoid;
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    background: var(--white);
   }
-  .review__author strong {
-    font-size: 0.875rem;
-    color: var(--brand-deep);
+
+  .card blockquote {
+    margin: 0;
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: var(--navy-800);
   }
-  .review__detail {
-    font-size: 0.8125rem;
-    color: var(--text-muted);
+
+  .card__who {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid #eef1f5;
   }
-  .review__source {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-top: 0.75rem;
-  }
-  .avatar {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: var(--grad-chip);
-    color: #fff;
+
+  .card__avatar {
+    flex: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-display);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--navy-800);
+    font-family: var(--font-title);
+    font-weight: 700;
+    color: var(--yellow-500);
+  }
+
+  .card__name {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    line-height: 1.35;
+    color: var(--slate-500);
+  }
+
+  .card__name strong {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy-800);
+  }
+
+  .card__source {
+    flex: none;
+    padding: 4px 10px;
+    border-radius: var(--r-pill);
+    background: var(--sky-50);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--slate-600);
+  }
+
+  .ask {
+    padding: 24px var(--gutter) 24px;
+  }
+
+  .ask__panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px 40px;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 48px 56px;
+    border-radius: var(--r-2xl);
+    background: var(--yellow-50);
+  }
+
+  .ask__title {
     font-weight: 800;
-    flex-shrink: 0;
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
   }
 
-  .ask-card {
-    max-width: var(--measure-prose);
-    margin-inline: auto;
-  }
-  .card-copy {
-    font-size: 0.9375rem;
-    color: var(--text-soft);
-    line-height: 1.6;
-    margin-block: 0.75rem 1.125rem;
+  .ask__text {
+    margin-top: 10px;
+    font-size: 17px;
+    color: var(--slate-600);
   }
 
-  @media (max-width: 900px) {
+  .ask__btn :global(.stars) {
+    gap: 0;
+  }
+
+  @media (max-width: 1099px) {
     .masonry {
-      columns: 2;
+      column-count: 2;
     }
   }
-  @media (max-width: 620px) {
+
+  @media (max-width: 768px) {
+    .rating-card {
+      padding: 24px;
+    }
+
+    .rating-card__score {
+      font-size: 52px;
+    }
+
+    .recent {
+      padding: 44px 0 24px;
+    }
+
+    .recent__title {
+      font-size: 28px;
+    }
+
     .masonry {
-      columns: 1;
+      column-count: 1;
+    }
+
+    .card {
+      padding: 22px;
+    }
+
+    .ask {
+      padding: 8px 16px 8px;
+    }
+
+    .ask__panel {
+      padding: 28px 22px;
+    }
+
+    .ask__title {
+      font-size: 24px;
     }
   }
 </style>
+
+<script>
+  const filter = document.querySelector<HTMLElement>('[data-review-filter]');
+  if (filter) {
+    const buttons = [...filter.querySelectorAll<HTMLButtonElement>('button[data-source]')];
+    const cards = [...document.querySelectorAll<HTMLElement>('.masonry > li[data-source]')];
+    buttons.forEach((button) =>
+      button.addEventListener('click', () => {
+        const source = button.dataset.source;
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+        cards.forEach((card) => {
+          card.hidden = source !== 'all' && card.dataset.source !== source;
+        });
+      }),
+    );
+  }
+</script>

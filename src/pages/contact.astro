@@ -1,196 +1,193 @@
 ---
 /**
- * CONTACT — guide Part 3 "Contact Us", design Contact.dc.html.
- * Centered hero → 2-col (request form | NAP, service area, hours cards).
+ * CONTACT — design "Sedco Contact".
+ * Hero → four info cards (call, hours, where we work, licence) → request
+ * form section (#request, the no-JS target of every "Request Service" link)
+ * → FAQ → service-area map.
  */
-import '../styles/legacy/load'; // pre-redesign styles: remove when this page is rebuilt
 import { site, paths } from '@config/site';
-import { th, phoneHref, emailHref, isPlaceholder } from '@lib/tokens';
-import { images } from '@lib/images';
-
+import { commonFaqs } from '@config/faqs';
+import { phoneHref, emailHref, isPlaceholder } from '@lib/tokens';
+import { PAGE_HERO_SIZES } from '@lib/media';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Hero from '@components/Hero.astro';
-import ContactForm from '@components/ContactForm.astro';
-import Phone from '@components/Phone.astro';
+import PageHero from '@components/PageHero.astro';
+import ContactSection from '@components/ContactSection.astro';
+import Faq from '@components/Faq.astro';
+import ServiceAreasSection from '@components/ServiceAreasSection.astro';
+import Icon from '@components/ui/Icon.astro';
 import PageSchema from '@components/schema/PageSchema.astro';
 
 const title = 'Contact Sedco Plumbing | El Cajon Plumber — [PHONE]';
 const description =
   'Contact Sedco Plumbing in El Cajon, CA. Request service anywhere in San Diego County — same-day appointments available. Call [PHONE] or book online.';
 const path = paths.contact;
-
 const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Contact' }];
-
-const eastCountyCities = site.cities.filter((city) => city.slug !== 'san-diego');
+const email = site.business.email;
+const hasEmail = !isPlaceholder(email) && email.length > 0;
 ---
 
-<BaseLayout title={title} description={description} path={path} crumbs={crumbs}>
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  crumbs={crumbs}
+  inlineCrumbs
+  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES }}
+>
   <Fragment slot="head">
     <PageSchema type="ContactPage" name={title} description={description} path={path} />
   </Fragment>
 
-  <Hero
-    variant="center"
-    image={images.heroGeneral}
-    badge="Same-day appointments usually available"
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Contact us"
     heading="Contact Sedco Plumbing"
-    intro="The fastest way to reach us is by phone: [PHONE]. Prefer to write? Use the form below and we will get back to you promptly."
-  >
-    <div class="btn-row btn-row--center" slot="cta">
-      <a class="btn btn--accent" href={phoneHref()}>
-        <span aria-hidden="true">📞</span> Call <Phone />
-      </a>
-      <a class="btn btn--glass" href="#request">Request online</a>
-    </div>
-  </Hero>
+    intro="Call us at any hour from Monday to Saturday, or send a request and we’ll call you back within 30 minutes. Every visit starts with a free estimate, with no trip charge."
+  />
 
-  <section class="section">
-    <div class="container contact-grid">
-      <div>
-        <h2 class="form-heading">Request Service</h2>
-        <ContactForm variant="full" as="h3" heading="Tell us what you need" id="request" />
-      </div>
-
-      <aside class="contact-side">
-        <div class="side-card side-card--dark on-dark">
-          <!-- Not a heading: the guide's heading order for this page is H1, then
-               H2 Request Service / Service Area / Hours only. -->
-          <p class="card-title">{site.business.name}</p>
-          <address class="nap-block">
-            <span>{site.business.locality}, {site.business.region}</span>
-            <a href={phoneHref()}><span set:html={th('[PHONE]')} /></a>
-            <a href={emailHref()}><span set:html={th('[EMAIL]')} /></a>
-            {!isPlaceholder(site.business.license) && (
-              <span>License <span set:html={th('[LICENSE #]')} /></span>
-            )}
-          </address>
-          <p>
-            We are a mobile service-area business — our technicians come to you, so there is no
-            storefront to visit.
-          </p>
-        </div>
-
-        <div class="side-card">
-          <h2>Service Area</h2>
-          <p class="side-copy">
-            We come to you. Sedco Plumbing is based in El Cajon and serves all of San Diego County,
-            with priority coverage in {
-              eastCountyCities.map((city, index) => (
-                <>
-                  <a href={paths.city(city.slug)}>{city.name}</a>
-                  {index < eastCountyCities.length - 2
-                    ? ', '
-                    : index === eastCountyCities.length - 2
-                      ? ', and '
-                      : ''}
-                </>
-              ))
-            }.
-          </p>
-          <ul class="pill-list side-pills">
-            {
-              site.cities.map((city) => (
-                <li>
-                  <a class="pill" href={paths.city(city.slug)}>
-                    <span aria-hidden="true">📍</span>
-                    {city.name}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-          <p class="side-copy">
-            Browse <a href={paths.servicesHub}>all of our plumbing services</a> or the <a
-              href={paths.areasHub}>full list of communities we serve</a
-            >.
-          </p>
-        </div>
-
-        <div class="side-card side-card--warm">
-          <h2>Hours</h2>
-          <p class="side-copy">
-            {
-              isPlaceholder(site.business.hours) ? (
-                <>
-                  For urgent problems like burst pipes, sewage backups, and gas leaks, call us
-                  right away — those calls get priority.
-                </>
-              ) : (
-                <>
-                  <span set:html={th('[HOURS]')} /> — with emergency availability for urgent
-                  problems like burst pipes, sewage backups, and gas leaks.
-                </>
-              )
-            }
-          </p>
-          <p class="safety-note">
-            <strong>If you smell gas</strong>, leave the building first and call your gas utility,
-            then call us.
-          </p>
-        </div>
-      </aside>
-    </div>
+  <section class="info" aria-label="How to reach us">
+    <ul class="info__grid">
+      <li class="info__card">
+        <span class="info__icon"><Icon name="phone" size={24} /></span>
+        <p class="info__title">Call us</p>
+        <a class="info__phone" href={phoneHref()}>{site.business.phone}</a>
+        <p class="info__text">Someone picks up at any hour, Monday to Saturday.</p>
+        {hasEmail && <p class="info__text">Or email <a href={emailHref()}>{email}</a></p>}
+      </li>
+      <li class="info__card">
+        <span class="info__icon"><Icon name="clock" size={24} /></span>
+        <p class="info__title">Opening hours</p>
+        <p class="info__text">Open 24 hours, Monday to Saturday.</p>
+        <p class="info__text">Closed Sunday. Requests sent on Sunday are answered on Monday.</p>
+      </li>
+      <li class="info__card">
+        <span class="info__icon"><Icon name="map-pin" size={24} /></span>
+        <p class="info__title">Where we work</p>
+        <p class="info__text">
+          Based in {site.business.locality}, {site.business.region}, serving homes and businesses across{' '}
+          <a href={paths.areasHub}>San Diego County</a>. We come to you, so there's no storefront to visit.
+        </p>
+      </li>
+      <li class="info__card">
+        <span class="info__icon"><Icon name="licensed" size={24} /></span>
+        <p class="info__title">Licensed contractor</p>
+        <p class="info__text">
+          Licensed CA {site.business.licenseClass} plumbing contractor, with a 30-day guarantee on all work.
+        </p>
+      </li>
+    </ul>
+    <p class="info__safety">
+      <Icon name="alert-circle" size={20} />
+      <span><strong>If you smell gas</strong>, leave the building first and call your gas utility, then call us.</span>
+    </p>
   </section>
+
+  <ContactSection />
+
+  <Faq faqs={commonFaqs} mobileCall />
+
+  <ServiceAreasSection />
 </BaseLayout>
 
 <style>
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 3.5rem;
-    align-items: start;
-  }
-  .form-heading {
-    margin-bottom: 1.25rem;
-  }
-  .contact-side {
-    display: grid;
-    gap: 1.375rem;
-  }
-  .card-title {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.1875rem;
-    color: #fff;
-  }
-  .nap-block {
-    display: grid;
-    gap: 0.4375rem;
-    font-style: normal;
-    margin-top: 1rem;
-    font-size: 0.9375rem;
-  }
-  .nap-block a {
-    color: #fff;
-    font-weight: 600;
-  }
-  .side-copy {
-    font-size: 0.9375rem;
-    color: var(--text-soft);
-    line-height: 1.6;
-    margin-top: 0.75rem;
-  }
-  .side-pills {
-    margin-top: 1rem;
-  }
-  .side-card--warm {
-    background: #fff8f0;
-    border-color: #f3d9bb;
-  }
-  .safety-note {
-    margin-top: 0.875rem;
-    font-size: 0.875rem;
-    color: #8a4b12;
-    background: #fdeedb;
-    border-radius: var(--r-input);
-    padding: 0.75rem 0.875rem;
-    line-height: 1.5;
+  .info {
+    max-width: calc(var(--container) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 40px var(--gutter) 0;
   }
 
-  @media (max-width: 900px) {
-    .contact-grid {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
+  .info__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    list-style: none;
+  }
+
+  .info__card {
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: var(--white);
+  }
+
+  .info__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: var(--r-md);
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  .info__title {
+    margin-top: 22px;
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--navy-800);
+  }
+
+  .info__phone {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 24px;
+    color: var(--navy-800);
+    text-decoration: none;
+  }
+
+  .info__phone:hover {
+    color: var(--blue-700);
+  }
+
+  .info__text {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--slate-600);
+  }
+
+  .info__safety {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 16px 20px;
+    border-left: 4px solid var(--yellow-500);
+    border-radius: var(--r-md);
+    background: var(--yellow-100);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--navy-800);
+  }
+
+  .info__safety :global(svg) {
+    flex: none;
+    margin-top: 1px;
+    color: var(--gold-text);
+  }
+
+  @media (max-width: 1099px) {
+    .info__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .info {
+      padding: 28px 16px 0;
+    }
+
+    .info__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .info__card {
+      padding: 22px;
     }
   }
 </style>
