@@ -1,566 +1,120 @@
 ---
 /**
- * HOMEPAGE — guide Part 3 "Homepage", design Homepage.dc.html.
+ * HOMEPAGE — design "Sedco Homepage v3".
  *
- * Copy is verbatim from the guide; the layout follows the design. Carries the
- * site-wide Plumber (LocalBusiness) entity plus FAQPage schema, and links to
- * all 16 service pages and all 10 city pages (guide Part 7.2).
+ * Copy is the design's final copy, which is written around the SEO keyword
+ * map for this URL (primary "plumber El Cajon"; secondaries "plumbing company
+ * El Cajon", "plumbing services San Diego County", "licensed plumber East
+ * County San Diego"). Carries the site-wide Plumber (LocalBusiness) entity and
+ * FAQPage schema, and links to every service and every town page.
  */
-import { Image } from 'astro:assets';
-import { site, paths, getCity } from '@config/site';
-import { featuredReviews } from '@config/reviews';
-import { images } from '@lib/images';
-import type { Faq } from '@lib/types';
+import { paths } from '@config/site';
+import type { Faq as FaqItem } from '@lib/types';
 
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Hero from '@components/Hero.astro';
-import HeroCtas from '@components/HeroCtas.astro';
-import ContactForm from '@components/ContactForm.astro';
-import ServiceCardGrid from '@components/ServiceCardGrid.astro';
-import FaqBlock from '@components/FaqBlock.astro';
-import CtaSection from '@components/CtaSection.astro';
-import Droplet from '@components/Droplet.astro';
-import ServiceAreaMap from '@components/ServiceAreaMap.astro';
+import HomeHero from '@components/home/HomeHero.astro';
+import { HOME_HERO_SIZES } from '@lib/media';
+import HowItWorks from '@components/home/HowItWorks.astro';
+import ServicesGrid from '@components/ServicesGrid.astro';
+import ReviewsMarquee from '@components/ReviewsMarquee.astro';
+import ServiceAreasSection from '@components/ServiceAreasSection.astro';
+import AboutSplit from '@components/AboutSplit.astro';
+import Faq from '@components/Faq.astro';
+import ContactSection from '@components/ContactSection.astro';
 import LocalBusinessSchema from '@components/schema/LocalBusinessSchema.astro';
 import FaqSchema from '@components/schema/FaqSchema.astro';
 
-const title = 'Plumber in El Cajon, CA | Sedco Plumbing — San Diego County';
+const title = 'Plumber in El Cajon & San Diego County | Sedco Plumbing';
 const description =
-  'Licensed El Cajon plumbers serving all of San Diego County. Drains, water heaters, slab leaks, sewer lines and more. Upfront pricing. Call [PHONE].';
+  'Licensed plumber in El Cajon serving East County & San Diego County. Drains, water heaters, leaks & repairs with upfront pricing. Call [PHONE].';
 
-// Hero/stat claims are kept to what the SEO copy on this page actually
-// supports. The copy hedges response times ("can vary") and describes pricing
-// as explained up front rather than flat-rate, so the badges say the same.
-const trust = [
-  'Licensed & Insured',
-  'Upfront Pricing',
-  'Clear Communication',
-  'Locally Owned in El Cajon',
-];
-
-const whyStats = [
-  {
-    value: 'C-36',
-    label: 'Licensed & insured',
-    sub: 'California plumbing contractor',
-  },
-  { value: 'Upfront', label: 'Pricing explained first', sub: 'Before any work begins' },
-  { value: 'Local', label: 'Based in El Cajon', sub: 'Serving East County and San Diego County' },
-  {
-    value: 'Practical',
-    label: 'Solutions, not upsells',
-    sub: 'We recommend what the problem actually needs',
-  },
-];
-
-// Guide Part 3 Homepage FAQ — the same array feeds the visible accordion and
-// the FAQPage schema.
-const faqs: Faq[] = [
+const faqs: FaqItem[] = [
   {
     question: 'Do you charge for estimates?',
     answer: [
-      'Our team can explain the expected service and pricing before work begins. Call us at [PHONE] to discuss your plumbing needs and find out what to expect.',
+      "No, our estimates are free, and there's no call-out fee or trip charge either. Our plumber looks at the problem and tells you the price, and then it's up to you whether we go ahead.",
     ],
   },
   {
-    question: 'Are you licensed and insured?',
+    question: 'How quickly can a plumber get to me?',
     answer: [
-      'Yes. Our plumbing professionals are licensed and insured to provide plumbing services for homeowners throughout El Cajon and surrounding San Diego County communities.',
+      "Same-day visits are available from Monday to Saturday, and we're open 24 hours on each of those days. If you send us a request through the website, we'll call you back within 30 minutes to talk about the problem and agree on a time.",
     ],
   },
   {
-    question: 'How fast can you get to my home?',
+    question: 'Do you charge more at night or on Saturdays?',
     answer: [
-      'Response times can vary depending on the type of plumbing problem, location, and current service demand. If you have an urgent issue, contact our team as soon as possible so we can discuss the quickest available service option.',
+      "No, a call at night or on a Saturday costs the same as one on a weekday afternoon. We're closed on Sundays, so if you send us a request on a Sunday, we'll get back to you on Monday.",
+    ],
+  },
+  {
+    question: 'Do you work outside El Cajon?',
+    answer: [
+      "Yes, we're based in El Cajon, but we take jobs right across San Diego County, and most of our work is in East County towns like [La Mesa](/service-areas/la-mesa/), [Santee](/service-areas/santee/), [Lakeside](/service-areas/lakeside/) and [Alpine](/service-areas/alpine/). Wherever you are, you get the same free estimate and the same prices.",
+    ],
+  },
+  {
+    question: 'Are you a licensed plumber?',
+    answer: [
+      'Yes, Sedco Plumbing is a licensed CA C-36 plumbing contractor, which is the California license for plumbing work, so your job is handled by a licensed plumbing company rather than a general handyman.',
+    ],
+  },
+  {
+    question: 'What does your 30-day guarantee cover?',
+    answer: [
+      "It covers all of our work for 30 days, with no exceptions. If the same problem comes back in that time, for example the same drain blocks up again, we'll come back and fix it at no charge.",
+    ],
+  },
+  {
+    question: 'Do you work for landlords and businesses?',
+    answer: [
+      'Yes, we work for homeowners, landlords, rental managers and businesses alike. If you look after rentals or other properties, our [property management plumbing service](/services/property-management-plumbing/) makes it easy to send us tenant repairs whenever they come up.',
     ],
   },
 ];
-
-// The cities the SEO copy names, in the order the copy names them. The prose is
-// verbatim; linking the names keeps the homepage's hub-and-spoke internal links
-// (guide Part 7.2) rather than leaving them as plain text.
-const NAMED_CITY_SLUGS = [
-  'la-mesa',
-  'santee',
-  'lakeside',
-  'spring-valley',
-  'lemon-grove',
-  'alpine',
-  'rancho-san-diego',
-  'jamul',
-];
-const namedCities = NAMED_CITY_SLUGS.map(getCity);
 ---
 
-<BaseLayout title={title} description={description} path="/">
+<BaseLayout
+  title={title}
+  description={description}
+  path="/"
+  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: HOME_HERO_SIZES }}
+>
   <Fragment slot="head">
     <LocalBusinessSchema />
     <FaqSchema faqs={faqs} />
   </Fragment>
 
-  <Hero
-    variant="home"
-    image={images.heroHome}
-    badge="Licensed CA C-36 plumbing contractor"
+  <HomeHero
     heading="El Cajon Plumbers Serving All of San Diego County"
     intro={[
       'When you need reliable plumbing help, having a local team you can count on makes all the difference. Our experienced plumbers provide dependable solutions for leaks, clogged drains, broken fixtures, water heaters, and other plumbing problems throughout El Cajon and surrounding San Diego County communities.',
       'Whether you need a quick repair or help with a larger plumbing issue, we focus on finding the cause of the problem and providing a practical solution. We keep our service straightforward, communicate clearly, and treat your home with care from start to finish.',
     ]}
-  >
-    <HeroCtas slot="cta" requestHref="#request" />
-
-    <ul class="trust-row" slot="below">
-      {
-        trust.map((item) => (
-          <li>
-            <span class="check" aria-hidden="true">
-              ✓
-            </span>
-            {item}
-          </li>
-        ))
-      }
-    </ul>
-
-    <ContactForm slot="aside" variant="compact" as="h2" />
-  </Hero>
-
-  <!-- ================= SERVICES ================= -->
-  <section class="section">
-    <div class="container">
-      <div class="split">
-        <div class="section-head">
-          <span class="eyebrow">
-            <Droplet size={12} />
-            What we do
-          </span>
-          <h2>Plumbing Services We Provide</h2>
-          <p>
-            From everyday plumbing problems to more urgent issues, our team handles a wide range of
-            residential plumbing needs. Our services are designed to keep your home’s plumbing
-            system working safely and efficiently.
-          </p>
-        </div>
-
-        <div class="framed">
-          <Image
-            src={images.servicesIntro.src}
-            alt={images.servicesIntro.alt}
-            widths={[420, 720]}
-            sizes="(max-width: 900px) 100vw, 460px"
-            height={280}
-            loading="lazy"
-          />
-          <div class="framed__badge">
-            <span class="card__glyph" aria-hidden="true">🔧</span>
-            <span>
-              <strong>{site.services.length} services</strong>
-              <span>residential &amp; commercial</span>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="services-grid">
-        <ServiceCardGrid services={site.services} variant="numbered" />
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= TRUST BAND ================= -->
-  <section class="trust-band on-dark">
-    <Image
-      class="trust-band__bg"
-      src={images.trustBand.src}
-      alt=""
-      widths={[900, 1400, 1920]}
-      sizes="100vw"
-      loading="lazy"
-      aria-hidden="true"
-    />
-    <div class="trust-band__overlay"></div>
-    <div class="container trust-band__inner">
-      <div>
-        <p class="trust-band__head">Real plumbers. Real fixes. Honest prices.</p>
-        <p class="trust-band__sub">
-          We explain the work and the pricing before anything begins.
-        </p>
-      </div>
-      <a class="btn btn--accent" href={paths.contact}>Get my upfront price →</a>
-    </div>
-  </section>
-
-  <!-- ================= WHY SEDCO ================= -->
-  <section class="section section--tint">
-    <div class="container">
-      <div class="split split--reverse">
-        <div class="framed framed--right">
-          <Image
-            src={images.whyUs.src}
-            alt={images.whyUs.alt}
-            widths={[440, 880]}
-            sizes="(max-width: 900px) 100vw, 480px"
-            height={440}
-            loading="lazy"
-          />
-          <div class="framed__flag">
-            <strong>Upfront</strong>
-            <span>no surprises</span>
-          </div>
-        </div>
-
-        <div>
-          <span class="eyebrow">
-            <Droplet size={12} />
-            Local experience
-          </span>
-          <h2>Why East County Homeowners Choose Sedco Plumbing</h2>
-          <p class="why-copy">
-            Choosing a plumbing company is about more than simply finding someone who can fix a
-            pipe. You want a team that arrives prepared, explains what is happening, and respects
-            your home and your time.
-          </p>
-          <p class="why-copy">
-            Our local experience allows us to understand the plumbing needs commonly found in El
-            Cajon and throughout East County. We provide straightforward service, upfront pricing,
-            and practical recommendations so you can make informed decisions about your home.
-          </p>
-
-          <div class="stat-grid">
-            {
-              whyStats.map((stat) => (
-                <div class="stat">
-                  <div class="stat__value">{stat.value}</div>
-                  <div class="stat__name">{stat.label}</div>
-                  <div class="stat__label">{stat.sub}</div>
-                </div>
-              ))
-            }
-          </div>
-
-          <p class="warranty-note">
-            We explain what we find and recommend what the problem actually needs.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= SERVICE AREAS ================= -->
-  <section class="section">
-    <div class="container">
-      <div class="split split--even">
-        <div>
-          <span class="eyebrow">
-            <Droplet size={12} />
-            Where we work
-          </span>
-          <h2>Serving El Cajon and All of San Diego County</h2>
-          <p class="area-copy">
-            Our service area extends throughout El Cajon and communities across San Diego County. We
-            understand that plumbing problems rarely happen at a convenient time, which is why our
-            team is focused on providing dependable service when you need it.
-          </p>
-          <p class="area-copy">
-            Whether you’re dealing with a leaking pipe, clogged drain, water heater issue, or
-            another plumbing concern, you can rely on our local team for professional assistance. We
-            proudly serve homeowners in <a href={paths.city('el-cajon')}>El Cajon</a> and nearby
-            communities, including {
-              namedCities.map((city) => (
-                <>
-                  <a href={paths.city(city.slug)}>{city.name}</a>{', '}
-                </>
-              ))
-            }and surrounding areas.
-          </p>
-
-          <ul class="pill-list area-pills">
-            {
-              site.cities.map((city) => (
-                <li>
-                  <a class="pill" href={paths.city(city.slug)}>
-                    <span aria-hidden="true">📍</span>
-                    {city.name}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-
-        <ServiceAreaMap />
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= REVIEWS ================= -->
-  <section class="reviews-band on-dark">
-    <Droplet class="reviews-band__drop reviews-band__drop--a" size={120} />
-    <Droplet class="reviews-band__drop reviews-band__drop--b" size={90} />
-
-    <div class="container reviews-band__inner">
-      <div class="reviews-band__head">
-        <div>
-          <span class="eyebrow eyebrow--light">Reviews</span>
-          <h2>What Our Customers Say</h2>
-        </div>
-        <a class="btn btn--glass" href={paths.reviews}>Read all reviews →</a>
-      </div>
-
-      <ul class="grid grid--3 review-cards" role="list">
-        {
-          featuredReviews.map((review) => {
-            const city = review.city ? getCity(review.city) : null;
-            return (
-              <li class="review-card">
-                {review.rating && (
-                  <div class="stars" aria-label={`${review.rating} out of 5 stars`}>
-                    {'★'.repeat(review.rating)}
-                  </div>
-                )}
-                <p>“{review.quote}”</p>
-                <div class="review-card__name">— {review.name}</div>
-                <div class="review-card__detail">
-                  {city ? `${review.service} — ${city.name}` : review.service} · via {review.source}
-                </div>
-              </li>
-            );
-          })
-        }
-      </ul>
-    </div>
-  </section>
-
-  <!-- ================= FAQ ================= -->
-  <section class="section">
-    <div class="container">
-      <div class="faq-wrap">
-        <div class="section-head section-head--center">
-          <span class="eyebrow">
-            <Droplet size={12} />
-            Good to know
-          </span>
-        </div>
-        <FaqBlock faqs={faqs} center />
-      </div>
-    </div>
-  </section>
-
-  <CtaSection
-    heading="Need a Plumber Today?"
-    body="Don’t let a plumbing problem turn into a bigger and more expensive issue. Whether you need help with a leak, clogged drain, water heater, fixture, or another plumbing concern, our local team is ready to help. If you’re looking for dependable emergency plumber services in El Cajon, give us a call or request service online. We’ll listen to the problem, explain your options, and help you determine the best next step for your home."
   />
+
+  <ServicesGrid
+    heading="Plumbing Services Across San Diego County"
+    intro="Sedco Plumbing provides plumbing services in San Diego County for homeowners, landlords, rental managers and businesses, and since we're based in El Cajon, most of our work is in the East County towns close to home. Every service we offer is listed below, grouped by the kind of problem it solves, so you can find yours quickly and open its page to see how we handle the job."
+    formGap
+  />
+
+  <ReviewsMarquee />
+
+  <HowItWorks />
+
+  <ServiceAreasSection />
+
+  <AboutSplit
+    heading="An El Cajon Plumbing Company With 20 Years of Experience"
+    paragraphs={[
+      "Our team brings 20 years of plumbing experience to every job, and over that time we've learned that most people want the same few things when they look for a plumber in El Cajon. They want someone who picks up the phone, turns up when they say they will, explains the problem in plain words and then charges the price they quoted.",
+      "That's why we give free estimates, keep our prices the same day and night, and guarantee every job for 30 days with no exceptions. As a licensed CA C-36 plumbing contractor, we look after every home, rental and business we work in as carefully as we'd want someone to look after our own.",
+    ]}
+    link={{ href: paths.about, label: 'Learn more about Sedco Plumbing' }}
+  />
+
+  <Faq faqs={faqs} mobileCall />
+
+  <ContactSection />
 </BaseLayout>
-
-<style>
-  .split {
-    display: grid;
-    grid-template-columns: 1fr 0.82fr;
-    gap: 4rem;
-    align-items: center;
-  }
-  .split--reverse {
-    grid-template-columns: 0.92fr 1fr;
-  }
-  .split--even {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .services-grid {
-    margin-top: 4.5rem;
-  }
-
-  .framed img {
-    height: 280px;
-  }
-  .framed--right::before {
-    transform: rotate(3deg);
-    background: linear-gradient(135deg, var(--brand-primary), var(--brand-deep));
-  }
-  .framed--right img {
-    height: 440px;
-    object-position: center 30%;
-  }
-  .framed__flag {
-    position: absolute;
-    top: -18px;
-    right: -14px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 14px;
-    padding: 0.875rem 1.125rem;
-    box-shadow: 0 12px 26px rgba(240, 133, 31, 0.4);
-    text-align: center;
-  }
-  .framed__flag strong {
-    display: block;
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: 1.625rem;
-    line-height: 1;
-  }
-  .framed__flag span {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-  }
-
-  .why-copy,
-  .area-copy {
-    font-size: var(--fs-prose);
-    color: var(--text-soft);
-    margin-top: 1.125rem;
-    line-height: 1.65;
-  }
-  .stat__name {
-    font-size: 0.9375rem;
-    font-weight: 700;
-    color: var(--brand-deep);
-    margin-top: 0.5rem;
-  }
-  .warranty-note {
-    font-size: var(--fs-sm);
-    color: var(--text-muted);
-    margin-top: 1.25rem;
-  }
-  .area-pills {
-    margin-top: 1.625rem;
-  }
-
-  /* ---- Trust band ---- */
-  .trust-band {
-    position: relative;
-    overflow: hidden;
-    background: var(--brand-deep);
-    color: #fff;
-    isolation: isolate;
-  }
-  .trust-band__bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 55%;
-    opacity: 0.28;
-    z-index: -2;
-  }
-  .trust-band__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, var(--brand-trust-band) 20%, rgba(12, 47, 82, 0.6) 100%);
-    z-index: -1;
-  }
-  .trust-band__inner {
-    padding-block: 3.5rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-  }
-  .trust-band__head {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.625rem;
-  }
-  .trust-band__sub {
-    color: #bcd4ea;
-    margin-top: 0.375rem;
-  }
-
-  /* ---- Reviews band ---- */
-  .reviews-band {
-    position: relative;
-    background: var(--brand-deep);
-    color: #fff;
-    overflow: hidden;
-  }
-  .reviews-band__inner {
-    padding-block: var(--section-y);
-    position: relative;
-  }
-  .reviews-band__drop {
-    position: absolute;
-  }
-  .reviews-band__drop--a {
-    left: -20px;
-    top: -30px;
-    color: rgba(56, 182, 232, 0.12);
-  }
-  .reviews-band__drop--b {
-    right: 8%;
-    bottom: -24px;
-    color: rgba(56, 182, 232, 0.1);
-  }
-  .reviews-band__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  .reviews-band h2 {
-    color: #fff;
-    margin-top: 0.75rem;
-  }
-  .eyebrow--light {
-    color: #8fc0ee;
-  }
-  .review-cards {
-    list-style: none;
-    padding: 0;
-    margin-top: 2.375rem;
-  }
-  .review-card {
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
-    padding: 1.625rem;
-    backdrop-filter: blur(4px);
-  }
-  .review-card p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #e3eefa;
-    margin-top: 0.875rem;
-  }
-  .stars {
-    color: var(--star);
-    font-size: 1.0625rem;
-    letter-spacing: 2px;
-  }
-  .review-card__name {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: #fff;
-    margin-top: 1rem;
-  }
-  .review-card__detail {
-    font-size: var(--fs-xs);
-    color: #9db8d4;
-  }
-  .faq-wrap {
-    max-width: var(--measure);
-    margin-inline: auto;
-  }
-  .faq-wrap .section-head--center {
-    margin-bottom: 0.5rem;
-  }
-
-  @media (max-width: 900px) {
-    .split,
-    .split--reverse,
-    .split--even {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-    .framed--right img {
-      height: 340px;
-    }
-    .services-grid {
-      margin-top: 3rem;
-    }
-  }
-</style>

@@ -1,0 +1,351 @@
+---
+/**
+ * "What Our Customers Say": heading row with the 5.0 rating, then two rows of
+ * real review cards scrolling in opposite directions. Each row is rendered
+ * twice for a seamless loop; the second copy is hidden from assistive tech.
+ * Hovering or focusing a row pauses it. Under prefers-reduced-motion the rows
+ * stop and become horizontally scrollable instead.
+ */
+import { reviews } from '@config/reviews';
+import { paths } from '@config/site';
+import Icon from '@components/ui/Icon.astro';
+import Stars from '@components/ui/Stars.astro';
+
+interface Props {
+  heading?: string;
+  intro?: string;
+  id?: string;
+}
+
+const {
+  heading = 'What Our Customers Say',
+  intro = 'The best way to judge a plumber is to hear from the people who have already hired them, so every review below is quoted word for word from a customer who used Sedco Plumbing. You can read them all, along with the service each one was for, on our reviews page.',
+  id = 'reviews',
+} = Astro.props;
+
+const half = Math.ceil(reviews.length / 2);
+const rows = [reviews.slice(0, half), reviews.slice(half)];
+---
+
+<section class="reviews" id={id} aria-labelledby={`${id}-heading`}>
+  <div class="container">
+    <div class="reviews__head">
+      <div>
+        <p class="eyebrow">Reviews</p>
+        <h2 class="section-title" id={`${id}-heading`}>{heading}</h2>
+        <p class="reviews__intro">{intro}</p>
+      </div>
+      <div class="rating">
+        <span class="rating__score">5.0</span>
+        <div class="rating__meta">
+          <Stars size={26} label="Rated 5 out of 5" />
+          <p>Rated 5.0 on Google</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rows" aria-label="Customer reviews">
+    {
+      rows.map((row, rowIndex) => (
+        <div class="row" tabindex="0" aria-label={`Reviews, row ${rowIndex + 1} of 2`}>
+          <div class:list={['track', rowIndex === 1 && 'track--reverse']}>
+            {[0, 1].map((copy) => (
+              <ul class="set" aria-hidden={copy === 1 ? 'true' : undefined}>
+                {row.map((review) => (
+                  <li>
+                    <figure class="review">
+                      <Stars size={20} label={copy === 0 ? '5 out of 5 stars' : undefined} />
+                      <blockquote>“{review.quote}”</blockquote>
+                      <figcaption>
+                        <span class="review__avatar" aria-hidden="true">{review.name.charAt(0)}</span>
+                        <span class="review__who">
+                          <strong>{review.name}</strong>
+                          <span>{review.service}</span>
+                        </span>
+                        <span class="review__source">
+                          Review from<br /><strong>{review.source}</strong>
+                        </span>
+                      </figcaption>
+                    </figure>
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="container">
+    <a class="reviews__more" href={paths.reviews}>
+      Read all our reviews<Icon name="arrow-right" size={18} />
+    </a>
+  </div>
+</section>
+
+<style>
+  .reviews {
+    padding: 88px 0;
+  }
+
+  .reviews__head {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 72px;
+    align-items: end;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #dde3ec;
+  }
+
+  .reviews__intro {
+    max-width: 640px;
+    margin-top: 18px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--slate-600);
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 18px;
+  }
+
+  .rating__score {
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 72px;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: var(--navy-800);
+  }
+
+  .rating__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .rating__meta p {
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--slate-600);
+  }
+
+  /* ---- marquee ---- */
+
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .row {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  }
+
+  .row:focus-visible {
+    outline-offset: -3px;
+  }
+
+  .track {
+    display: flex;
+    width: max-content;
+    animation: reviews-left 70s linear infinite;
+  }
+
+  .track--reverse {
+    animation-name: reviews-right;
+  }
+
+  .row:hover .track,
+  .row:focus-within .track {
+    animation-play-state: paused;
+  }
+
+  .set {
+    display: flex;
+    gap: 24px;
+    padding: 4px 12px;
+    list-style: none;
+  }
+
+  @keyframes reviews-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes reviews-right {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .row {
+      overflow-x: auto;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .track {
+      animation: none;
+    }
+
+    .set[aria-hidden] {
+      display: none;
+    }
+  }
+
+  /* ---- card ---- */
+
+  .review {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 400px;
+    height: 100%;
+    margin: 0;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    background: var(--white);
+  }
+
+  .review blockquote {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.55;
+    font-weight: 500;
+    color: var(--navy-800);
+  }
+
+  .review figcaption {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid #eef1f5;
+  }
+
+  .review__avatar {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--blue-700);
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--white);
+  }
+
+  .review__who {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .review__who strong {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy-800);
+  }
+
+  .review__who span {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--slate-600);
+  }
+
+  .review__source {
+    flex: none;
+    font-size: 13px;
+    line-height: 1.3;
+    color: var(--slate-600);
+    text-align: right;
+  }
+
+  .review__source strong {
+    font-weight: 600;
+    color: var(--navy-800);
+  }
+
+  .reviews__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    margin-top: 28px;
+    font-size: 17px;
+    font-weight: 600;
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 959px) {
+    .reviews__head {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
+    }
+
+    .rating {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .reviews {
+      padding: 48px 0;
+    }
+
+    .reviews__head {
+      padding-bottom: 28px;
+    }
+
+    .reviews__intro {
+      font-size: 16px;
+    }
+
+    .rating__score {
+      font-size: 56px;
+    }
+
+    .rows {
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .set {
+      gap: 16px;
+      padding: 4px 8px;
+    }
+
+    .review {
+      width: 300px;
+      padding: 22px;
+    }
+
+    .review blockquote {
+      font-size: 16px;
+    }
+  }
+</style>

@@ -7,8 +7,8 @@
   "owner": "[OWNER NAME]",
   "hours": "Open 24 hours, Monday to Saturday. Closed Sunday.",
   "hoursSchema": "Mo-Sa 00:00-23:59",
-  "warranty": "[WARRANTY TERMS]",
-  "estimatePolicy": "[ESTIMATE POLICY]",
+  "warranty": "30-day guarantee on all work",
+  "estimatePolicy": "Free estimates, no trip charge",
   "postalCode": "[ZIP]",
   "profiles": {
     "google": "[GOOGLE BUSINESS PROFILE URL]",

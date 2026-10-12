@@ -6,13 +6,6 @@
  * JSON-LD is passed in through the `head` slot so it lands in <head> as the
  * guide specifies (Part 7.1).
  */
-import '@fontsource/barlow/latin-700.css';
-import '@fontsource/barlow/latin-800.css';
-import '@fontsource/barlow/latin-900.css';
-import '@fontsource-variable/libre-franklin/wght.css';
-// Legacy styles stay until every page is rebuilt on the new design system.
-import '../styles/legacy/tokens.css';
-import '../styles/legacy/base.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 import { Font } from 'astro:assets';
@@ -26,7 +19,8 @@ import Breadcrumbs from '@components/Breadcrumbs.astro';
 import BreadcrumbSchema from '@components/schema/BreadcrumbSchema.astro';
 import PreloadImage from '@components/ui/PreloadImage.astro';
 import RequestDrawer from '@components/RequestDrawer.astro';
-import type { ImageKey } from '@components/ui/ResponsiveImage.astro';
+import MobileCallBar from '@components/MobileCallBar.astro';
+import type { ImageKey } from '@lib/media';
 
 interface Props {
   title: string;
@@ -150,6 +144,7 @@ const googleSiteVerification = site.integrations.googleSiteVerification;
 
     <Footer />
 
+    <MobileCallBar />
     <RequestDrawer service={drawerService} />
   </body>
 </html>

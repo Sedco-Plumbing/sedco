@@ -1,0 +1,363 @@
+---
+/**
+ * Homepage hero: navy panel with the job-site photo fading in from the right,
+ * the H1 and intro, Call + Request buttons, hours and four highlights.
+ * Desktop: the free-estimate card sits in the right column and hangs 520px
+ * down into the services section (which reserves that space, see
+ * ServicesGrid `formGap`). Mobile: the card follows the content.
+ *
+ * The photo is the page's LCP image: rendered with `priority` and preloaded
+ * by the page through BaseLayout with the same `sizes`.
+ */
+import { site, paths } from '@config/site';
+import { phoneHref } from '@lib/tokens';
+import Icon from '@components/ui/Icon.astro';
+import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
+import RequestForm from '@components/RequestForm.astro';
+import type { IconName } from '@lib/icons';
+import { HOME_HERO_SIZES } from '@lib/media';
+
+
+
+interface Props {
+  heading: string;
+  intro: string[];
+}
+
+const { heading, intro } = Astro.props;
+const phone = site.business.phone;
+
+const highlights: { icon: IconName; label: string }[] = [
+  { icon: 'wrench', label: '20+ Years Experienced' },
+  { icon: 'clipboard-check', label: 'Free Estimates' },
+  { icon: 'calendar-check', label: '30-Day Guarantee' },
+  { icon: 'star-outline', label: '5-Star Rated Plumber' },
+];
+---
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero__media" aria-hidden="true">
+    <ResponsiveImage
+      name="hero/sedco-plumber-el-cajon"
+      alt=""
+      priority
+      sizes={HOME_HERO_SIZES}
+      class="hero__img"
+    />
+  </div>
+
+  <div class="hero__grid">
+    <div class="hero__content">
+      <p class="hero__badge">
+        <Icon name="shield-check" size={18} />Licensed under CA {site.business.licenseClass}
+      </p>
+      <h1 class="hero__title" id="hero-heading">{heading}</h1>
+      {intro.map((paragraph) => <p class="hero__intro">{paragraph}</p>)}
+
+      <div class="hero__ctas on-navy">
+        <a class="btn btn--call btn--lg" href={phoneHref()}>
+          <Icon name="phone" size={24} />Call {phone}
+        </a>
+        <a class="btn btn--request btn--lg hero__request" href={`${paths.contact}#request`} data-open-request>
+          Request Service
+        </a>
+      </div>
+      <p class="hero__hours"><Icon name="clock" size={18} />{site.business.hours}</p>
+
+      <ul class="hero__highlights" aria-label="Why homeowners choose Sedco">
+        {
+          highlights.map((item) => (
+            <li>
+              <Icon name={item.icon} size={22} strokeWidth={1.9} />
+              <strong>{item.label}</strong>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="estimate" id="estimate">
+      <div class="chip-row">
+        <span class="chip chip--blue"><Icon name="check" size={14} strokeWidth={3} />Free Estimates</span>
+        <span class="chip chip--blue"><Icon name="check" size={14} strokeWidth={3} />No Trip Charge</span>
+      </div>
+      <p class="estimate__title">Get a free estimate</p>
+      <p class="estimate__lead">We'll call you back within 30 minutes, Monday to Saturday.</p>
+      <div class="estimate__form">
+        <RequestForm id="hero" variant="compact" source="home-hero" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    z-index: 2;
+    margin: 0 var(--section-inset);
+    padding: 64px clamp(24px, 5.5vw, 105px);
+    border-radius: var(--r-section);
+    background: var(--navy-800);
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+  }
+
+  .hero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--navy-800) 0%, var(--navy-800) 50%, rgba(11, 37, 69, 0) 64%);
+  }
+
+  .hero__media :global(.hero__img) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    max-width: none;
+    height: 100%;
+  }
+
+  .hero__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 72px;
+    align-items: end;
+    max-width: var(--container);
+    margin: 0 auto;
+  }
+
+  .hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 20px;
+    padding: 8px 14px;
+    border: 1px solid var(--navy-600);
+    border-radius: var(--r-pill);
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--white);
+  }
+
+  .hero__badge :global(svg) {
+    color: var(--blue-300);
+  }
+
+  .hero__title {
+    font-weight: 800;
+    font-size: 62px;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--white);
+  }
+
+  .hero__intro {
+    max-width: 640px;
+    margin-top: 12px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--blue-100);
+  }
+
+  .hero__title + .hero__intro {
+    margin-top: 20px;
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 36px;
+  }
+
+  .hero__ctas .btn:focus-visible {
+    outline-color: var(--white);
+  }
+
+  .hero__request {
+    padding: 0 26px;
+    font-size: 18px;
+  }
+
+  .hero__hours {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--blue-200);
+  }
+
+  .hero__hours :global(svg) {
+    flex: none;
+    color: var(--blue-300);
+  }
+
+  .hero__highlights {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 16px 48px;
+    max-width: 100%;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--navy-600);
+    list-style: none;
+  }
+
+  .hero__highlights li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero__highlights :global(svg) {
+    flex: none;
+    color: var(--yellow-500);
+  }
+
+  .hero__highlights strong {
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.25;
+    color: var(--white);
+  }
+
+  /* ---- free-estimate card ---- */
+
+  .estimate {
+    position: relative;
+    z-index: 3;
+    margin-bottom: -620px;
+    padding: 28px;
+    border-radius: var(--r-xl);
+    background: var(--white);
+    box-shadow: 0 30px 70px rgba(0, 35, 64, 0.28);
+    color: var(--ink);
+  }
+
+  .estimate .chip-row {
+    margin-bottom: 16px;
+  }
+
+  .estimate__title {
+    font-family: var(--font-title);
+    font-weight: 800;
+    color: var(--navy-800);
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .estimate__lead {
+    margin-top: 6px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--slate-600);
+  }
+
+  .estimate__form {
+    margin-top: 20px;
+  }
+
+  /* ---- reflow ---- */
+
+  @media (max-width: 1199px) {
+    .hero__title {
+      font-size: 52px;
+    }
+
+    .hero__grid {
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 959px) {
+    .hero__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero__media::after {
+      background: linear-gradient(180deg, rgba(11, 37, 69, 0.94) 0%, rgba(11, 37, 69, 0.86) 100%);
+    }
+
+    .hero__media :global(.hero__img) {
+      width: 100%;
+      object-fit: cover;
+      object-position: 78% center;
+    }
+
+    .estimate {
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 32px 20px 24px;
+    }
+
+    .hero__badge {
+      margin-bottom: 16px;
+    }
+
+    .hero__title {
+      font-size: 36px;
+      line-height: 1.08;
+    }
+
+    .hero__intro {
+      line-height: 1.55;
+    }
+
+    .hero__title + .hero__intro {
+      margin-top: 16px;
+    }
+
+    .hero__ctas {
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .hero__ctas .btn {
+      width: 100%;
+    }
+
+    .hero__hours {
+      align-items: flex-start;
+    }
+
+    .hero__hours :global(svg) {
+      margin-top: 2px;
+    }
+
+    .hero__highlights {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 16px;
+    }
+
+    .hero__highlights strong {
+      font-size: 16px;
+    }
+
+    .estimate {
+      margin-top: 4px;
+      padding: 20px;
+    }
+
+    .estimate .chip {
+      padding: 6px 10px;
+    }
+  }
+</style>

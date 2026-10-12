@@ -6,6 +6,7 @@
  * sticky sidebar) → orange final CTA. Copy comes verbatim from the service's
  * content entry; internal links use the guide's anchor text.
  */
+import '../../../styles/legacy/load'; // pre-redesign styles: remove when this page is rebuilt
 import type { GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import { getService, getCity, paths, site } from '@config/site';

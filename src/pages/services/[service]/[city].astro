@@ -9,6 +9,7 @@
  * Every one of these carries unique local copy from the guide — the
  * anti-doorway rule means no page is a clone with the city name swapped.
  */
+import '../../../styles/legacy/load'; // pre-redesign styles: remove when this page is rebuilt
 import type { GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import { getCity, getService, paths, siblingCombos } from '@config/site';

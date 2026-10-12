@@ -177,16 +177,22 @@ const { service } = Astro.props;
   const drawer = document.querySelector<HTMLDialogElement>('[data-request-drawer]');
 
   if (drawer) {
-    const open = (event: Event) => {
+    const open = (event: Event, trigger: HTMLElement) => {
       event.preventDefault();
+      // A trigger can pre-select its service, e.g. a service card's estimate button.
+      const service = trigger.dataset.service;
+      const select = drawer.querySelector<HTMLSelectElement>('select[name="service"]');
+      if (service && select && [...select.options].some((o) => o.value === service)) {
+        select.value = service;
+      }
       drawer.showModal();
       // Focus the first field rather than the close button.
       drawer.querySelector<HTMLInputElement>('input[name="name"]')?.focus();
     };
 
     document.addEventListener('click', (event) => {
-      const trigger = (event.target as HTMLElement).closest('[data-open-request]');
-      if (trigger) open(event);
+      const trigger = (event.target as HTMLElement).closest<HTMLElement>('[data-open-request]');
+      if (trigger) open(event, trigger);
     });
 
     drawer.addEventListener('click', (event) => {

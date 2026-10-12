@@ -1,0 +1,531 @@
+---
+/**
+ * "How Our Plumbing Service Works": a four-step player. The image stage
+ * cross-fades between the step photos; the step panel is a vertical timeline
+ * whose rail fills over each 5-second step, with only the current step's
+ * description open. It loops, has play/pause and a 0:00 / 0:20 readout, and
+ * clicking a step jumps to it. It runs only while on screen, and under
+ * prefers-reduced-motion it starts paused.
+ *
+ * Without JavaScript every step and its text is still in the HTML, with the
+ * first one shown. "What You Can Count On" closes the same navy panel.
+ */
+import Icon from '@components/ui/Icon.astro';
+import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
+import type { ImageKey } from '@lib/media';
+import CountOn from '@components/CountOn.astro';
+import type { IconName } from '@lib/icons';
+
+interface Step {
+  title: string;
+  text: string;
+  image: ImageKey;
+  alt: string;
+  icon: IconName;
+}
+
+const steps: Step[] = [
+  {
+    title: 'Call or send a request.',
+    text: "You can call us at (619) 714-0027 or fill in the short form on this page, and if you use the form, we'll call you back within 30 minutes from Monday to Saturday.",
+    image: 'how-it-works/step-1-call-sedco-plumbing',
+    alt: 'Homeowner calling Sedco Plumbing about a burst pipe while a Sedco plumber takes the call',
+    icon: 'phone',
+  },
+  {
+    title: 'We come to you.',
+    text: "Our plumbers drive out to homes and businesses all over San Diego County, same-day visits are available, and there's no call-out fee or trip charge for coming to see the problem.",
+    image: 'how-it-works/step-2-sedco-plumber-arrives',
+    alt: 'Sedco plumber arriving in the service van and at the front door',
+    icon: 'truck',
+  },
+  {
+    title: 'You get a free estimate.',
+    text: "Once our plumber has found the cause, you get a clear price for the work, and nothing starts until you're happy with it and say yes.",
+    image: 'how-it-works/step-3-free-plumbing-estimate',
+    alt: 'Sedco plumber showing the cracked pipe and explaining the free estimate',
+    icon: 'free-estimate',
+  },
+  {
+    title: 'We fix it and stand behind it.',
+    text: "When the job is finished, we test the work and explain what we found, and if anything goes wrong with it in the next 30 days, we'll come back and put it right at no charge.",
+    image: 'how-it-works/step-4-repair-tested-and-guaranteed',
+    alt: 'Sedco plumber finishing the repair and shaking hands with the homeowner',
+    icon: 'guarantee',
+  },
+];
+
+const STAGE_SIZES = '(max-width: 959px) calc(100vw - 30px), (max-width: 1440px) 70vw, 984px';
+---
+
+<section class="how" aria-labelledby="how-heading">
+  <div class="how__inner">
+    <div class="how__head">
+      <div>
+        <p class="eyebrow eyebrow--on-navy">How it works</p>
+        <h2 class="section-title section-title--on-navy" id="how-heading">How Our Plumbing Service Works</h2>
+      </div>
+      <p class="how__lead">
+        Dealing with a plumbing problem is stressful enough on its own, so we keep things simple and
+        make sure you know what's going to happen, and what it's going to cost, before we touch
+        anything.
+      </p>
+    </div>
+
+    <div class="player" data-player>
+      <div class="stage">
+        {
+          steps.map((step, index) => (
+            <div class="stage__frame" data-frame={index} data-active={index === 0 ? '' : undefined}>
+              <ResponsiveImage name={step.image} alt={step.alt} sizes={STAGE_SIZES} class="stage__img" />
+            </div>
+          ))
+        }
+        <div class="stage__progress" aria-hidden="true"><span data-progress></span></div>
+      </div>
+
+      <div class="panel">
+        <ol class="steps">
+          {
+            steps.map((step, index) => (
+              <li class="step" data-step={index} data-state={index === 0 ? 'on' : 'next'}>
+                {index < steps.length - 1 && (
+                  <span class="step__rail" aria-hidden="true">
+                    <span data-rail />
+                  </span>
+                )}
+                <button type="button" class="step__icon" data-go={index} aria-label={`Step ${index + 1}: ${step.title}`}>
+                  <Icon name={step.icon} size={20} strokeWidth={1.9} />
+                </button>
+                <div class="step__body">
+                  <button type="button" class="step__title" data-go={index} aria-current={index === 0 ? 'step' : undefined}>
+                    {step.title}
+                  </button>
+                  <div class="step__text">
+                    <div>
+                      <p>{step.text}</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="controls">
+          <button type="button" class="controls__toggle" data-toggle aria-label="Pause">
+            <Icon name="pause" size={16} class="controls__pause" />
+            <Icon name="play" size={16} class="controls__play" />
+          </button>
+          <span class="controls__time"><span data-time>0:00</span> / 0:20</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="how__count-on">
+      <CountOn />
+    </div>
+  </div>
+</section>
+
+<style>
+  .how {
+    margin: 24px 30px;
+    padding: 96px clamp(24px, 4vw, 64px);
+    border-radius: var(--r-section);
+    background: var(--navy-800);
+    color: var(--white);
+  }
+
+  .how__inner {
+    max-width: 1312px;
+    margin: 0 auto;
+  }
+
+  .how__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 48px;
+  }
+
+  .how__head .section-title {
+    letter-spacing: -0.03em;
+  }
+
+  .how__lead {
+    max-width: 500px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--blue-200);
+  }
+
+  /* ---- player ---- */
+
+  .player {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+    margin-top: 40px;
+    overflow: hidden;
+    border-radius: var(--r-2xl);
+    background: var(--navy-800);
+  }
+
+  .stage {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    background: #020c18;
+  }
+
+  .stage__frame {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 800ms ease;
+  }
+
+  .stage__frame[data-active] {
+    opacity: 1;
+  }
+
+  .stage__frame :global(.stage__img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .stage__progress {
+    display: none;
+  }
+
+  .panel {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 26px 24px;
+    background: var(--navy-900);
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+  }
+
+  .step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    column-gap: 14px;
+  }
+
+  .step__rail {
+    position: absolute;
+    left: 21px;
+    top: 50px;
+    bottom: 6px;
+    width: 2px;
+    overflow: hidden;
+    border-radius: 2px;
+    background: rgba(150, 198, 245, 0.2);
+  }
+
+  .step__rail span {
+    display: block;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(180deg, var(--yellow-500), #ffd166);
+    box-shadow: 0 0 10px rgba(255, 183, 3, 0.6);
+  }
+
+  .step[data-state='done'] .step__rail span {
+    height: 100%;
+  }
+
+  .step__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--navy-800);
+    box-shadow: inset 0 0 0 1.5px var(--blue-400);
+    color: var(--blue-300);
+    cursor: pointer;
+    transition:
+      background-color 400ms ease,
+      box-shadow 400ms ease,
+      color 400ms ease;
+  }
+
+  .step[data-state='on'] .step__icon {
+    background: var(--yellow-500);
+    box-shadow: 0 0 0 5px rgba(255, 183, 3, 0.22);
+    color: var(--navy-800);
+  }
+
+  .step[data-state='done'] .step__icon {
+    background: var(--yellow-200);
+    box-shadow: none;
+    color: var(--navy-800);
+  }
+
+  .step__body {
+    padding: 10px 0 22px;
+  }
+
+  .step:last-child .step__body {
+    padding-bottom: 0;
+  }
+
+  .step__title {
+    display: block;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.3;
+    text-align: left;
+    color: var(--blue-300);
+    cursor: pointer;
+    transition: color 400ms ease;
+  }
+
+  .step[data-state='on'] .step__title {
+    color: var(--white);
+  }
+
+  .step[data-state='done'] .step__title {
+    color: var(--blue-100);
+  }
+
+  .step__icon:focus-visible,
+  .step__title:focus-visible,
+  .controls__toggle:focus-visible {
+    outline-color: var(--blue-300);
+  }
+
+  .step__text {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .step__text > div {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .step__text p {
+    padding-top: 8px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--blue-200);
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity 500ms ease,
+      transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .step[data-state='on'] .step__text {
+    grid-template-rows: 1fr;
+  }
+
+  .step[data-state='on'] .step__text p {
+    opacity: 1;
+    transform: none;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 20px;
+  }
+
+  .controls__toggle {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--navy-800);
+    cursor: pointer;
+  }
+
+  .controls__toggle :global(.controls__play),
+  .player[data-paused] .controls__toggle :global(.controls__pause) {
+    display: none;
+  }
+
+  .player[data-paused] .controls__toggle :global(.controls__play) {
+    display: block;
+  }
+
+  .controls__time {
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 14px;
+    color: var(--blue-300);
+  }
+
+  .how__count-on {
+    margin-top: 44px;
+    padding-top: 44px;
+    border-top: 1px solid var(--navy-600);
+  }
+
+  /* ---- reflow ---- */
+
+  @media (max-width: 1199px) {
+    .player {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .how__head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .how {
+      margin: 16px var(--section-inset);
+      padding: 40px 20px;
+      border-radius: var(--r-2xl);
+    }
+
+    .how__lead {
+      font-size: 16px;
+    }
+
+    .player {
+      margin-top: 28px;
+      border-radius: var(--r-lg);
+    }
+
+    .stage__progress {
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      background: rgba(150, 198, 245, 0.2);
+    }
+
+    .stage__progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: var(--yellow-500);
+    }
+
+    .panel {
+      padding: 20px 16px;
+    }
+
+    .step__rail {
+      display: none;
+    }
+
+    .step__body {
+      padding-bottom: 14px;
+    }
+
+    .how__count-on {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+  }
+</style>
+
+<script>
+  const STEP_MS = 5000;
+
+  document.querySelectorAll<HTMLElement>('[data-player]').forEach((player) => {
+    const frames = [...player.querySelectorAll<HTMLElement>('[data-frame]')];
+    const steps = [...player.querySelectorAll<HTMLElement>('[data-step]')];
+    const rails = steps.map((step) => step.querySelector<HTMLElement>('[data-rail]'));
+    const progress = player.querySelector<HTMLElement>('[data-progress]');
+    const time = player.querySelector<HTMLElement>('[data-time]');
+    const toggle = player.querySelector<HTMLButtonElement>('[data-toggle]');
+    const count = steps.length;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let current = 0;
+    let elapsed = 0;
+    let paused = reduceMotion;
+    let visible = false;
+    let last = 0;
+    let frame = 0;
+
+    const render = () => {
+      steps.forEach((step, index) => {
+        step.dataset.state = index === current ? 'on' : index < current ? 'done' : 'next';
+        const title = step.querySelector('.step__title');
+        if (index === current) title?.setAttribute('aria-current', 'step');
+        else title?.removeAttribute('aria-current');
+        const rail = rails[index];
+        if (rail) rail.style.height = index < current ? '100%' : index === current ? `${(elapsed / STEP_MS) * 100}%` : '0%';
+      });
+      frames.forEach((f, index) => f.toggleAttribute('data-active', index === current));
+      if (progress) progress.style.width = `${((current + elapsed / STEP_MS) / count) * 100}%`;
+      if (time) {
+        const seconds = current * (STEP_MS / 1000) + Math.floor(elapsed / 1000);
+        time.textContent = `0:${String(seconds).padStart(2, '0')}`;
+      }
+      player.toggleAttribute('data-paused', paused);
+      toggle?.setAttribute('aria-label', paused ? 'Play' : 'Pause');
+    };
+
+    const tick = (now: number) => {
+      if (!last) last = now;
+      elapsed += now - last;
+      last = now;
+      if (elapsed >= STEP_MS) {
+        elapsed = 0;
+        current = (current + 1) % count;
+      }
+      render();
+      frame = requestAnimationFrame(tick);
+    };
+
+    const sync = () => {
+      cancelAnimationFrame(frame);
+      last = 0;
+      if (visible && !paused) frame = requestAnimationFrame(tick);
+      render();
+    };
+
+    player.querySelectorAll<HTMLElement>('[data-go]').forEach((button) =>
+      button.addEventListener('click', () => {
+        current = Number(button.dataset.go);
+        elapsed = 0;
+        sync();
+      }),
+    );
+
+    toggle?.addEventListener('click', () => {
+      paused = !paused;
+      sync();
+    });
+
+    // Only animate while the player is on screen.
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      sync();
+    }).observe(player);
+
+    render();
+  });
+</script>

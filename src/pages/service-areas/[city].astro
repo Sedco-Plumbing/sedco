@@ -9,6 +9,7 @@
  * requires, using the same @id and the same site-wide areaServed list as the
  * homepage so the entity is never published with conflicting data.
  */
+import '../../styles/legacy/load'; // pre-redesign styles: remove when this page is rebuilt
 import type { GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import { getCity, paths, serviceCityPairs } from '@config/site';

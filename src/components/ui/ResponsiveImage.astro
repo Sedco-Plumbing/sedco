@@ -10,8 +10,7 @@
  * high fetch priority. Pair it with <PreloadImage> in the page's head.
  */
 import images from '../../data/images.json';
-
-export type ImageKey = keyof typeof images;
+import type { ImageKey } from '@lib/media';
 
 interface Props {
   name: ImageKey;

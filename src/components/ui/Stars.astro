@@ -1,0 +1,35 @@
+---
+/**
+ * Five filled stars. Read out once via `label`; the individual stars are
+ * decorative. Pass no label where nearby text already states the rating.
+ */
+interface Props {
+  size?: number;
+  label?: string;
+  class?: string;
+}
+
+const { size = 20, label, class: className } = Astro.props;
+---
+
+<span class:list={['stars', className]} role={label ? 'img' : undefined} aria-label={label} aria-hidden={label ? undefined : 'true'}>
+  {
+    [0, 1, 2, 3, 4].map(() => (
+      <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 1.8l3.1 6.6 7.1.8-5.3 4.9 1.5 7.1L12 17.6l-6.4 3.6 1.5-7.1-5.3-4.9 7.1-.8z" />
+      </svg>
+    ))
+  }
+</span>
+
+<style>
+  .stars {
+    display: inline-flex;
+    gap: 2px;
+    fill: #ffb705;
+  }
+
+  .stars svg {
+    flex: none;
+  }
+</style>

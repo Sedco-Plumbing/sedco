@@ -86,6 +86,11 @@ textarea {
   outline-offset: 2px;
 }
 
+/* Component rules like `.form-alert { display: flex }` must not unhide [hidden]. */
+[hidden] {
+  display: none !important;
+}
+
 summary {
   list-style: none;
 }

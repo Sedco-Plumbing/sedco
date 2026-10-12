@@ -1,0 +1,171 @@
+---
+/**
+ * Photo collage on the left half, text on the right (desktop); stacked on
+ * mobile. Used on the homepage ("An El Cajon Plumbing Company With 20 Years of
+ * Experience", linking to /about/) and on the About page.
+ */
+import Icon from '@components/ui/Icon.astro';
+import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
+
+interface Props {
+  heading: string;
+  paragraphs: string[];
+  link?: { href: string; label: string };
+  id?: string;
+}
+
+const { heading, paragraphs, link, id = 'about' } = Astro.props;
+---
+
+<section class="about-split" id={id} aria-labelledby={`${id}-heading`}>
+  <div class="about-split__media">
+    <ResponsiveImage
+      name="about/sedco-plumbing-jobs-san-diego-county"
+      sizes="(max-width: 959px) calc(100vw - 30px), 50vw"
+      class="about-split__img"
+    />
+  </div>
+  <div class="about-split__text">
+    <h2 class="about-split__title" id={`${id}-heading`}>{heading}</h2>
+    {paragraphs.map((paragraph) => <p class="about-split__p">{paragraph}</p>)}
+    {
+      link && (
+        <a class="about-split__link" href={link.href}>
+          {link.label}
+          <Icon name="arrow-right" size={18} />
+        </a>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .about-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 600px) minmax(0, 600px) minmax(0, 1fr);
+    align-items: stretch;
+    margin: 40px var(--section-inset) 24px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-section);
+    background: var(--white);
+  }
+
+  .about-split__media {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    position: relative;
+    min-height: 800px;
+  }
+
+  .about-split__media :global(.about-split__img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-split__text {
+    grid-column: 3;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 40px 80px 72px;
+  }
+
+  .about-split__title {
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .about-split__p {
+    margin-top: 16px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--slate-600);
+  }
+
+  .about-split__title + .about-split__p {
+    margin-top: 20px;
+  }
+
+  .about-split__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    min-height: 44px;
+    margin-top: 28px;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+
+  .about-split__link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  @media (max-width: 1199px) {
+    .about-split {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .about-split__media {
+      grid-column: 1;
+      min-height: 640px;
+    }
+
+    .about-split__text {
+      grid-column: 2;
+      padding: 56px 40px;
+    }
+  }
+
+  @media (max-width: 959px) {
+    .about-split {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .about-split__media {
+      grid-column: 1;
+      min-height: 0;
+      aspect-ratio: 900 / 760;
+    }
+
+    .about-split__text {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-split {
+      margin: 32px var(--section-inset) 16px;
+      border-radius: var(--r-2xl);
+    }
+
+    .about-split__text {
+      padding: 32px 24px 44px;
+    }
+
+    .about-split__title {
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .about-split__p {
+      font-size: 17px;
+    }
+
+    .about-split__link {
+      font-size: 17px;
+    }
+  }
+</style>

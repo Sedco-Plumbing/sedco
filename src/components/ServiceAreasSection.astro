@@ -1,0 +1,231 @@
+---
+/**
+ * Service-area section: text and town links on the left, the East County map
+ * on the right (desktop); map below the text on mobile. Every town links to its
+ * live /service-areas/[town]/ page. Used on Home, About, Contact and the
+ * Service Areas hub.
+ */
+import { site, paths } from '@config/site';
+import { phoneHref } from '@lib/tokens';
+import Icon from '@components/ui/Icon.astro';
+import ServiceAreaMapSvg from './ServiceAreaMapSvg.astro';
+
+interface Props {
+  heading?: string;
+  paragraphs?: string[];
+  id?: string;
+  /** Hide the town buttons (e.g. on the Service Areas hub, which lists towns already) */
+  showTowns?: boolean;
+}
+
+const {
+  heading = 'A Licensed Plumber Serving East County San Diego',
+  paragraphs = [
+    "Sedco Plumbing is based in El Cajon, and because we're a mobile plumbing company, our plumbers come straight to your home, rental or business rather than asking you to visit a shop. As a licensed plumber in East County San Diego, we do most of our work in the towns listed below, but we take jobs right across San Diego County, so wherever your property is, you can call us at any hour from Monday to Saturday.",
+    "If your town isn't on the list, just give us a call or put your ZIP code in the form on this page, and we'll set up a visit in the same way, with the same free estimate and the same prices you'd get in El Cajon.",
+  ],
+  id = 'service-areas',
+  showTowns = true,
+} = Astro.props;
+
+const mapLabel = `Map of East County San Diego with Sedco Plumbing's service areas highlighted: ${site.cities
+  .filter((c) => c.slug !== 'san-diego')
+  .map((c) => c.name)
+  .join(', ')}, and San Diego to the west`;
+---
+
+<section class="areas-section" id={id} aria-labelledby={`${id}-heading`}>
+  <div class="areas-section__text">
+    <p class="eyebrow">Service areas</p>
+    <h2 class="areas-section__title" id={`${id}-heading`}>{heading}</h2>
+    {paragraphs.map((paragraph) => <p class="areas-section__p">{paragraph}</p>)}
+
+    {
+      showTowns && (
+        <ul class="towns">
+          {site.cities.map((city) => (
+            <li>
+              <a href={paths.city(city.slug)}>
+                <Icon name="map-pin" size={16} />
+                {city.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <a class="btn btn--call btn--block areas-section__call" href={phoneHref()}>
+      <Icon name="phone" size={20} />Call {site.business.phone}
+    </a>
+  </div>
+
+  <div class="areas-section__map" role="img" aria-label={mapLabel}>
+    <ServiceAreaMapSvg />
+  </div>
+</section>
+
+<style>
+  .areas-section {
+    display: grid;
+    grid-template-columns: minmax(24px, 1fr) minmax(0, 660px) minmax(0, 540px) minmax(0, 1fr);
+    align-items: stretch;
+    margin: 24px var(--section-inset);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-section);
+    background: var(--white);
+  }
+
+  .areas-section__text {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 56px 80px 0;
+  }
+
+  .areas-section__title {
+    margin-top: 12px;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+
+  .areas-section__p {
+    margin-top: 12px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--slate-600);
+  }
+
+  .areas-section__title + .areas-section__p {
+    margin-top: 18px;
+  }
+
+  .towns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 28px;
+    list-style: none;
+  }
+
+  .towns a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--navy-800);
+    border-radius: var(--r-md);
+    background: var(--navy-800);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--white);
+    text-decoration: none;
+    transition:
+      background-color var(--t-fast) ease,
+      border-color var(--t-fast) ease,
+      color var(--t-fast) ease;
+  }
+
+  .towns a:hover {
+    border-color: var(--yellow-500);
+    background: var(--yellow-500);
+    color: #000;
+  }
+
+  .towns :global(svg) {
+    flex: none;
+  }
+
+  .areas-section__call {
+    margin-top: 28px;
+    height: 56px;
+    font-size: 17px;
+  }
+
+  .areas-section__call:hover {
+    background: var(--yellow-400);
+    transform: scale(1.02);
+  }
+
+  .areas-section__map {
+    grid-column: 3 / 5;
+    grid-row: 1;
+    position: relative;
+    min-height: 760px;
+    overflow: hidden;
+    background: var(--navy-800);
+  }
+
+  .areas-section__map :global(.map-svg) {
+    position: absolute;
+    inset: 0;
+  }
+
+  @media (max-width: 1199px) {
+    .areas-section {
+      grid-template-columns: 40px minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .areas-section__map {
+      grid-column: 3;
+    }
+  }
+
+  @media (max-width: 959px) {
+    .areas-section {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .areas-section__text {
+      grid-column: 1;
+      padding: 56px 32px 40px;
+    }
+
+    .areas-section__map {
+      grid-column: 1;
+      grid-row: 2;
+      min-height: 0;
+      aspect-ratio: 1000 / 900;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .areas-section {
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .areas-section__text {
+      padding: 44px 24px 28px;
+    }
+
+    .areas-section__title {
+      margin-top: 10px;
+      font-size: 28px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .areas-section__p {
+      line-height: 1.6;
+    }
+
+    .towns a {
+      height: 46px;
+      font-size: 15px;
+    }
+
+    .areas-section__map {
+      margin: 0 var(--section-inset);
+      border-radius: var(--r-2xl);
+    }
+  }
+</style>

@@ -11,7 +11,7 @@
  */
 import { site, paths, type ServiceDef } from './site';
 import type { IconName } from '@lib/icons';
-import type { ImageKey } from '@components/ui/ResponsiveImage.astro';
+import type { ImageKey } from '@lib/media';
 
 export type DesignGroupKey = 'repairs' | 'drains' | 'remodels' | 'heaters';
 

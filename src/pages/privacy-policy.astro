@@ -10,6 +10,7 @@
  * tracks it and `npm run verify` warns until `legal.privacyPolicyApproved` is
  * set in src/config/site.ts.
  */
+import '../styles/legacy/load'; // pre-redesign styles: remove when this page is rebuilt
 import { site, paths } from '@config/site';
 import { th, emailHref } from '@lib/tokens';
 

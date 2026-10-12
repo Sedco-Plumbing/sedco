@@ -1,0 +1,77 @@
+---
+/**
+ * Persistent click-to-call bar on phones (≤ 768px): "Call Now · number" plus
+ * a Text button, fixed to the bottom of the screen. The layout pads the page
+ * by the bar's height so it never covers the footer.
+ */
+import { site } from '@config/site';
+import { phoneHref } from '@lib/tokens';
+import Icon from '@components/ui/Icon.astro';
+
+const tel = phoneHref();
+const sms = `sms:${tel.replace('tel:', '')}`;
+---
+
+<div class="call-bar">
+  <a class="call-bar__call" href={tel}>
+    <Icon name="phone" size={20} />
+    Call Now · {site.business.phone}
+  </a>
+  <a class="call-bar__text" href={sms}>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    Text
+  </a>
+</div>
+
+<style>
+  .call-bar {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .call-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 35;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 112px;
+      height: calc(64px + env(safe-area-inset-bottom));
+      padding-bottom: env(safe-area-inset-bottom);
+      box-shadow: 0 -8px 24px rgba(11, 37, 69, 0.18);
+    }
+
+    .call-bar a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .call-bar__call {
+      background: var(--yellow-500);
+      color: var(--navy-800);
+    }
+
+    .call-bar__call:active {
+      background: var(--yellow-700);
+    }
+
+    .call-bar__text {
+      background: var(--navy-800);
+      color: var(--white);
+    }
+
+    .call-bar a:focus-visible {
+      outline-offset: -4px;
+    }
+
+    :global(body) {
+      padding-bottom: calc(64px + env(safe-area-inset-bottom));
+    }
+  }
+</style>
