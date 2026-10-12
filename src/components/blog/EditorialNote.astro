@@ -20,24 +20,26 @@ const { label = 'Before publishing' } = Astro.props;
 
 <style>
   .editorial-note {
-    background: var(--ph-bg);
-    border: 1px dashed var(--ph-border);
-    border-radius: var(--r-card);
-    padding: 1rem 1.125rem;
-    margin-block: 1.5rem;
+    margin-block: 24px;
+    padding: 16px 18px;
+    border: 1px dashed var(--yellow-600);
+    border-radius: var(--r-md);
+    background: var(--yellow-50);
   }
+
   .editorial-note strong {
     display: block;
-    font-size: 0.75rem;
-    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-size: 12px;
     letter-spacing: 0.1em;
-    color: var(--ph-text);
-    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    color: var(--gold-text);
   }
+
   .editorial-note :global(p) {
-    font-size: 0.875rem !important;
-    line-height: 1.6 !important;
-    color: var(--ph-text) !important;
     margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gold-ink);
   }
 </style>

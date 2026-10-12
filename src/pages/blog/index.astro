@@ -1,18 +1,19 @@
 ---
 /**
- * BLOG INDEX — design Blog.dc.html: featured post, then a card grid.
+ * BLOG INDEX — 2026 design language (the handoff has no blog design): page
+ * hero → featured post → card grid of the rest → contact section.
  * Posts are Keystatic-managed (src/content/blog).
  */
-import '../../styles/legacy/load'; // pre-redesign styles: remove when this page is rebuilt
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { paths } from '@config/site';
 import { images } from '@lib/images';
 
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Hero from '@components/Hero.astro';
-import HeroCtas from '@components/HeroCtas.astro';
-import CtaSection from '@components/CtaSection.astro';
+import PageHero from '@components/PageHero.astro';
+import ContactSection from '@components/ContactSection.astro';
+import Icon from '@components/ui/Icon.astro';
+import { PAGE_HERO_SIZES } from '@lib/media';
 import PageSchema from '@components/schema/PageSchema.astro';
 
 const title = 'Plumbing Tips & Local Guides | Sedco Plumbing Blog';
@@ -35,208 +36,256 @@ const dateFormat = new Intl.DateTimeFormat('en-US', {
 });
 ---
 
-<BaseLayout title={title} description={description} path={path} crumbs={crumbs}>
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  crumbs={crumbs}
+  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES }}
+>
   <Fragment slot="head">
     <PageSchema type="Blog" name={title} description={description} path={path} />
   </Fragment>
 
-  <Hero
-    variant="center"
-    image={images.heroGeneral}
-    badge="East County plumbing know-how"
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Plumbing tips & local guides"
     heading="Plumbing Advice for East County Homes"
-    intro="Local, practical answers from the crew that works on these houses every day — hard water, slab leaks, aging pipe, and what things actually cost in San Diego County."
-  >
-    <HeroCtas slot="cta" center />
-  </Hero>
+    intro="Local, practical answers from the plumbers who work on these houses every day: hard water, slab leaks, aging pipes, water heaters and what things actually cost in San Diego County."
+  />
 
   {
     posts.length === 0 ? (
-      <section class="section">
+      <section class="blog">
         <div class="container">
           <p class="empty-note">
-            <span class="ph-chip">NO POSTS YET</span>
-            Publish the first two posts from the content guide's Part 8 calendar through the
-            <a href="/keystatic"> Keystatic admin</a>, and they will appear here automatically.
+            No posts yet. Publish the first post through the <a href="/keystatic">Keystatic admin</a> and
+            it will appear here automatically.
           </p>
         </div>
       </section>
     ) : (
-      <>
-        <section class="section">
-          <div class="container">
-            <a class="featured" href={paths.post(featured.id)}>
-              <div class="featured__media">
-                <Image
-                  src={featured.data.featuredImage ?? images.blogDefault.src}
-                  alt={featured.data.featuredImageAlt || images.blogDefault.alt}
-                  widths={[480, 900]}
-                  sizes="(max-width: 900px) 100vw, 560px"
-                  loading="eager"
-                />
-                <span class="featured__pill">Featured</span>
-              </div>
-              <div class="featured__body">
-                <span class="cat-pill">{featured.data.category}</span>
-                <h2>{featured.data.title}</h2>
-                <p>{featured.data.excerpt}</p>
-                <span class="meta">
-                  {dateFormat.format(featured.data.publishDate)} · {featured.data.author}
-                </span>
-                <span class="card__more" aria-hidden="true">
-                  Read more →
-                </span>
-              </div>
-            </a>
-          </div>
-        </section>
+      <section class="blog" aria-label="Articles">
+        <div class="container">
+          <a class="featured" href={paths.post(featured.id)}>
+            <div class="featured__media">
+              <Image
+                src={featured.data.featuredImage ?? images.blogDefault.src}
+                alt={featured.data.featuredImageAlt || images.blogDefault.alt}
+                widths={[480, 900]}
+                sizes="(max-width: 900px) calc(100vw - 48px), 560px"
+              />
+              <span class="featured__pill">Featured</span>
+            </div>
+            <div class="featured__body">
+              <span class="cat">{featured.data.category}</span>
+              <h2 class="featured__title">{featured.data.title}</h2>
+              <p class="featured__excerpt">{featured.data.excerpt}</p>
+              <span class="meta">{dateFormat.format(featured.data.publishDate)} · {featured.data.author}</span>
+              <span class="more" aria-hidden="true">Read the article<Icon name="arrow-right" size={16} /></span>
+            </div>
+          </a>
 
-        {rest.length > 0 && (
-          <section class="section section--tight">
-            <div class="container">
-              <h2 class="all-heading">All Articles</h2>
-              <ul class="grid grid--3 post-grid" role="list">
+          {rest.length > 0 && (
+            <>
+              <h2 class="all-title">All Articles</h2>
+              <ul class="posts">
                 {rest.map((post) => (
                   <li>
-                    <a class="card post-card" href={paths.post(post.id)}>
-                      <span class="post-card__bar" aria-hidden="true" />
-                      <span class="cat-pill">{post.data.category}</span>
-                      <h3>{post.data.title}</h3>
-                      <p>{post.data.excerpt}</p>
+                    <a class="post-card" href={paths.post(post.id)}>
+                      <span class="cat">{post.data.category}</span>
+                      <h3 class="post-card__title">{post.data.title}</h3>
+                      <p class="post-card__excerpt">{post.data.excerpt}</p>
                       <span class="meta">{dateFormat.format(post.data.publishDate)}</span>
-                      <span class="card__more" aria-hidden="true">
-                        Read more →
-                      </span>
+                      <span class="more" aria-hidden="true">Read more<Icon name="arrow-right" size={16} /></span>
                     </a>
                   </li>
                 ))}
               </ul>
-            </div>
-          </section>
-        )}
-      </>
+            </>
+          )}
+        </div>
+      </section>
     )
   }
 
-  <CtaSection
-    variant="dark"
-    heading="Have a Plumbing Question We Have Not Covered?"
-    body="Call Sedco Plumbing at [PHONE] and ask. We would rather explain your options over the phone than sell you a visit you do not need."
+  <ContactSection
+    heading="Have a Plumbing Question We Haven't Covered?"
+    intro="Call Sedco Plumbing at {phone} and ask. We'd rather explain your options over the phone than sell you a visit you don't need."
   />
 </BaseLayout>
 
 <style>
+  .blog {
+    padding: 72px 0 24px;
+  }
+
   .empty-note {
-    background: var(--ph-bg);
-    border: 1px dashed var(--ph-border);
-    color: var(--ph-text);
-    border-radius: var(--r-card);
-    padding: 1.125rem 1.25rem;
-    font-size: var(--fs-sm);
-    line-height: 1.6;
-    max-width: var(--measure-prose);
-    margin-inline: auto;
+    font-size: 17px;
+    color: var(--slate-600);
   }
 
   .featured {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-    align-items: center;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: var(--r-card-lg);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-2xl);
+    background: var(--white);
+    color: inherit;
+    text-decoration: none;
     transition:
-      border-color var(--t-med),
-      box-shadow var(--t-med);
+      box-shadow var(--t-base) ease,
+      transform var(--t-base) ease;
   }
+
   .featured:hover {
-    border-color: var(--brand-primary);
-    box-shadow: var(--sh-card-hover);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
   }
+
   .featured__media {
     position: relative;
-    height: 100%;
-    min-height: 300px;
+    min-height: 320px;
   }
-  .featured__media img {
+
+  .featured__media :global(img) {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+
   .featured__pill {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background: var(--accent);
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 0.375rem 0.75rem;
+    top: 18px;
+    left: 18px;
+    padding: 6px 12px;
     border-radius: var(--r-pill);
+    background: var(--yellow-500);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy-800);
   }
+
   .featured__body {
-    padding: 2rem 2.25rem 2rem 0;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-  }
-  .featured__body h2 {
-    font-size: var(--fs-h2-sm);
-  }
-  .featured__body p {
-    color: var(--text-soft);
-    font-size: var(--fs-prose);
-    line-height: 1.6;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 40px;
   }
 
-  .cat-pill {
-    align-self: flex-start;
-    background: var(--tint);
-    color: var(--brand-primary);
-    font-size: 0.75rem;
+  .cat {
+    font-size: 13px;
     font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 0.3125rem 0.625rem;
-    border-radius: var(--r-pill);
+    color: var(--blue-600);
   }
+
+  .featured__title {
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .featured__excerpt,
+  .post-card__excerpt {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--slate-600);
+  }
+
   .meta {
-    font-size: 0.8125rem;
-    color: var(--text-muted);
+    font-size: 14px;
+    color: var(--slate-500);
   }
 
-  .all-heading {
-    margin-bottom: 1.75rem;
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    font-weight: 600;
+    color: var(--blue-600);
   }
-  .post-grid {
+
+  .all-title {
+    margin-top: 64px;
+    font-weight: 800;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+  }
+
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 24px;
     list-style: none;
-    padding: 0;
-  }
-  .post-grid > li {
-    display: flex;
-  }
-  .post-card {
-    width: 100%;
-    padding-top: 1.875rem;
-  }
-  .post-card__bar {
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--brand-primary), var(--cyan));
   }
 
-  @media (max-width: 900px) {
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--yellow-500);
+    border-radius: var(--r-xl);
+    background: var(--white);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      box-shadow var(--t-base) ease,
+      transform var(--t-base) ease;
+  }
+
+  .post-card:hover {
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
+  }
+
+  .post-card__title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  @media (max-width: 959px) {
     .featured {
-      grid-template-columns: 1fr;
-      gap: 0;
+      grid-template-columns: minmax(0, 1fr);
     }
+
+    .featured__media {
+      min-height: 220px;
+      aspect-ratio: 16 / 9;
+    }
+
+    .posts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .blog {
+      padding: 40px 0 8px;
+    }
+
     .featured__body {
-      padding: 1.75rem;
+      padding: 24px;
+    }
+
+    .featured__title {
+      font-size: 24px;
+    }
+
+    .posts {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>

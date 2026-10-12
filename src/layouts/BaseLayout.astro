@@ -15,7 +15,6 @@ import type { Crumb } from '@lib/types';
 import Seo from '@components/Seo.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
-import Breadcrumbs from '@components/Breadcrumbs.astro';
 import BreadcrumbSchema from '@components/schema/BreadcrumbSchema.astro';
 import PreloadImage from '@components/ui/PreloadImage.astro';
 import RequestDrawer from '@components/RequestDrawer.astro';
@@ -28,7 +27,10 @@ interface Props {
   title: string;
   description: string;
   path: string;
-  /** Breadcrumb trail; omit on the homepage */
+  /**
+   * Breadcrumb trail for the BreadcrumbList schema; omit on the homepage. Pages
+   * render the visible trail themselves, inside their hero.
+   */
   crumbs?: Crumb[];
   ogImage?: string;
   publishedTime?: Date;
@@ -40,11 +42,6 @@ interface Props {
   preloadImage?: PreloadSpec | PreloadSpec[];
   /** Service pre-selected in the Request drawer (catalog name) */
   drawerService?: string;
-  /**
-   * True when the page renders its breadcrumb trail inside its own hero (the
-   * redesign). The BreadcrumbList schema is still emitted here either way.
-   */
-  inlineCrumbs?: boolean;
 }
 
 const {
@@ -57,7 +54,6 @@ const {
   noindex,
   preloadImage,
   drawerService,
-  inlineCrumbs = false,
 } = Astro.props;
 const ga4 = site.integrations.ga4;
 const gtm = site.integrations.gtm;
@@ -145,8 +141,6 @@ const googleSiteVerification = site.integrations.googleSiteVerification;
     <a class="skip-link" href="#main">Skip to content</a>
 
     <Header />
-
-    {crumbs && crumbs.length > 1 && !inlineCrumbs && <Breadcrumbs crumbs={crumbs} />}
 
     <main id="main">
       <slot />
