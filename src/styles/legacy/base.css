@@ -1,3 +1,6 @@
+/* Legacy styles, layered below the redesign so new components always win.
+   Delete this folder once no page uses the old classes. */
+@layer legacy {
 /**
  * BASE + SHARED PRIMITIVES
  * The design's repeated pieces (heroes, cards, pills, buttons, accordions,
@@ -1154,4 +1157,6 @@ a.pill--dark:hover {
   html {
     scroll-behavior: auto;
   }
+}
+
 }

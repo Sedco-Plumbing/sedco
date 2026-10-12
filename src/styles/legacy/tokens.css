@@ -1,3 +1,6 @@
+/* Legacy styles, layered below the redesign so new components always win.
+   Delete this folder once no page uses the old classes. */
+@layer legacy {
 /**
  * DESIGN TOKENS — Sedco Plumbing
  * Values taken from the approved design handoff (design README + prototypes).
@@ -155,4 +158,6 @@
     /* Shorter wave on small screens; hero bottom padding tracks it via calc(). */
     --hero-wave-h: 48px;
   }
+}
+
 }

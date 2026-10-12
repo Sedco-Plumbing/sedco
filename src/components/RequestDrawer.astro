@@ -1,0 +1,204 @@
+---
+/**
+ * "Request Service" drawer. A native <dialog> opened with showModal(), so the
+ * browser provides the focus trap, Escape-to-close, the inert page behind it
+ * and focus return to the trigger. It slides in from the right (420ms) over a
+ * blurred backdrop; a click on the backdrop closes it.
+ *
+ * Any element with [data-open-request] opens it. Those elements are links to
+ * /contact/#request, so without JavaScript they still reach a working form.
+ */
+import RequestForm from './RequestForm.astro';
+import Icon from '@components/ui/Icon.astro';
+
+interface Props {
+  /** Pre-selected service name on service pages */
+  service?: string;
+}
+
+const { service } = Astro.props;
+---
+
+<dialog class="drawer" aria-labelledby="drawer-title" data-request-drawer>
+  <div class="drawer__head">
+    <div>
+      <p id="drawer-title" class="drawer__title">Request Service</p>
+      <p class="drawer__lead">We'll call you back within 30 minutes, Monday to Saturday.</p>
+      <div class="chip-row drawer__chips">
+        <span class="chip"><Icon name="check" size={16} strokeWidth={2.75} />Free Estimates</span>
+        <span class="chip"><Icon name="check" size={16} strokeWidth={2.75} />No Trip Charge</span>
+      </div>
+    </div>
+    <button type="button" class="drawer__close" aria-label="Close" data-drawer-close>
+      <Icon name="close" size={22} strokeWidth={2.25} />
+    </button>
+  </div>
+  <div class="drawer__body">
+    <RequestForm id="drawer" source="drawer" service={service} closeButton />
+  </div>
+</dialog>
+
+<style>
+  .drawer {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(600px, 100vw);
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 24px 0 0 24px;
+    background: var(--white);
+    box-shadow: var(--shadow-drawer);
+    color: var(--ink);
+    overflow: hidden;
+    transform: translateX(calc(100% + 40px));
+    transition:
+      transform var(--t-slow) var(--ease-drawer),
+      overlay var(--t-slow) allow-discrete,
+      display var(--t-slow) allow-discrete;
+  }
+
+  .drawer[open] {
+    display: flex;
+    flex-direction: column;
+    transform: translateX(0);
+  }
+
+  @starting-style {
+    .drawer[open] {
+      transform: translateX(calc(100% + 40px));
+    }
+  }
+
+  .drawer::backdrop {
+    background: rgba(6, 24, 48, 0);
+    backdrop-filter: blur(0);
+    transition:
+      background-color 320ms ease,
+      backdrop-filter 320ms ease,
+      overlay 320ms allow-discrete,
+      display 320ms allow-discrete;
+  }
+
+  .drawer[open]::backdrop {
+    background: rgba(6, 24, 48, 0.55);
+    backdrop-filter: blur(3px);
+  }
+
+  @starting-style {
+    .drawer[open]::backdrop {
+      background: rgba(6, 24, 48, 0);
+      backdrop-filter: blur(0);
+    }
+  }
+
+  .drawer__head {
+    flex: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 36px 40px 20px;
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .drawer__title {
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 34px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--navy-800);
+  }
+
+  .drawer__lead {
+    margin-top: 6px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--slate-600);
+  }
+
+  .drawer__chips {
+    margin-top: 14px;
+  }
+
+  .drawer__close {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--r-md);
+    background: var(--slate-50);
+    color: var(--navy-800);
+    cursor: pointer;
+    transition:
+      background-color var(--t-fast) ease,
+      transform var(--t-fast) ease;
+  }
+
+  .drawer__close:hover {
+    background: var(--blue-100);
+    transform: rotate(90deg);
+  }
+
+  .drawer__body {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 24px 40px 32px;
+  }
+
+  @media (max-width: 768px) {
+    .drawer {
+      border-radius: 0;
+    }
+
+    .drawer__head {
+      padding: 24px 20px 16px;
+    }
+
+    .drawer__title {
+      font-size: 28px;
+    }
+
+    .drawer__body {
+      padding: 20px 20px 28px;
+    }
+  }
+</style>
+
+<script>
+  const drawer = document.querySelector<HTMLDialogElement>('[data-request-drawer]');
+
+  if (drawer) {
+    const open = (event: Event) => {
+      event.preventDefault();
+      drawer.showModal();
+      // Focus the first field rather than the close button.
+      drawer.querySelector<HTMLInputElement>('input[name="name"]')?.focus();
+    };
+
+    document.addEventListener('click', (event) => {
+      const trigger = (event.target as HTMLElement).closest('[data-open-request]');
+      if (trigger) open(event);
+    });
+
+    drawer.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      // The dialog element itself is only the click target on its backdrop.
+      if (target === drawer || target.closest('[data-drawer-close]')) drawer.close();
+    });
+
+    // Lock page scroll while open (the dialog's own body scrolls).
+    const observer = new MutationObserver(() => {
+      document.documentElement.style.overflow = drawer.open ? 'hidden' : '';
+    });
+    observer.observe(drawer, { attributes: true, attributeFilter: ['open'] });
+  }
+</script>

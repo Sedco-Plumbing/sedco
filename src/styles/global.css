@@ -16,6 +16,8 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* lets the FAQ accordion animate to height: auto (Chromium; others snap) */
+  interpolate-size: allow-keywords;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 24px);
 }
@@ -527,6 +529,7 @@ textarea.input {
   align-items: flex-start;
   gap: 20px;
   padding: 24px 0;
+  text-align: left;
 }
 
 .form-success__icon {

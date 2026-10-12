@@ -1,0 +1,221 @@
+---
+/**
+ * FAQ accordion: native <details>/<summary>, so it works with zero JavaScript.
+ * The first item starts open. Each question is an H3 inside its <summary> to
+ * keep the page's heading order (H2 section → H3 questions).
+ *
+ * FAQPage schema comes from the same `faqs` array via schema/FaqSchema.astro,
+ * so the structured data can never drift from the visible answers.
+ *
+ * Answers may use the content's inline link syntax `[anchor](/path/)` and
+ * placeholder tokens; `th()` resolves both.
+ */
+import { th } from '@lib/tokens';
+import type { Faq as FaqItem } from '@lib/types';
+import { site } from '@config/site';
+import { phoneHref } from '@lib/tokens';
+import Icon from '@components/ui/Icon.astro';
+
+interface Props {
+  faqs: FaqItem[];
+  heading?: string;
+  /** "page": full-width section. "column": inside the service-page article column. */
+  variant?: 'page' | 'column';
+  id?: string;
+  /** Show the full-width Call button under the list on mobile (homepage design) */
+  mobileCall?: boolean;
+}
+
+const {
+  faqs,
+  heading = 'Common Questions About Our Plumbing Service',
+  variant = 'page',
+  id = 'faq',
+  mobileCall = false,
+} = Astro.props;
+const headingId = `${id}-heading`;
+---
+
+<section class:list={['faq', `faq--${variant}`]} id={id} aria-labelledby={headingId}>
+  <div class:list={[variant === 'page' && 'container']}>
+    <h2 class="faq__title" id={headingId} set:html={th(heading)} />
+    <div class="faq__list">
+      {
+        faqs.map((faq, index) => (
+          <details class="faq__item" open={index === 0}>
+            <summary class="faq__summary">
+              <h3 class="faq__q" set:html={th(faq.question)} />
+              <span class="faq__toggle" aria-hidden="true">
+                <Icon name="chevron-down" size={18} />
+              </span>
+            </summary>
+            <div class="faq__a">
+              {faq.answer.map((paragraph) => (
+                <p set:html={th(paragraph)} />
+              ))}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+    {
+      mobileCall && (
+        <a class="btn btn--call btn--block faq__call" href={phoneHref()}>
+          <Icon name="phone" size={20} />
+          Call {site.business.phone}
+        </a>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .faq--page {
+    padding: 72px 0 64px;
+  }
+
+  .faq__title {
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .faq__list {
+    margin-top: 40px;
+    border-top: 1px solid var(--blue-200);
+  }
+
+  .faq__item {
+    border-bottom: 1px solid var(--blue-200);
+  }
+
+  .faq__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 44px;
+    padding: 24px 0;
+    border-radius: var(--r-sm);
+    cursor: pointer;
+  }
+
+  .faq__q {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .faq__toggle {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--blue-200);
+    border-radius: 50%;
+    background: var(--blue-50);
+    color: var(--blue-600);
+    transition: transform 300ms ease;
+  }
+
+  .faq__item[open] .faq__toggle {
+    transform: rotate(180deg);
+  }
+
+  .faq__summary:hover .faq__toggle {
+    background: var(--blue-100);
+  }
+
+  .faq__a {
+    padding: 0 64px 28px 0;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--slate-600);
+  }
+
+  .faq__a p + p {
+    margin-top: 12px;
+  }
+
+  /* Smooth open/close where ::details-content is supported; others snap. */
+  .faq__item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 600ms cubic-bezier(0.4, 0, 0.2, 1),
+      content-visibility 600ms allow-discrete;
+  }
+
+  .faq__item[open]::details-content {
+    block-size: auto;
+  }
+
+  .faq__call {
+    display: none;
+  }
+
+  /* ---- inside the service page's article column ---- */
+  .faq--column .faq__title {
+    font-size: 32px;
+  }
+
+  .faq--column .faq__list {
+    margin-top: 24px;
+  }
+
+  .faq--column .faq__q {
+    font-size: 19px;
+  }
+
+  .faq--column .faq__a {
+    padding-right: 48px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .faq--page {
+      padding: 44px 0;
+    }
+
+    .faq__title,
+    .faq--column .faq__title {
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .faq__list {
+      margin-top: 24px;
+    }
+
+    .faq__summary {
+      gap: 16px;
+      padding: 20px 0;
+    }
+
+    .faq__q,
+    .faq--column .faq__q {
+      font-size: 19px;
+    }
+
+    .faq__toggle {
+      width: 36px;
+      height: 36px;
+    }
+
+    .faq__a,
+    .faq--column .faq__a {
+      padding: 0 0 22px;
+      font-size: 17px;
+    }
+
+    .faq__call {
+      display: flex;
+      margin-top: 32px;
+      height: 56px;
+    }
+  }
+</style>

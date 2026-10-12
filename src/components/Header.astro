@@ -1,452 +1,722 @@
 ---
 /**
- * Sticky site header (guide Part 2 nav, design SiteHeader.dc.html).
+ * Site header (sticky). Desktop: logo, nav with the Services mega menu and the
+ * Service Areas dropdown, Call + Request Service. Mobile (≤ 1180px): logo, a
+ * call button and a menu button that opens a full-width link list.
  *
- * Desktop: hover-opened Services (16) and Service Areas (10) dropdowns, plus
- * the orange click-to-call button. Mobile: a hamburger drawer with the two
- * lists as accordions — not covered by the prototypes, so it follows the
- * established visual language.
+ * The menus are progressive: every trigger is also a plain link target, so the
+ * site navigates without JavaScript. Closed menus are `display: none`, which
+ * keeps the 17 lazy thumbnails in the mega menu from downloading until it opens.
+ *
+ * "Request Service" carries [data-open-request]; RequestDrawer.astro turns it
+ * into the slide-in form. Without JS it falls through to the contact page form.
  */
-import { Image } from 'astro:assets';
 import { site, paths } from '@config/site';
+import { catalogGroups, serviceHref } from '@config/catalog';
 import { phoneHref } from '@lib/tokens';
-import { images } from '@lib/images';
-import Phone from './Phone.astro';
+import Icon from '@components/ui/Icon.astro';
+import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
 
-const currentPath = Astro.url.pathname;
-const isCurrent = (href: string) =>
-  href === paths.home ? currentPath === href : currentPath.startsWith(href);
-
-const serviceLinks = site.services.map((service) => ({
-  href: paths.service(service.slug),
-  label: service.navLabel,
-}));
-const cityLinks = site.cities.map((city) => ({
-  href: paths.city(city.slug),
-  label: city.name,
-}));
+const phone = site.business.phone;
+const tel = phoneHref();
+const current = Astro.url.pathname;
+const isCurrent = (href: string) => current === href || (href !== '/' && current.startsWith(href));
 ---
 
-<header class="site-header">
-  <div class="site-header__accent"></div>
-
-  <div class="container site-header__row">
-    <a class="lockup" href={paths.home}>
-      <Image
-        src={images.logo.src}
-        alt={images.logo.alt}
-        width={84}
-        height={84}
-        loading="eager"
-        class="lockup__logo"
+<header class="site-header" data-site-header>
+  <div class="bar">
+    <a class="brand" href={paths.home} aria-label={`${site.business.name} home`}>
+      <img
+        src="/images/brand/sedco-plumbing-logo-84w.webp"
+        alt=""
+        width="44"
+        height="44"
+        class="brand__logo"
       />
-      <span class="lockup__text">
-        <span class="lockup__name">{site.business.name}</span>
-        <span class="lockup__place">{site.business.tagline}</span>
-      </span>
+      <span class="brand__name">{site.business.name}</span>
     </a>
 
     <nav class="nav" aria-label="Main">
-      {
-        site.nav.map((item) =>
-          item.dropdown ? (
-            <div class="nav__group" data-dropdown>
-              <a
-                class="nav__link"
-                href={item.href}
-                aria-current={isCurrent(item.href) ? 'true' : undefined}
-                aria-expanded="false"
-                aria-haspopup="true"
-                data-dropdown-trigger
-              >
-                {item.label} <span class="nav__caret" aria-hidden="true">▾</span>
-              </a>
-              <div
-                class={`nav__menu nav__menu--${item.dropdown}`}
-                data-dropdown-menu
-                hidden
-              >
-                {(item.dropdown === 'services' ? serviceLinks : cityLinks).map((link) => (
-                  <a href={link.href}>{link.label}</a>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <a
-              class="nav__link"
-              href={item.href}
-              aria-current={isCurrent(item.href) ? 'page' : undefined}
-            >
-              {item.label}
+      <a
+        class="nav__item"
+        href={paths.servicesHub}
+        aria-expanded="false"
+        aria-controls="mega-menu"
+        aria-current={isCurrent(paths.servicesHub) ? 'page' : undefined}
+        data-menu-trigger="mega"
+      >
+        Services<Icon name="chevron-down" size={14} strokeWidth={2.5} class="nav__chev" />
+      </a>
+      <div class="nav__areas" data-areas-wrap>
+        <a
+          class="nav__item"
+          href={paths.areasHub}
+          aria-expanded="false"
+          aria-controls="areas-menu"
+          aria-current={isCurrent(paths.areasHub) ? 'page' : undefined}
+          data-menu-trigger="areas"
+        >
+          Service Areas<Icon name="chevron-down" size={14} strokeWidth={2.5} class="nav__chev" />
+        </a>
+        <div id="areas-menu" class="areas" data-menu="areas">
+          <div class="areas__card">
+            <ul class="areas__list">
+              {
+                site.cities.map((city) => (
+                  <li>
+                    <a href={paths.city(city.slug)}>
+                      <Icon name="map-pin" size={16} />
+                      {city.name}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+            <a class="areas__all" href={paths.areasHub}>
+              See all service areas<Icon name="arrow-right" size={16} strokeWidth={2.5} />
             </a>
-          ),
-        )
+          </div>
+        </div>
+      </div>
+      <a class="nav__item" href={paths.reviews} aria-current={isCurrent(paths.reviews) ? 'page' : undefined} data-menu-close>Reviews</a>
+      <a class="nav__item" href={paths.about} aria-current={isCurrent(paths.about) ? 'page' : undefined} data-menu-close>About</a>
+      <a class="nav__item" href={paths.contact} aria-current={isCurrent(paths.contact) ? 'page' : undefined} data-menu-close>Contact</a>
+    </nav>
+
+    <div class="ctas">
+      <a class="btn btn--call btn--sm" href={tel}>
+        <Icon name="phone" size={20} />
+        {phone}
+      </a>
+      <a class="btn btn--request btn--sm" href={`${paths.contact}#request`} data-open-request>
+        <Icon name="free-estimate" size={20} />
+        Request Service
+      </a>
+    </div>
+
+    <div class="mobile-ctas">
+      <a class="icon-btn icon-btn--call" href={tel} aria-label={`Call ${phone}`}>
+        <Icon name="phone" size={22} />
+      </a>
+      <button
+        type="button"
+        class="icon-btn icon-btn--menu"
+        aria-label="Menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-mobile-toggle
+      >
+        <Icon name="menu" size={22} class="icon-btn__open" />
+        <Icon name="close" size={22} class="icon-btn__close" />
+      </button>
+    </div>
+  </div>
+
+  <div id="mega-menu" class="mega" data-menu="mega" role="region" aria-label="Services menu">
+    <div class="mega__cols">
+      {
+        catalogGroups.map((group) => (
+          <div class="mega__col">
+            <p class="mega__title">{group.menuTitle}</p>
+            <ul>
+              {group.services.map((service) => (
+                <li>
+                  <a href={serviceHref(service)} aria-current={current === serviceHref(service) ? 'page' : undefined}>
+                    <ResponsiveImage name={service.image} alt="" sizes="56px" class="mega__thumb" />
+                    {service.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
       }
-    </nav>
-
-    <a class="call-btn" href={phoneHref()}>
-      <span aria-hidden="true">📞</span>
-      <span class="visually-hidden">Call us at</span>
-      <Phone />
-    </a>
-
-    <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-nav">
-      <span class="visually-hidden">Menu</span>
-      <span class="burger__bars" aria-hidden="true"></span>
-    </button>
+    </div>
+    <div class="mega__strip">
+      <div class="mega__hours">
+        <span class="mega__clock"><Icon name="clock" size={22} /></span>
+        <div>
+          <p class="mega__hours-title">Open 24 hours, Monday to Saturday.</p>
+          <p class="mega__hours-note">Closed Sunday.</p>
+        </div>
+      </div>
+      <div class="mega__actions on-navy">
+        <a class="btn btn--outline-dark btn--md" href={paths.servicesHub}>
+          View all services<Icon name="arrow-right" size={16} strokeWidth={2.5} />
+        </a>
+        <a class="btn btn--call btn--md" href={tel}>
+          <Icon name="phone" size={18} />Call {phone}
+        </a>
+        <a class="btn btn--request btn--md" href={`${paths.contact}#request`} data-open-request>Request Service</a>
+      </div>
+    </div>
   </div>
 
-  <div class="drawer" id="mobile-nav" hidden>
-    <nav class="drawer__inner container" aria-label="Mobile">
-      <a class="drawer__link" href={paths.home}>Home</a>
-
-      <details class="drawer__group">
-        <summary>Services</summary>
-        <div class="drawer__sublinks">
-          <a href={paths.servicesHub}>All Services</a>
-          {serviceLinks.map((link) => <a href={link.href}>{link.label}</a>)}
-        </div>
-      </details>
-
-      <details class="drawer__group">
-        <summary>Service Areas</summary>
-        <div class="drawer__sublinks">
-          <a href={paths.areasHub}>All Service Areas</a>
-          {cityLinks.map((link) => <a href={link.href}>{link.label}</a>)}
-        </div>
-      </details>
-
-      <a class="drawer__link" href={paths.about}>About</a>
-      <a class="drawer__link" href={paths.reviews}>Reviews</a>
-      <a class="drawer__link" href={paths.blog}>Blog</a>
-      <a class="drawer__link" href={paths.contact}>Contact</a>
-    </nav>
-  </div>
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Main" data-mobile-menu>
+    <ul>
+      <li><a href={paths.servicesHub}>Services</a></li>
+      <li><a href={paths.areasHub}>Service Areas</a></li>
+      <li><a href={paths.reviews}>Reviews</a></li>
+      <li><a href={paths.about}>About</a></li>
+      <li><a href={paths.contact}>Contact</a></li>
+      <li><a href={paths.blog}>Blog</a></li>
+    </ul>
+    <div class="mobile-menu__ctas">
+      <a class="btn btn--call btn--block" href={tel}><Icon name="phone" size={20} />Call {phone}</a>
+      <a class="btn btn--request btn--block" href={`${paths.contact}#request`} data-open-request>Request Service</a>
+    </div>
+  </nav>
 </header>
 
 <style>
   .site-header {
     position: sticky;
     top: 0;
-    z-index: 60;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(8px);
-    box-shadow: var(--sh-header);
+    z-index: 40;
+    background: var(--page);
   }
 
-  .site-header__accent {
-    height: 3px;
-    background: var(--grad-accent-bar);
-  }
-
-  .site-header__row {
+  .bar {
     display: flex;
     align-items: center;
-    gap: 0.875rem;
-    padding-block: 0.6875rem;
-    flex-wrap: nowrap;
+    gap: 32px;
+    max-width: calc(var(--container) + 2 * var(--gutter));
+    height: var(--header-h);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
   }
 
-  /* ---- Logo lockup ---- */
-  .lockup {
+  .brand {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    flex-shrink: 0;
-  }
-  .lockup__logo {
-    width: 42px;
-    height: 42px;
-    border-radius: var(--r-input);
-    box-shadow: 0 3px 8px rgba(15, 58, 99, 0.22);
-  }
-  .lockup__text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-  }
-  .lockup__name {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.125rem;
-    letter-spacing: 0.01em;
-    color: var(--brand-deep);
-    text-transform: uppercase;
-  }
-  .lockup__place {
-    font-size: 0.625rem;
-    letter-spacing: 0.14em;
-    font-weight: 600;
-    color: var(--text-muted-2);
-    text-transform: uppercase;
-    margin-top: 3px;
-  }
-
-  /* ---- Desktop nav ---- */
-  .nav {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    flex-shrink: 0;
-    /* Deliberately roomier than the design handoff's `gap: 0`. */
-    gap: var(--nav-gap);
-  }
-  .nav__link {
-    /* Horizontal padding sets both the hover pill's width and the visual
-       separation between items, so it is tuned alongside --nav-gap. The design
-       specified 7px both sides; this is more generous per review feedback. */
-    padding: 0.4375rem var(--nav-link-padding-x);
-    font-weight: 600;
-    font-size: 0.84375rem;
-    color: var(--text);
-    border-radius: 6px;
-    white-space: nowrap;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .nav__link:hover,
-  .nav__group[data-open] .nav__link {
-    background: var(--tint);
-  }
-  .nav__link[aria-current] {
-    color: var(--brand-primary);
-  }
-  .nav__caret {
-    font-size: 0.625rem;
-    color: var(--text-muted-2);
-  }
-
-  .nav__group {
-    position: relative;
-  }
-  .nav__menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: var(--sh-dropdown);
-    padding: 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-  }
-  .nav__menu--services {
-    width: 520px;
-  }
-  .nav__menu--cities {
-    width: 300px;
-    left: auto;
-    right: 0;
-  }
-  .nav__menu a {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text);
+    gap: 12px;
+    color: var(--navy-800);
+    text-decoration: none;
     border-radius: var(--r-sm);
   }
-  .nav__menu a:hover {
-    background: var(--tint);
-    color: var(--brand-primary);
+
+  .brand:hover {
+    color: var(--navy-800);
   }
 
-  /* ---- Call button ---- */
-  .call-btn {
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--accent);
-    color: #fff;
-    font-weight: 700;
-    font-size: 0.875rem;
-    padding: 0.6875rem 0.9375rem;
-    border-radius: var(--r-input);
-    box-shadow: var(--sh-accent-sm);
-    min-height: 44px;
-    transition: background var(--t-fast);
-  }
-  .call-btn:hover {
-    background: var(--accent-hover);
-    color: #fff;
-  }
-  .call-btn :global(.ph-chip) {
-    background: rgba(255, 255, 255, 0.18);
-    border-color: rgba(255, 255, 255, 0.75);
-    color: #fff;
+  .brand:focus-visible {
+    outline-offset: 4px;
   }
 
-  /* ---- Hamburger + drawer ---- */
-  .burger {
-    display: none;
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: var(--r-input);
+  .brand__logo {
     width: 44px;
     height: 44px;
-    cursor: pointer;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-  }
-  .burger__bars,
-  .burger__bars::before,
-  .burger__bars::after {
-    display: block;
-    width: 20px;
-    height: 2px;
-    background: var(--brand-deep);
-    border-radius: 2px;
-    position: relative;
-  }
-  .burger__bars::before,
-  .burger__bars::after {
-    content: '';
-    position: absolute;
-    left: 0;
-  }
-  .burger__bars::before {
-    top: -6px;
-  }
-  .burger__bars::after {
-    top: 6px;
+    border-radius: var(--r-sm);
   }
 
-  .drawer {
-    border-top: 1px solid var(--border);
-    background: #fff;
-    max-height: min(70vh, 560px);
-    overflow-y: auto;
+  .brand__name {
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
   }
-  .drawer__inner {
-    display: grid;
-    padding-block: 0.75rem 1.25rem;
+
+  /* ---- desktop nav ---- */
+
+  .nav {
+    display: flex;
+    margin-left: auto;
   }
-  .drawer__link,
-  .drawer__group > summary {
+
+  .nav__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 44px;
+    padding: 0 14px;
+    border-radius: var(--r-sm);
+    font: 500 16px var(--font-body);
+    color: var(--navy-800);
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color var(--t-fast) ease,
+      color var(--t-fast) ease;
+  }
+
+  .nav__item:hover,
+  .nav__item[aria-expanded='true'] {
+    background: var(--blue-50);
+    color: var(--blue-700);
+  }
+
+  .nav__item[aria-current='page'] {
+    color: var(--blue-700);
+  }
+
+  .nav__item :global(.nav__chev) {
+    transition: transform 200ms ease;
+  }
+
+  .nav__item[aria-expanded='true'] :global(.nav__chev) {
+    transform: rotate(180deg);
+  }
+
+  .nav__areas {
+    position: relative;
+  }
+
+  .ctas {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ctas .btn--request {
+    padding: 0 16px;
+  }
+
+  /* ---- shared menu motion: display:none when closed ---- */
+
+  .areas,
+  .mega {
+    display: none;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition:
+      opacity 200ms ease,
+      transform 200ms ease,
+      display 200ms allow-discrete;
+  }
+
+  .areas[data-open],
+  .mega[data-open] {
+    display: block;
+    opacity: 1;
+    transform: none;
+  }
+
+  @starting-style {
+    .areas[data-open],
+    .mega[data-open] {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  /* ---- Service Areas dropdown ---- */
+
+  .areas {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 30;
+    padding-top: 14px;
+  }
+
+  .areas__card {
+    width: 280px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--white);
+    box-shadow: var(--shadow-dropdown);
+  }
+
+  .areas__list {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    list-style: none;
+  }
+
+  .areas__list a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--navy-800);
+    text-decoration: none;
+    transition:
+      background-color var(--t-base) ease,
+      color var(--t-base) ease;
+  }
+
+  .areas__list a:hover,
+  .areas__list a:focus-visible {
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  .areas__all {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.8125rem 0.25rem;
+    padding: 14px 20px;
+    border-top: 1px solid var(--line);
+    background: var(--sky-50);
+    font-size: 15px;
     font-weight: 600;
-    font-size: 1rem;
-    color: var(--text);
-    border-bottom: 1px solid var(--border);
-    min-height: 44px;
-    cursor: pointer;
+    color: var(--blue-600);
+    text-decoration: none;
+  }
+
+  /* ---- Services mega menu ---- */
+
+  .mega {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--header-h);
+    z-index: 30;
+    border-top: 1px solid var(--line);
+    background: var(--white);
+    box-shadow: var(--shadow-menu);
+  }
+
+  .mega__cols {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 32px 40px;
+  }
+
+  .mega__col {
+    padding: 0 22px;
+  }
+
+  .mega__col + .mega__col {
+    border-left: 1px solid var(--line);
+  }
+
+  .mega__title {
+    margin: 0 0 6px;
+    padding: 0 0 14px;
+    border-bottom: 2px solid var(--yellow-500);
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--navy-800);
+  }
+
+  .mega__col ul {
     list-style: none;
   }
-  .drawer__group > summary::-webkit-details-marker {
-    display: none;
+
+  .mega__col li + li {
+    border-top: 1px dashed var(--line);
   }
-  .drawer__group > summary::after {
-    content: '+';
-    color: var(--brand-primary);
-    font-size: 1.25rem;
-  }
-  .drawer__group[open] > summary::after {
-    content: '–';
-  }
-  .drawer__sublinks {
-    display: grid;
-    padding: 0.5rem 0 0.75rem 0.75rem;
-  }
-  .drawer__sublinks a {
-    padding: 0.625rem 0.25rem;
-    font-size: 0.9375rem;
-    color: var(--text-soft);
-    min-height: 44px;
+
+  .mega__col li a {
     display: flex;
     align-items: center;
+    gap: 14px;
+    margin: 0 -10px;
+    padding: 12px 10px;
+    border-radius: var(--r-md);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--navy-800);
+    text-decoration: none;
+    transition:
+      background-color var(--t-base) ease,
+      color var(--t-base) ease;
   }
-  .drawer__sublinks a:hover {
-    color: var(--brand-primary);
+
+  .mega__col li a:hover,
+  .mega__col li a:focus-visible,
+  .mega__col li a[aria-current='page'] {
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  .mega :global(.mega__thumb) {
+    flex: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    object-fit: cover;
+  }
+
+  .mega__strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px max(40px, calc((100% - 1360px) / 2));
+    background: var(--navy-800);
+  }
+
+  .mega__hours {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .mega__clock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--r-md);
+    background: var(--navy-700);
+    color: var(--yellow-500);
+  }
+
+  .mega__hours-title {
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--white);
+  }
+
+  .mega__hours-note {
+    margin-top: 2px;
+    font-size: 14px;
+    color: var(--blue-300);
+  }
+
+  .mega__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mega__actions .btn--outline-dark {
+    margin-right: 6px;
+    padding: 0 18px;
+  }
+
+  /* ---- mobile ---- */
+
+  .mobile-ctas,
+  .mobile-menu {
+    display: none;
+  }
+
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--r-md);
+    color: var(--navy-800);
+  }
+
+  .icon-btn--call {
+    background: var(--yellow-500);
+  }
+
+  .icon-btn--call:active {
+    background: var(--yellow-700);
+  }
+
+  .icon-btn--menu {
+    border: 1.5px solid var(--blue-200);
+    background: var(--white);
+    cursor: pointer;
+  }
+
+  .icon-btn--menu:active {
+    background: var(--blue-50);
+  }
+
+  .icon-btn :global(.icon-btn__close),
+  .icon-btn[aria-expanded='true'] :global(.icon-btn__open) {
+    display: none;
+  }
+
+  .icon-btn[aria-expanded='true'] :global(.icon-btn__close) {
+    display: block;
   }
 
   @media (max-width: 1180px) {
     .nav,
-    .call-btn {
+    .ctas,
+    .mega,
+    .mega[data-open] {
       display: none;
     }
-    .burger {
-      display: inline-flex;
-      margin-left: auto;
+
+    .bar {
+      gap: 8px;
+      padding: 0 16px 0 20px;
+    }
+
+    .brand {
+      margin-right: auto;
+    }
+
+    .mobile-ctas {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mobile-menu[data-open] {
+      display: block;
+      max-height: calc(100dvh - var(--header-h));
+      overflow-y: auto;
+      padding: 0 20px 20px;
+      border-top: 1px solid var(--blue-200);
+      background: var(--page);
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+    }
+
+    .mobile-menu li + li {
+      border-top: 1px solid var(--blue-100);
+    }
+
+    .mobile-menu li a {
+      display: flex;
+      align-items: center;
+      height: 52px;
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--navy-800);
+      text-decoration: none;
+    }
+
+    .mobile-menu__ctas {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
     }
   }
 
-  @media (max-width: 420px) {
-    .lockup__name {
-      font-size: 1rem;
+  @media (max-width: 768px) {
+    .brand {
+      gap: 10px;
+    }
+
+    .brand__logo {
+      width: 40px;
+      height: 40px;
+    }
+
+    .brand__name {
+      font-size: 19px;
     }
   }
 </style>
 
 <script>
-  // Desktop dropdowns: hover on pointer devices, click/tap otherwise.
-  // Only one menu is open at a time; Escape closes.
-  const groups = document.querySelectorAll<HTMLElement>('[data-dropdown]');
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
 
-  const closeAll = (except?: HTMLElement) => {
-    groups.forEach((group) => {
-      if (group === except) return;
-      group.removeAttribute('data-open');
-      group.querySelector('[data-dropdown-menu]')?.setAttribute('hidden', '');
-      group.querySelector('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'false');
-    });
-  };
+  if (header) {
+    type MenuName = 'mega' | 'areas';
+    const triggers = {
+      mega: header.querySelector<HTMLAnchorElement>('[data-menu-trigger="mega"]'),
+      areas: header.querySelector<HTMLAnchorElement>('[data-menu-trigger="areas"]'),
+    };
+    const menus = {
+      mega: header.querySelector<HTMLElement>('[data-menu="mega"]'),
+      areas: header.querySelector<HTMLElement>('[data-menu="areas"]'),
+    };
+    const desktop = window.matchMedia('(min-width: 1181px)');
+    const hoverable = window.matchMedia('(hover: hover)');
+    let areasTimer: number | undefined;
 
-  const open = (group: HTMLElement) => {
-    closeAll(group);
-    group.setAttribute('data-open', '');
-    group.querySelector('[data-dropdown-menu]')?.removeAttribute('hidden');
-    group.querySelector('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'true');
-  };
+    const isOpen = (name: MenuName) => menus[name]?.hasAttribute('data-open') ?? false;
 
-  const close = (group: HTMLElement) => {
-    group.removeAttribute('data-open');
-    group.querySelector('[data-dropdown-menu]')?.setAttribute('hidden', '');
-    group.querySelector('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'false');
-  };
+    const setOpen = (name: MenuName, open: boolean) => {
+      menus[name]?.toggleAttribute('data-open', open);
+      triggers[name]?.setAttribute('aria-expanded', String(open));
+    };
 
-  const hoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const open = (name: MenuName) => {
+      window.clearTimeout(areasTimer);
+      setOpen(name === 'mega' ? 'areas' : 'mega', false);
+      setOpen(name, true);
+    };
 
-  groups.forEach((group) => {
-    const trigger = group.querySelector<HTMLElement>('[data-dropdown-trigger]');
+    const closeAll = () => {
+      window.clearTimeout(areasTimer);
+      setOpen('mega', false);
+      setOpen('areas', false);
+    };
 
-    if (hoverCapable) {
-      group.addEventListener('mouseenter', () => open(group));
-      group.addEventListener('mouseleave', () => close(group));
-      // Keyboard users get the menu on focus, and can still follow the hub link.
-      trigger?.addEventListener('focus', () => open(group));
-      group.addEventListener('focusout', (event) => {
-        if (!group.contains(event.relatedTarget as Node)) close(group);
-      });
-    } else {
-      trigger?.addEventListener('click', (event) => {
-        // First tap opens the menu; the hub link stays reachable from inside it.
-        if (!group.hasAttribute('data-open')) {
+    // Click/tap/Enter toggles. The trigger is a real link to the hub page, so a
+    // second activation while open navigates there.
+    (Object.keys(triggers) as MenuName[]).forEach((name) => {
+      triggers[name]?.addEventListener('click', (event) => {
+        if (!desktop.matches) return;
+        if (!isOpen(name)) {
           event.preventDefault();
-          open(group);
+          open(name);
         }
       });
-    }
-  });
+    });
 
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeAll();
-  });
+    // Hover opens on pointer devices.
+    triggers.mega?.addEventListener('mouseenter', () => {
+      if (desktop.matches && hoverable.matches) open('mega');
+    });
+    const areasWrap = header.querySelector<HTMLElement>('[data-areas-wrap]');
+    areasWrap?.addEventListener('mouseenter', () => {
+      if (desktop.matches && hoverable.matches) open('areas');
+    });
+    areasWrap?.addEventListener('mouseleave', () => {
+      if (!hoverable.matches) return;
+      areasTimer = window.setTimeout(() => setOpen('areas', false), 120);
+    });
+    header.addEventListener('mouseleave', () => {
+      if (hoverable.matches) setOpen('mega', false);
+    });
+    header.querySelectorAll('[data-menu-close]').forEach((link) =>
+      link.addEventListener('mouseenter', () => {
+        if (hoverable.matches) closeAll();
+      }),
+    );
 
-  // Mobile drawer
-  const burger = document.querySelector<HTMLButtonElement>('.burger');
-  const drawer = document.getElementById('mobile-nav');
+    // Escape closes and returns focus to the trigger that owns the open menu.
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      const openName = (['mega', 'areas'] as MenuName[]).find(isOpen);
+      if (openName) {
+        closeAll();
+        triggers[openName]?.focus();
+      }
+      if (mobileMenu?.hasAttribute('data-open')) {
+        setMobile(false);
+        mobileToggle?.focus();
+      }
+    });
 
-  burger?.addEventListener('click', () => {
-    const isOpen = burger.getAttribute('aria-expanded') === 'true';
-    burger.setAttribute('aria-expanded', String(!isOpen));
-    if (isOpen) drawer?.setAttribute('hidden', '');
-    else drawer?.removeAttribute('hidden');
-  });
+    // Close when focus or a click moves outside the header.
+    document.addEventListener('click', (event) => {
+      if (!header.contains(event.target as Node)) closeAll();
+    });
+    header.addEventListener('focusout', (event) => {
+      const next = event.relatedTarget as Node | null;
+      if (next && !header.contains(next)) closeAll();
+    });
+
+    // ---- mobile menu ----
+    const mobileToggle = header.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
+    const mobileMenu = header.querySelector<HTMLElement>('[data-mobile-menu]');
+    const setMobile = (openMenu: boolean) => {
+      mobileMenu?.toggleAttribute('data-open', openMenu);
+      mobileToggle?.setAttribute('aria-expanded', String(openMenu));
+      mobileToggle?.setAttribute('aria-label', openMenu ? 'Close menu' : 'Menu');
+    };
+    mobileToggle?.addEventListener('click', () =>
+      setMobile(!mobileMenu?.hasAttribute('data-open')),
+    );
+    mobileMenu?.querySelectorAll('a').forEach((link) =>
+      link.addEventListener('click', () => setMobile(false)),
+    );
+
+    desktop.addEventListener('change', () => {
+      closeAll();
+      setMobile(false);
+    });
+  }
 </script>
