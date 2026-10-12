@@ -2,9 +2,7 @@ service: sewer-lines
 city: spring-valley
 
 title: Sewer Line Repair in Spring Valley, CA | Sedco Plumbing
-description: >-
-  Sewer line repair and replacement in Spring Valley — from root-bound clay laterals to trenchless fixes on sloped
-  lots. Flat-rate quotes. Call [PHONE].
+description: 'Sewer line repair and replacement in Spring Valley, from root-bound clay laterals to trenchless fixes on sloped lots. Upfront quotes. Call [PHONE].'
 primaryKeyword: sewer line repair Spring Valley
 supportingKeywords:
   - sewer line replacement Spring Valley

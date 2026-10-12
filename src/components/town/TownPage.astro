@@ -47,7 +47,7 @@ const faqHeading =
 const toc: TocItem[] = [
   { id: 'overview', label: 'Overview' },
   ...sections.map(({ id, section }) => ({ id, label: section.tocLabel ?? t(section.heading) })),
-  { id: 'services', label: `Services in ${city.name}` },
+  { id: 'services', label: `${city.name} plumbing services` },
   { id: 'reviews', label: 'Reviews' },
   ...(data.faqs.length > 0 ? [{ id: 'questions', label: 'Questions' }] : []),
 ];

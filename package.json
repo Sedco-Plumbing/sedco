@@ -12,6 +12,7 @@
     "check": "astro check",
     "verify": "astro build && node scripts/verify-build.mjs",
     "seo:diff": "node scripts/seo-snapshot.mjs --diff scripts/seo-baseline.json",
+    "seo:keywords": "node scripts/keyword-coverage.mjs",
     "deploy": "astro build && node scripts/verify-build.mjs --strict && wrangler deploy",
     "astro": "astro"
   },

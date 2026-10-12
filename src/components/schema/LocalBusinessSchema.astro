@@ -11,7 +11,6 @@
  */
 import { site, absolute, BUSINESS_ID } from '@config/site';
 import { t, isPlaceholder } from '@lib/tokens';
-import { images } from '@lib/images';
 import JsonLd from './JsonLd.astro';
 
 const { business, profiles } = site;
@@ -38,7 +37,9 @@ const data: Record<string, unknown> = {
   email: t('[EMAIL]'),
   // SEO team's LocalBusiness schema description, composed from config so it stays correct per client.
   description: `${business.name} is a locally owned plumbing company based in ${business.locality}, ${business.regionName}, serving homeowners and businesses throughout ${business.county}.`,
-  image: absolute(images.logo.src.src),
+  // 512px square logo (Google asks for at least 112px).
+  image: absolute('/images/brand/sedco-plumbing-logo-512.png'),
+  logo: absolute('/images/brand/sedco-plumbing-logo-512.png'),
   address,
   areaServed: [
     ...site.cities.map((city) => ({ '@type': 'City', name: city.name })),

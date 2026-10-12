@@ -1,8 +1,8 @@
 ---
 /**
- * "Plumbing Services in [Town]": every service as a compact card. A card
- * links to the service × town page where one exists (and says so), otherwise
- * to the main service page.
+ * "[Town] Plumbing Services": every service as a compact card labelled
+ * "[service] in [Town]". A card links to the service × town page where one
+ * exists (and says so), otherwise to the main service page.
  */
 import { paths, type CityDef, type ServiceDef } from '@config/site';
 import { catalogServices, serviceHref } from '@config/catalog';
@@ -21,7 +21,7 @@ const cards = catalogServices.map((service) => {
   const combo = hasCombo(service.slug);
   return {
     href: combo ? paths.serviceCity(service.slug, city.slug) : serviceHref(service),
-    title: combo ? `${service.short} in ${city.name}` : service.name,
+    title: `${service.short} in ${city.name}`,
     text: service.summary,
     icon: service.icon,
     local: combo,
@@ -32,7 +32,7 @@ cards.sort((a, b) => Number(b.local) - Number(a.local));
 ---
 
 <section class="article-section town-services" id={id} aria-labelledby={`${id}-heading`}>
-  <h2 class="article-h2" id={`${id}-heading`}>Plumbing Services in {city.name}</h2>
+  <h2 class="article-h2" id={`${id}-heading`}>{city.name} Plumbing Services</h2>
   <p class="article-lead">
     Every service below is available in {city.name}, with the same free estimate and the same
     prices you'd get in El Cajon.

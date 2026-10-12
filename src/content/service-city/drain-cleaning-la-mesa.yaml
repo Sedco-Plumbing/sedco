@@ -2,9 +2,7 @@ service: drain-cleaning
 city: la-mesa
 
 title: Drain Cleaning in La Mesa, CA | Sedco Plumbing
-description: >-
-  Slow or clogged drains in La Mesa? Sedco Plumbing clears kitchen, bath, and main lines with upfront pricing
-  and fast East County response. Call [PHONE].
+description: 'Slow or clogged drains in La Mesa? Sedco Plumbing clears kitchen, bath and main lines with upfront pricing and a fast response. Call [PHONE].'
 primaryKeyword: drain cleaning La Mesa
 supportingKeywords:
   - clogged drain La Mesa

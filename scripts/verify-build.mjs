@@ -38,24 +38,12 @@ const NON_PAGE_TARGETS = new Set([
 ]);
 
 /**
- * KNOWN CONFLICT IN THE CONTENT GUIDE — decided: follow the guide.
- *
- * The guide specifies the same title tag for two pages:
- *   /services/general-plumbing/  and  /service-areas/el-cajon/
- * both get "Plumber in El Cajon, CA | Sedco Plumbing", and both target the
- * primary keyword "plumber El Cajon". That contradicts the guide's own Part 7.4
- * rule ("unique title tag ... never duplicate across pages").
- *
- * The call is to ship the guide's copy verbatim. The accepted consequence is
- * that the two pages compete for "plumber El Cajon" and Google picks one; the
- * other may be filtered from results for that query. If that shows up in Search
- * Console later, differentiating the service page as "Plumbing Services in El
- * Cajon, CA | Sedco Plumbing" is the fix — edit the title in its content entry.
- *
- * This entry stops the duplicate from failing the uniqueness check. Do not
- * remove it without also changing one of the two titles.
+ * Titles allowed to repeat across pages. Empty: the guide's one duplicate
+ * ("Plumber in El Cajon, CA" on both /services/general-plumbing/ and
+ * /service-areas/el-cajon/) was resolved in the 2026 redesign by retargeting
+ * the service page to "plumbing services El Cajon", per the SEO keyword map.
  */
-const ACKNOWLEDGED_DUPLICATE_TITLES = new Set(['Plumber in El Cajon, CA | Sedco Plumbing']);
+const ACKNOWLEDGED_DUPLICATE_TITLES = new Set();
 
 /** Hard failures block launch; warnings are informational. */
 const failures = [];
@@ -265,7 +253,9 @@ const words = (s) =>
     .replace(/&amp;/g, '&')
     .toLowerCase()
     .split(/[^a-z0-9-]+/)
-    .filter((w) => w && !['in', 'and', 'the', 'a', 'of', 'for', 'ca'].includes(w));
+    .filter((w) => w && !['in', 'and', 'the', 'a', 'of', 'for', 'ca'].includes(w))
+    // Singular and plural count as the same word ("system" / "systems").
+    .map((w) => w.replace(/s$/, ''));
 for (const entry of keywordMap.pages) {
   const page = meta.get(entry.url);
   if (!page || !entry.primary) continue;

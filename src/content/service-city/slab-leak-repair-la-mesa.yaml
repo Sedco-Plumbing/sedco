@@ -2,9 +2,7 @@ service: slab-leak-repair
 city: la-mesa
 
 title: Slab Leak Repair in La Mesa, CA | Sedco Plumbing
-description: >-
-  Warm spots, high water bills, or the sound of running water? Sedco Plumbing finds and fixes slab leaks in La
-  Mesa homes with minimal digging. Call [PHONE].
+description: 'Warm spots, high water bills or running water sounds? Sedco Plumbing finds and fixes slab leaks in La Mesa homes with minimal digging. Call [PHONE].'
 primaryKeyword: slab leak repair La Mesa
 supportingKeywords:
   - slab leak detection La Mesa

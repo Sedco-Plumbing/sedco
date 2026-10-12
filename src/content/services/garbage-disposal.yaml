@@ -1,9 +1,7 @@
 service: garbage-disposal
 
 title: Garbage Disposal Repair El Cajon, CA | Sedco Plumbing
-description: >-
-  Garbage disposal jammed, leaking, or humming? Sedco Plumbing repairs and installs disposals across
-  El Cajon and East County, often same day. Call [PHONE].
+description: 'Garbage disposal jammed, leaking or humming? We repair and install disposals across El Cajon and East County, often same day. Call [PHONE].'
 primaryKeyword: garbage disposal repair El Cajon
 supportingKeywords:
   - Garbage Disposal Repair in El Cajon

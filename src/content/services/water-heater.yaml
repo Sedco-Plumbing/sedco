@@ -19,7 +19,35 @@ heroPoints:
   - Expansion tanks where closed systems require them
   - Old unit hauled away
 
-h1: Water Heater Installation in El Cajon
+# ---- 2026 design blocks (added on top of the SEO copy; see content.config.ts) ----
+heroLead: >-
+  Water heater repair and replacement in El Cajon, from emergency water heater repair to tankless
+  water heater installation in San Diego County.
+asideHeading: No hot water right now?
+asideText: Same-day visits across San Diego County, 24 hours Monday to Saturday.
+covers:
+  heading: Water Heaters We Repair and Install
+  tocLabel: Water heaters we handle
+  intro: Gas, electric and tankless units, repaired or replaced to current California code.
+  items:
+    - title: Emergency water heater repair
+      text: >-
+        No hot water or a leaking tank? Emergency water heater repair in El Cajon, 24 hours a day,
+        Monday to Saturday.
+    - title: Tank water heaters
+      text: Gas and electric tanks repaired, or replaced with a correctly sized new unit.
+    - title: Tankless water heaters
+      text: >-
+        Tankless water heater repair in El Cajon homes, and tankless water heater installation
+        across San Diego County.
+    - title: Water heater replacement
+      text: Old or failing heaters replaced, with the old unit hauled away.
+    - title: Code upgrades
+      text: Seismic straps, expansion tanks, venting and permits handled as part of the job.
+    - title: Rentals and businesses
+      text: Water heater service for landlords, property managers and commercial buildings.
+
+h1: Water Heater Repair and Installation in El Cajon
 intro:
   - >-
     A reliable water heater keeps your home comfortable, from morning showers to everyday cleaning

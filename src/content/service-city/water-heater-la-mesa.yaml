@@ -2,9 +2,7 @@ service: water-heater
 city: la-mesa
 
 title: Water Heater Repair in La Mesa, CA | Sedco Plumbing
-description: >-
-  Water heater not keeping up? Sedco Plumbing repairs and replaces tank and tankless units across La Mesa,
-  from Grossmont to Mount Helix. Call [PHONE].
+description: 'Water heater not keeping up? Sedco Plumbing repairs and replaces tank and tankless units in La Mesa, from Grossmont to Mount Helix. Call [PHONE].'
 primaryKeyword: water heater repair La Mesa
 supportingKeywords:
   - water heater replacement La Mesa

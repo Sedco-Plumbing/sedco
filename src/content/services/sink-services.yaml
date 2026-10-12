@@ -1,10 +1,8 @@
 service: sink-services
 
-title: Sink Installation & Repair in El Cajon | Sedco Plumbing
-description: >-
-  Kitchen, bathroom, and utility sink installation and repair in El Cajon. Leak fixes, clean
-  installs, and upfront pricing. Call [PHONE].
-primaryKeyword: sink installation El Cajon
+title: 'Sink Repair & Installation in El Cajon | Sedco Plumbing'
+description: 'Sink repair and installation in El Cajon: kitchen, bathroom and utility sinks, leak fixes and clean installs with upfront pricing. Call [PHONE].'
+primaryKeyword: sink repair El Cajon
 supportingKeywords:
   - Sink Installation and Repair in El Cajon
   - Sink Installation in El Cajon
@@ -20,7 +18,7 @@ heroPoints:
   - Disposal and dishwasher reconnected and tested
   - We check what your new fixture connects to
 
-h1: Sink Installation and Repair in El Cajon
+h1: Sink Repair and Installation in El Cajon
 intro:
   - >-
     Your sink works hard every day, from washing dishes and preparing meals to cleaning up after

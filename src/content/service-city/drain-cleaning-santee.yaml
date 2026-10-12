@@ -2,9 +2,7 @@ service: drain-cleaning
 city: santee
 
 title: Drain Cleaning in Santee, CA | Sedco Plumbing
-description: >-
-  Sedco Plumbing clears stubborn clogs in Santee kitchens, bathrooms, and main lines — fast service from nearby
-  El Cajon, priced upfront. Call [PHONE].
+description: 'Sedco Plumbing clears stubborn clogs in Santee kitchens, bathrooms and main lines, fast from nearby El Cajon and priced upfront. Call [PHONE].'
 primaryKeyword: drain cleaning Santee
 supportingKeywords:
   - clogged drain Santee

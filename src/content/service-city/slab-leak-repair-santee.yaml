@@ -2,9 +2,7 @@ service: slab-leak-repair
 city: santee
 
 title: Slab Leak Repair in Santee, CA | Sedco Plumbing
-description: >-
-  Slab leak in your Santee tract home? Sedco Plumbing pinpoints leaks under concrete and repairs them with the
-  least disruption possible. Call [PHONE].
+description: 'Slab leak in your Santee tract home? Sedco Plumbing pinpoints leaks under concrete and repairs them with the least disruption. Call [PHONE].'
 primaryKeyword: slab leak repair Santee
 supportingKeywords:
   - slab leak detection Santee
