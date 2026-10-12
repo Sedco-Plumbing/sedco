@@ -11,7 +11,7 @@ content rather than components.
 | Piece | Choice | Why |
 | --- | --- | --- |
 | Framework | Astro 7, `output: 'static'` | 52+ prerendered pages; only `/keystatic` renders on demand |
-| Styling | Plain CSS + custom properties | No build-time CSS framework; tokens in `src/styles/tokens.css` |
+| Styling | Plain CSS + custom properties | No build-time CSS framework; design tokens in `src/styles/tokens.css`, shared primitives in `src/styles/global.css` |
 | Hosting | Cloudflare Workers (`@astrojs/cloudflare`) | Static assets at the edge, Worker only for the CMS routes |
 | CMS | Keystatic + Keystatic Cloud | Client edits the blog; auth handled by Keystatic Cloud |
 | Blog body | Markdoc | Rich text without letting content inject components |
@@ -84,7 +84,9 @@ more than 3 clicks from the homepage, and it reports any `[PLACEHOLDER]` tokens 
 src/
   config/
     site.ts            ← SINGLE SOURCE OF TRUTH for all client values
-    reviews.ts         ← review content (placeholder until the client's real ones land)
+    catalog.ts         ← how the 2026 design groups/names/illustrates the services (live slugs)
+    faqs.ts            ← site-wide FAQs (Home and hub pages)
+    reviews.ts         ← review content
   content/
     services/          ← 16 service pages (YAML: spec block + copy)
     service-areas/     ← 10 city pages
@@ -92,23 +94,36 @@ src/
     blog/              ← Keystatic-managed posts (.mdoc)
   content.config.ts    ← Zod schemas for the four collections
   layouts/BaseLayout.astro
-  components/
-    Header, Footer, Breadcrumbs, Hero, HeroCtas, ServiceCardGrid, CityCardGrid,
-    FaqBlock, CtaSection, ContactForm, SideCallCard, SideLinkCard, Sections,
-    Droplet, Phone, ServiceAreaMap, Seo
+  components/          ← 2026 redesign (design_handoff_sedco_astro)
+    Header, Footer, RequestDrawer, RequestForm, ContactSection, Faq, PageHero,
+    ServicesGrid, ReviewsMarquee, CountOn, ServiceAreasSection, ServiceAreaMapSvg,
+    AboutSplit, MobileCallBar, Seo
+    home/              ← HomeHero, HowItWorks (4-step player)
+    service/           ← ServicePage template + its blocks (hero, aside, steps, …)
+    town/              ← TownPage template + TownServices
+    ui/                ← Icon, ResponsiveImage, PreloadImage, Stars
     schema/            ← LocalBusiness, Service, FAQPage, BreadcrumbList, Article, PageSchema
   lib/
     tokens.ts          ← resolves [PLACEHOLDER] tokens from site.ts
-    images.ts          ← image registry: pages reference images by role, not filename
+    images.ts          ← blog image registry (Astro-optimized, src/assets)
+    icons.ts           ← inline SVG icon set used by ui/Icon.astro
+    media.ts           ← image keys + shared `sizes` for LCP images and their preloads
     types.ts
+  data/
+    images.json        ← the pre-optimized WebP set in public/images (srcset, alt, sizes)
+    keyword-map.json   ← the SEO team's keyword map: every target URL + keywords
   pages/
     index, about, contact, reviews, privacy-policy
     services/index, services/[service]/index, services/[service]/[city]
     service-areas/index, service-areas/[city]
     blog/index, blog/[slug]
     robots.txt.ts
-  styles/tokens.css, base.css
-scripts/verify-build.mjs
+  styles/tokens.css, global.css
+scripts/
+  verify-build.mjs     ← npm run verify: links, H1s, titles, canonicals, keyword map, baseline URLs
+  seo-snapshot.mjs     ← npm run seo:diff: SEO changes vs. the pre-redesign baseline
+  seo-baseline.json    ← every page's title/description/H1/canonical/schema before the redesign
+  keyword-coverage.mjs ← npm run seo:keywords: keyword-map phrases missing from each page
 keystatic.config.ts
 markdoc.config.mjs
 ```

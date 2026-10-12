@@ -84,22 +84,31 @@ card grids, form dropdowns, sitemap, and schema `areaServed` all read from these
 
 ## 3. Swap the branding
 
-**Design tokens** — `src/styles/tokens.css`. Colours, fonts, spacing, radii, shadows, and the
-signature gradients are all here. Rebranding is mostly this one file.
+**Design tokens** — `src/styles/tokens.css` (colours, radii, shadows, motion) and
+`src/styles/global.css` (buttons, chips, form fields, prose). Values come from the 2026 design
+handoff (`design_handoff_sedco_astro/`, kept outside the repo).
 
-**Fonts** — installed via `@fontsource`, imported at the top of
-`src/layouts/BaseLayout.astro`. To change: `npm i @fontsource/<family>`, swap the imports, and
-update `--font-display` / `--font-body` in `tokens.css`.
+**Fonts** — Plus Jakarta Sans (headings) and Inter (body), self-hosted through the Astro Fonts
+API in `astro.config.mjs` (`fonts: [...]`), Latin subset, preloaded by `<Font>` in
+`src/layouts/BaseLayout.astro`. To change a family, swap its `src` there; `--font-title` and
+`--font-body` in `tokens.css` follow automatically.
 
-**Logo and photos** — drop files in `src/assets/images/`, then update `src/lib/images.ts`. Pages
-reference images by **role** (`heroHome`, `heroService`, `whyUs`, …), never by filename, so this
-is the only file to touch. Keep the SEO filename convention: `slab-leak-repair-el-cajon.jpg`.
+**Site images** — the redesign's pre-optimized WebP set lives in `public/images/` and is
+described in `src/data/images.json` (srcset, sizes, alt). They are served as-is (not re-encoded)
+so they keep Sedco's XMP rights metadata, and cached for a year: **a replaced image must get a
+new file name**. Render them with `ui/ResponsiveImage.astro`.
 
-**Favicon** — `public/favicon.svg`.
+**Blog images** — Keystatic uploads go to `src/assets/`; `src/lib/images.ts` supplies the
+default lead image. These are optimized by Astro at build time.
 
-> ⚠️ Every photo currently in `src/assets/images/` is licensed stock from the design handoff and
-> is a **placeholder**. The guide (Part 7.4) asks for the client's real trucks, techs, and jobs.
-> The logo is the one real brand asset.
+**Favicon and logo** — `public/favicon.ico`, `icon-192.png`, `icon-512.png`,
+`apple-touch-icon.png`, and `public/images/brand/sedco-plumbing-logo-512.png` (the schema logo),
+all generated from `src/assets/images/sedco-plumbing-logo.jpeg`. Social share card:
+`public/images/social/sedco-plumbing-el-cajon-1200x630.jpg`.
+
+> ℹ️ The photos in `src/assets/images/` are licensed stock and are now used only as blog lead
+> images. The site's own photos and illustrations (`public/images/`) come from the 2026 design
+> handoff.
 
 ---
 
