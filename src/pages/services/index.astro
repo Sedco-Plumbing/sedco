@@ -7,7 +7,7 @@
 import { paths } from '@config/site';
 import { catalogGroups } from '@config/catalog';
 import { commonFaqs } from '@config/faqs';
-import { PAGE_HERO_SIZES } from '@lib/media';
+import { PAGE_HERO_SIZES, HERO_PHOTO_MEDIA } from '@lib/media';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PageHero from '@components/PageHero.astro';
 import ServicesGrid from '@components/ServicesGrid.astro';
@@ -27,7 +27,7 @@ const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Services' }];
   description={description}
   path={path}
   crumbs={crumbs}
-  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES }}
+  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES, media: HERO_PHOTO_MEDIA }}
 >
   <Fragment slot="head">
     <PageSchema type="CollectionPage" name={title} description={description} path={path} />

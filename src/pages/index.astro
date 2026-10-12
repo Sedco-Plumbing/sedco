@@ -13,7 +13,7 @@ import { commonFaqs } from '@config/faqs';
 
 import BaseLayout from '@layouts/BaseLayout.astro';
 import HomeHero from '@components/home/HomeHero.astro';
-import { HOME_HERO_SIZES } from '@lib/media';
+import { HOME_HERO_SIZES, HERO_PHOTO_MEDIA } from '@lib/media';
 import HowItWorks from '@components/home/HowItWorks.astro';
 import ServicesGrid from '@components/ServicesGrid.astro';
 import ReviewsMarquee from '@components/ReviewsMarquee.astro';
@@ -35,7 +35,7 @@ const faqs = commonFaqs;
   title={title}
   description={description}
   path="/"
-  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: HOME_HERO_SIZES }}
+  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: HOME_HERO_SIZES, media: HERO_PHOTO_MEDIA }}
 >
   <Fragment slot="head">
     <LocalBusinessSchema />

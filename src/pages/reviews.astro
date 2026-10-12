@@ -12,7 +12,7 @@ import { site, paths, getCity } from '@config/site';
 import { reviews } from '@config/reviews';
 import { commonFaqs } from '@config/faqs';
 import { isPlaceholder } from '@lib/tokens';
-import { PAGE_HERO_SIZES } from '@lib/media';
+import { PAGE_HERO_SIZES, HERO_PHOTO_MEDIA } from '@lib/media';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PageHero from '@components/PageHero.astro';
 import Faq from '@components/Faq.astro';
@@ -36,7 +36,7 @@ const reviewLinkReady = !isPlaceholder(reviewLink) && reviewLink.length > 0;
   description={description}
   path={path}
   crumbs={crumbs}
-  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES }}
+  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES, media: HERO_PHOTO_MEDIA }}
 >
   <Fragment slot="head">
     <PageSchema type="WebPage" name={title} description={description} path={path} />

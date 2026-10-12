@@ -15,7 +15,7 @@ import Icon from '@components/ui/Icon.astro';
 import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
 import RequestForm from '@components/RequestForm.astro';
 import type { IconName } from '@lib/icons';
-import { HOME_HERO_SIZES } from '@lib/media';
+import { HOME_HERO_SIZES, BLANK_PIXEL } from '@lib/media';
 
 
 
@@ -37,13 +37,16 @@ const highlights: { icon: IconName; label: string }[] = [
 
 <section class="hero" aria-labelledby="hero-heading">
   <div class="hero__media" aria-hidden="true">
-    <ResponsiveImage
-      name="hero/sedco-plumber-el-cajon"
-      alt=""
-      priority
-      sizes={HOME_HERO_SIZES}
-      class="hero__img"
-    />
+    <picture>
+      <source media="(max-width: 768px)" srcset={BLANK_PIXEL} />
+      <ResponsiveImage
+        name="hero/sedco-plumber-el-cajon"
+        alt=""
+        priority
+        sizes={HOME_HERO_SIZES}
+        class="hero__img"
+      />
+    </picture>
   </div>
 
   <div class="hero__grid">

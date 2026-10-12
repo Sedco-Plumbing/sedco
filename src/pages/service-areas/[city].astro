@@ -12,7 +12,7 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import { getCity, paths } from '@config/site';
-import { PAGE_HERO_SIZES } from '@lib/media';
+import { PAGE_HERO_SIZES, HERO_PHOTO_MEDIA } from '@lib/media';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import TownPage from '@components/town/TownPage.astro';
 import LocalBusinessSchema from '@components/schema/LocalBusinessSchema.astro';
@@ -43,7 +43,7 @@ const crumbs = [
   description={data.description}
   path={path}
   crumbs={crumbs}
-  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES }}
+  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES, media: HERO_PHOTO_MEDIA }}
 >
   <Fragment slot="head">
     <LocalBusinessSchema />

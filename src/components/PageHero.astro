@@ -12,7 +12,7 @@
  */
 import { site, paths } from '@config/site';
 import { phoneHref } from '@lib/tokens';
-import { PAGE_HERO_SIZES } from '@lib/media';
+import { PAGE_HERO_SIZES, BLANK_PIXEL } from '@lib/media';
 import Icon from '@components/ui/Icon.astro';
 import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
 import type { Crumb } from '@lib/types';
@@ -31,7 +31,10 @@ const hasBelow = Astro.slots.has('below');
 
 <section class:list={['page-hero', hasAside && 'page-hero--aside']} aria-labelledby="page-hero-heading">
   <div class="page-hero__media" aria-hidden="true">
-    <ResponsiveImage name="hero/sedco-plumber-el-cajon" alt="" priority sizes={PAGE_HERO_SIZES} class="page-hero__img" />
+    <picture>
+      <source media="(max-width: 768px)" srcset={BLANK_PIXEL} />
+      <ResponsiveImage name="hero/sedco-plumber-el-cajon" alt="" priority sizes={PAGE_HERO_SIZES} class="page-hero__img" />
+    </picture>
   </div>
 
   <div class="page-hero__inner">

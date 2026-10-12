@@ -6,7 +6,7 @@
  * → contact (the page's own CTA heading and copy).
  */
 import { paths } from '@config/site';
-import { PAGE_HERO_SIZES } from '@lib/media';
+import { PAGE_HERO_SIZES, HERO_PHOTO_MEDIA } from '@lib/media';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PageHero from '@components/PageHero.astro';
 import AboutSplit from '@components/AboutSplit.astro';
@@ -56,7 +56,7 @@ const sections: Section[] = [
   description={description}
   path={path}
   crumbs={crumbs}
-  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES }}
+  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES, media: HERO_PHOTO_MEDIA }}
 >
   <Fragment slot="head">
     <PageSchema type="AboutPage" name={title} description={description} path={path} />
