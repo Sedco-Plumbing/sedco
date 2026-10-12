@@ -1,0 +1,65 @@
+---
+/**
+ * Bulleted tips with a bold lead-in, e.g. "How to Keep Your Drains Clear".
+ */
+interface Props {
+  id: string;
+  heading: string;
+  items: { title: string; text: string }[];
+}
+
+const { id, heading, items } = Astro.props;
+---
+
+<section class="article-section tips" id={id} aria-labelledby={`${id}-heading`}>
+  <h2 class="article-h2" id={`${id}-heading`}>{heading}</h2>
+  <ul class="tips__list">
+    {
+      items.map((item) => (
+        <li>
+          <strong>{item.title}</strong> {item.text}
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .tips__list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 24px;
+    list-style: none;
+  }
+
+  .tips__list li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--slate-600);
+  }
+
+  .tips__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--yellow-500);
+  }
+
+  .tips__list strong {
+    font-weight: 700;
+    color: var(--navy-800);
+  }
+
+  @media (max-width: 768px) {
+    .tips__list li {
+      font-size: 16px;
+    }
+  }
+</style>

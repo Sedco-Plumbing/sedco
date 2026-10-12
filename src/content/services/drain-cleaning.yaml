@@ -20,6 +20,65 @@ heroPoints:
   - Clear pricing before the work starts
   - 'Licensed CA C-36 contractor'
 
+# ---- 2026 design blocks (added on top of the SEO copy; see content.config.ts) ----
+heroLead: >-
+  Slow or blocked drains cleared by a local, licensed plumber, from kitchen sinks and showers to
+  the main line.
+asideHeading: Blocked drain right now?
+asideText: Same-day visits across San Diego County.
+howHeading: Call Us to Clear Your Drain
+steps:
+  - title: Call or send a request
+    text: >-
+      Call [PHONE] or use the form on this page. If you use the form, we'll call you back within
+      30 minutes, Monday to Saturday.
+  - title: We find the clog
+    text: >-
+      Our plumber checks which fixtures are affected to work out where the blockage is and what is
+      causing it.
+  - title: You approve the price
+    text: >-
+      You get a free estimate with a clear price for the work, and nothing starts until you're
+      happy with it.
+  - title: We clear it and test it
+    text: >-
+      We clear the drain, run water through every affected fixture to check it flows freely, and
+      explain what we found.
+pricingIntro: >-
+  The cost depends on where the clog is and how far down the line it sits. You'll always know the
+  price before we start.
+covers:
+  heading: Drains We Clear
+  tocLabel: Drains we clear
+  intro: We clear blockages in every part of the plumbing, inside the home and out to the main line.
+  items:
+    - title: Kitchen sink drains
+      text: Grease, food scraps and soap build-up cleared from sinks and disposals.
+    - title: Bathroom sinks, showers and tubs
+      text: Hair and soap clogs removed so water drains away properly again.
+    - title: Toilet clogs
+      text: Blocked toilets cleared, and the cause found if it keeps happening.
+    - title: Laundry and floor drains
+      text: Lint, dirt and debris cleared from laundry, garage and floor drains.
+    - title: Main sewer line
+      text: Blockages in the main line cleared when several fixtures back up at once.
+    - title: Rental and commercial drains
+      text: Drain cleaning for landlords, property managers, restaurants and shops.
+tips:
+  heading: How to Keep Your Drains Clear
+  tocLabel: Prevention tips
+  items:
+    - title: Keep grease out of the sink.
+      text: Let cooking fat cool and put it in the trash instead of the drain.
+    - title: Use drain screens.
+      text: A simple screen in showers and tubs catches hair before it builds up.
+    - title: Only flush toilet paper.
+      text: Wipes, even ones labelled flushable, are a common cause of toilet and main line clogs.
+    - title: Run water after the disposal.
+      text: Keep cold water running for a few seconds to carry food scraps through the pipes.
+    - title: Call early.
+      text: A drain that is starting to slow down is usually quicker to clear than a full blockage.
+
 h1: Drain Cleaning in El Cajon, CA
 intro:
   - >-
@@ -32,6 +91,14 @@ intro:
 
 sections:
   - heading: Signs Your Drain Is Telling You Something
+    tocLabel: Signs you need it
+    list:
+      - Water drains slowly from sinks, tubs or showers
+      - Gurgling sounds from drains or the toilet
+      - Bad smells coming up from a drain
+      - Water backing up in more than one fixture
+      - Toilet water rising when you run the sink or washer
+      - Damp patches or a sewage smell in the yard
     paragraphs:
       - >-
         Drains rarely fail without warning. Slow water, standing water around your feet in the
@@ -44,6 +111,7 @@ sections:
         assess where the restriction is located and determine the most appropriate way to clear it.
 
   - heading: 'How We Clear Drains: Snaking, Hydro Jetting, and Camera Inspections'
+    tocLabel: How we clear drains
     paragraphs:
       - >-
         Different clogs require different solutions. For common household blockages, a professional
@@ -58,6 +126,7 @@ sections:
         methods when they aren’t necessary.
 
   - heading: Old Pipes, Mature Trees, and East County Clogs
+    tocLabel: Old pipes and tree roots
     paragraphs:
       - >-
         Local conditions can contribute to recurring drainage problems. Older plumbing may have
@@ -99,6 +168,32 @@ faqs:
         branch drain. However, if several drains are backing up or making unusual sounds at the same
         time, the blockage could be farther down the main sewer line. A professional inspection can
         help determine where the problem is located.
+  - question: Can you clear a blocked main sewer line?
+    answer:
+      - >-
+        Yes. If water is backing up in more than one fixture, the blockage is usually in the main
+        line, and we clear those too. If we find the line is cracked or broken, we'll explain your
+        [sewer line repair](/services/sewer-lines/) options.
+  - question: How long does drain cleaning take?
+    answer:
+      - >-
+        Most household drains are cleared in a single visit. Main line blockages can take longer,
+        and our plumber will tell you what to expect once they've found the clog.
+  - question: Do you clear drains for rentals and businesses?
+    answer:
+      - >-
+        Yes, we work for homeowners, landlords, property managers and businesses, including
+        restaurants that also need [grease trap services](/services/grease-trap/).
+  - question: Is drain cleaning guaranteed?
+    answer:
+      - >-
+        Yes. If anything goes wrong with our work in the next 30 days, we'll come back and put it
+        right at no charge.
+  - question: Can you come out at night or on a Saturday?
+    answer:
+      - >-
+        Yes, we're open 24 hours from Monday to Saturday, and same-day visits are available, so
+        you can call us for emergency drain cleaning in El Cajon at any hour on those days.
 
 ctaHeading: Get Your Drains Flowing Again Today
 ctaBody: >-

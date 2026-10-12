@@ -22,6 +22,8 @@ import RequestDrawer from '@components/RequestDrawer.astro';
 import MobileCallBar from '@components/MobileCallBar.astro';
 import type { ImageKey } from '@lib/media';
 
+type PreloadSpec = { name: ImageKey; sizes?: string; media?: string };
+
 interface Props {
   title: string;
   description: string;
@@ -31,8 +33,11 @@ interface Props {
   ogImage?: string;
   publishedTime?: Date;
   noindex?: boolean;
-  /** The page's LCP image, preloaded in <head>. Match `sizes` to the rendered <img>. */
-  preloadImage?: { name: ImageKey; sizes?: string };
+  /**
+   * The page's LCP image(s), preloaded in <head>. Match `sizes` to the rendered
+   * <img>; pass one entry per `media` query for an art-directed <picture>.
+   */
+  preloadImage?: PreloadSpec | PreloadSpec[];
   /** Service pre-selected in the Request drawer (catalog name) */
   drawerService?: string;
   /**
@@ -86,7 +91,12 @@ const googleSiteVerification = site.integrations.googleSiteVerification;
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <Font cssVariable="--font-jakarta" preload />
     <Font cssVariable="--font-inter" preload />
-    {preloadImage && <PreloadImage name={preloadImage.name} sizes={preloadImage.sizes} />}
+    {
+      preloadImage &&
+        [preloadImage].flat().map((spec) => (
+          <PreloadImage name={spec.name} sizes={spec.sizes} media={spec.media} />
+        ))
+    }
     <meta name="generator" content={Astro.generator} />
     {googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
 

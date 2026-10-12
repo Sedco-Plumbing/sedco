@@ -1,0 +1,282 @@
+---
+/**
+ * Hero for hub and info pages (Services, Service Areas, Reviews, About,
+ * Contact): navy panel, the job-site photo fading in on the right,
+ * breadcrumb, optional yellow eyebrow, H1, intro, Call + Request buttons.
+ *
+ * Slots:
+ *   below — content under a divider, e.g. the town or service-group pills
+ *   aside — a card on the right, e.g. the Reviews page rating card
+ *
+ * The photo is the page's LCP image (preload it with PAGE_HERO_SIZES).
+ */
+import { site, paths } from '@config/site';
+import { phoneHref } from '@lib/tokens';
+import { PAGE_HERO_SIZES } from '@lib/media';
+import Icon from '@components/ui/Icon.astro';
+import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
+import type { Crumb } from '@lib/types';
+
+interface Props {
+  crumbs: Crumb[];
+  eyebrow?: string;
+  heading: string;
+  intro: string;
+}
+
+const { crumbs, eyebrow, heading, intro } = Astro.props;
+const hasAside = Astro.slots.has('aside');
+const hasBelow = Astro.slots.has('below');
+---
+
+<section class:list={['page-hero', hasAside && 'page-hero--aside']} aria-labelledby="page-hero-heading">
+  <div class="page-hero__media" aria-hidden="true">
+    <ResponsiveImage name="hero/sedco-plumber-el-cajon" alt="" priority sizes={PAGE_HERO_SIZES} class="page-hero__img" />
+  </div>
+
+  <div class="page-hero__inner">
+    <div class="page-hero__main">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <ol>
+          {
+            crumbs.map((crumb, index) => (
+              <li>
+                {crumb.href && index < crumbs.length - 1 ? (
+                  <a href={crumb.href}>{crumb.name}</a>
+                ) : (
+                  <span aria-current="page">{crumb.name}</span>
+                )}
+                {index < crumbs.length - 1 && <Icon name="chevron-right" size={14} />}
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+
+      {eyebrow && <p class="page-hero__eyebrow">{eyebrow}</p>}
+      <h1 class="page-hero__title" id="page-hero-heading">{heading}</h1>
+      <p class="page-hero__intro">{intro}</p>
+
+      <div class="page-hero__ctas">
+        <a class="btn btn--call btn--lg" href={phoneHref()}>
+          <Icon name="phone" size={22} />Call {site.business.phone}
+        </a>
+        <a class="btn btn--request btn--lg" href={`${paths.contact}#request`} data-open-request>Request Service</a>
+      </div>
+    </div>
+
+    {hasAside && <div class="page-hero__aside"><slot name="aside" /></div>}
+
+    {hasBelow && <div class="page-hero__below"><slot name="below" /></div>}
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    margin: 0 var(--section-inset);
+    padding: 56px clamp(24px, 5.5vw, 105px) 64px;
+    overflow: hidden;
+    border-radius: var(--r-section);
+    background: var(--navy-800);
+  }
+
+  .page-hero__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .page-hero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--navy-800) 0%, var(--navy-800) 52%, rgba(11, 37, 69, 0) 72%);
+  }
+
+  .page-hero__media :global(.page-hero__img) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    max-width: none;
+    height: 100%;
+  }
+
+  .page-hero__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: var(--container);
+    margin: 0 auto;
+  }
+
+  .page-hero--aside .page-hero__inner {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    column-gap: 72px;
+    align-items: center;
+  }
+
+  .page-hero__main {
+    max-width: 680px;
+  }
+
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    list-style: none;
+    font-size: 15px;
+  }
+
+  .crumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--blue-200);
+  }
+
+  .crumbs a {
+    color: var(--blue-200);
+    text-decoration: none;
+  }
+
+  .crumbs a:hover {
+    color: var(--white);
+    text-decoration: underline;
+  }
+
+  .crumbs [aria-current] {
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .crumbs :global(svg) {
+    color: var(--blue-300);
+  }
+
+  .page-hero__eyebrow {
+    margin-top: 36px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--yellow-500);
+  }
+
+  .page-hero__title {
+    margin-top: 28px;
+    font-weight: 800;
+    font-size: 58px;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: var(--white);
+  }
+
+  .page-hero__eyebrow + .page-hero__title {
+    margin-top: 12px;
+  }
+
+  .page-hero__intro {
+    max-width: 620px;
+    margin-top: 20px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--blue-100);
+  }
+
+  .page-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .page-hero__ctas .btn--lg {
+    padding: 0 26px;
+    font-size: 18px;
+  }
+
+  .page-hero__ctas .btn:focus-visible {
+    outline-color: var(--white);
+  }
+
+  .page-hero__below {
+    grid-column: 1 / -1;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid var(--navy-600);
+  }
+
+  @media (max-width: 1199px) {
+    .page-hero__title {
+      font-size: 48px;
+    }
+
+    .page-hero--aside .page-hero__inner {
+      column-gap: 40px;
+    }
+  }
+
+  @media (max-width: 959px) {
+    .page-hero--aside .page-hero__inner {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .page-hero__aside {
+      margin-top: 32px;
+    }
+
+    .page-hero__media::after {
+      background: linear-gradient(180deg, rgba(11, 37, 69, 0.94) 0%, rgba(11, 37, 69, 0.86) 100%);
+    }
+
+    .page-hero__media :global(.page-hero__img) {
+      width: 100%;
+      object-fit: cover;
+      object-position: 78% center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 28px 20px 28px;
+    }
+
+    .crumbs ol {
+      font-size: 14px;
+    }
+
+    .page-hero__eyebrow {
+      margin-top: 24px;
+      font-size: 12px;
+    }
+
+    .page-hero__title {
+      margin-top: 20px;
+      font-size: 34px;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    .page-hero__intro {
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .page-hero__ctas {
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .page-hero__ctas .btn {
+      width: 100%;
+    }
+
+    .page-hero__below {
+      margin-top: 24px;
+      padding-top: 20px;
+    }
+  }
+</style>

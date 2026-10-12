@@ -1,108 +1,94 @@
 ---
 /**
- * SERVICES HUB — guide Part 3 "Services Hub", design ServicesHub.dc.html.
- * Centered hero → 4 grouped card sections → dark "Not Sure What You Need?".
+ * SERVICES HUB — design "Sedco All Services".
+ * Hero (with the four group pills) → services grid → FAQ → contact.
+ * Every card links to its live service URL (keyword map).
  */
-import '../../styles/legacy/load'; // pre-redesign styles: remove when this page is rebuilt
-import { site, paths } from '@config/site';
-import { servicesByGroup } from '@config/site';
-import { images } from '@lib/images';
-
+import { paths } from '@config/site';
+import { catalogGroups } from '@config/catalog';
+import { commonFaqs } from '@config/faqs';
+import { PAGE_HERO_SIZES } from '@lib/media';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Hero from '@components/Hero.astro';
-import HeroCtas from '@components/HeroCtas.astro';
-import ServiceCardGrid from '@components/ServiceCardGrid.astro';
-import CtaSection from '@components/CtaSection.astro';
+import PageHero from '@components/PageHero.astro';
+import ServicesGrid from '@components/ServicesGrid.astro';
+import Faq from '@components/Faq.astro';
+import ContactSection from '@components/ContactSection.astro';
 import PageSchema from '@components/schema/PageSchema.astro';
 
 const title = 'Plumbing Services in El Cajon & San Diego County | Sedco';
 const description =
-  'Full-service plumbing for San Diego County homes and businesses — drains, water heaters, slab leaks, sewer, gas lines and more. Call [PHONE].';
+  'Everyday repairs, drain and sewer, remodels, water heaters, and water and gas lines across El Cajon and San Diego County. Free estimates, no trip charge.';
 const path = paths.servicesHub;
-
 const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Services' }];
 ---
 
-<BaseLayout title={title} description={description} path={path} crumbs={crumbs}>
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  crumbs={crumbs}
+  inlineCrumbs
+  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES }}
+>
   <Fragment slot="head">
     <PageSchema type="CollectionPage" name={title} description={description} path={path} />
   </Fragment>
 
-  <Hero
-    variant="center"
-    image={images.heroService}
-    badge="Residential & commercial plumbing"
-    heading="Plumbing Services for San Diego County Homes and Businesses"
-    intro="Sedco Plumbing handles everything connected to the water, drain, and gas systems of your property — repair, replacement, installation, and maintenance. Every job is performed by a licensed technician (CA C-36) and priced upfront. Choose a service below to learn more, or call [PHONE] and tell us what’s going on."
+  <PageHero
+    crumbs={crumbs}
+    heading="Plumbing Services in El Cajon and San Diego County"
+    intro="From everyday repairs and blocked drains to remodels, water heaters, and water and gas lines, Sedco Plumbing handles plumbing for homes, rentals and businesses. Every visit starts with a free estimate, with no trip charge."
   >
-    <HeroCtas slot="cta" center />
-  </Hero>
+    <ul class="group-pills" slot="below" aria-label="Service groups">
+      {
+        catalogGroups.map((group) => (
+          <li>
+            <a href={`#group-${group.key}`}>{group.menuTitle}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </PageHero>
 
-  {
-    site.serviceGroups.map((group, index) => (
-      <section class={index === 0 ? 'section' : 'section section--tight'}>
-        <div class="container">
-          <h2 class="group-heading">
-            <span class="group-glyph" aria-hidden="true">
-              {group.glyph}
-            </span>
-            {/* The space keeps the heading's text content readable — "🔧 Repairs
-                & Emergency Work" rather than "🔧Repairs" — for crawlers and any
-                tool that reads textContent. The glyph is aria-hidden, so screen
-                readers announce the heading without it either way. */}
-            {' '}
-            {group.heading}
-          </h2>
-          <ServiceCardGrid
-            services={servicesByGroup(group.id)}
-            variant="glyph"
-            glyph={group.glyph}
-            columns={3}
-          />
-        </div>
-      </section>
-    ))
-  }
+  <ServicesGrid />
 
-  <section class="section section--tight">
-    <div class="container">
-      <p class="hub-links measure">
-        Not sure which page you need? See <a href={paths.areasHub}
-          >every city and community we serve</a
-        > or <a href={paths.contact}>request a service call</a> and describe the symptom.
-      </p>
-    </div>
-  </section>
+  <Faq faqs={commonFaqs} mobileCall />
 
-  <CtaSection
-    variant="dark"
-    heading="Not Sure What You Need?"
-    body="Describe the symptom — a noise, a smell, a stain, a spike in your water bill — and we will tell you what it likely is and what it costs to fix. Call Sedco Plumbing at [PHONE]."
-  />
+  <ContactSection />
 </BaseLayout>
 
 <style>
-  .group-heading {
+  .group-pills {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: var(--fs-h2-sm);
-    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
   }
-  .group-glyph {
+
+  .group-pills a {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: var(--tint);
-    font-size: 1.25rem;
-    flex-shrink: 0;
+    height: 40px;
+    padding: 0 16px;
+    border: 1.5px solid var(--blue-400);
+    border-radius: var(--r-pill);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    text-decoration: none;
+    transition:
+      background-color var(--t-base) ease,
+      border-color var(--t-base) ease,
+      color var(--t-base) ease;
   }
-  .hub-links {
-    font-size: var(--fs-prose);
-    color: var(--text-soft);
-    text-align: center;
+
+  .group-pills a:hover {
+    border-color: var(--yellow-500);
+    background: var(--yellow-500);
+    color: var(--navy-800);
+  }
+
+  .group-pills a:focus-visible {
+    outline-color: var(--blue-300);
   }
 </style>

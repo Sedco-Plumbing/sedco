@@ -1,0 +1,323 @@
+---
+/**
+ * SERVICE PAGE TEMPLATE (2026 design: "Sedco Service - Drain Cleaning v2").
+ *
+ * Renders a service page or a service × town page from its content entry:
+ * split hero → two-column body (article + sticky aside) → town chips →
+ * contact section. The article keeps every word of the page's SEO copy
+ * (intro → Overview, then each section), and adds the design's blocks around
+ * it: optional cards/tips from the entry, How it works, Pricing, Reviews,
+ * FAQ and Related services. Headings, ids and the "On this page" menu are
+ * built from the same list, so they can't drift apart.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { site, paths, siblingCombos, type ServiceDef, type CityDef } from '@config/site';
+import { catalogService, catalogGroup, catalogServices } from '@config/catalog';
+import { t } from '@lib/tokens';
+import type { Crumb, TocItem } from '@lib/types';
+import ServiceHero from './ServiceHero.astro';
+import ServiceAside from './ServiceAside.astro';
+import CopySection from './CopySection.astro';
+import CoverCards from './CoverCards.astro';
+import TipsList from './TipsList.astro';
+import ProcessSteps from './ProcessSteps.astro';
+import PricingTiles from './PricingTiles.astro';
+import ServiceReviews from './ServiceReviews.astro';
+import RelatedServices from './RelatedServices.astro';
+import AreaChips from './AreaChips.astro';
+import Faq from '@components/Faq.astro';
+import ContactSection from '@components/ContactSection.astro';
+import Icon from '@components/ui/Icon.astro';
+import { phoneHref } from '@lib/tokens';
+
+type Data = CollectionEntry<'services'>['data'] | CollectionEntry<'serviceCity'>['data'];
+
+interface Props {
+  data: Data;
+  service: ServiceDef;
+  city?: CityDef;
+  crumbs: Crumb[];
+}
+
+const { data, service, city, crumbs } = Astro.props;
+const item = catalogService(service.slug);
+const group = catalogGroup(item.group);
+/** "Drain cleaning" → "Drain Cleaning" (small words stay lower case). */
+const titleCase = (text: string) =>
+  text.replace(/\b([a-z])([a-z]*)/g, (word, first: string, rest: string) =>
+    ['and', 'in', 'of', 'or', 'the', 'a'].includes(word) ? word : first.toUpperCase() + rest,
+  );
+
+/** Keyword-style service name for generated headings, e.g. "Water Heater Repair" */
+const noun = titleCase(item.short);
+
+const slugify = (text: string) =>
+  t(text)
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
+// ---- article blocks, in page order ----
+const overviewHeading =
+  data.overviewHeading ??
+  (city ? `${noun} in ${city.name} From a Local Plumber` : `${noun} From a Local El Cajon Plumber`);
+
+const sections = data.sections.map((section) => ({ id: slugify(section.heading), section }));
+
+const steps = (data.steps ?? [
+  {
+    title: 'Call or send a request',
+    text: `Call ${site.business.phone} or use the form on this page. If you use the form, we'll call you back within 30 minutes, Monday to Saturday.`,
+  },
+  {
+    title: 'We find the problem',
+    text: 'Our plumber looks at the problem, finds the cause and explains what needs doing in plain words.',
+  },
+  {
+    title: 'You approve the price',
+    text: "You get a free estimate with a clear price for the work, and nothing starts until you're happy with it.",
+  },
+  {
+    title: 'We fix it and test it',
+    text: 'We do the work, test it and explain what we found. Every job is covered by our 30-day guarantee.',
+  },
+]).map((step) => ({ title: t(step.title), text: t(step.text) }));
+
+const faqHeading =
+  data.faqHeading && data.faqHeading !== 'Frequently Asked Questions'
+    ? data.faqHeading
+    : `${noun} Questions`;
+
+// Related services: the entry's own service links first, then same-group siblings.
+const linkedSlugs = data.internalLinks
+  .filter((link) => link.group === 'service')
+  .map((link) => link.href.match(/^\/services\/([^/]+)\/$/)?.[1])
+  .filter((slug): slug is string => Boolean(slug) && slug !== service.slug);
+const related = [
+  ...new Set([
+    ...linkedSlugs,
+    ...catalogServices.filter((s) => s.group === item.group && s.slug !== service.slug).map((s) => s.slug),
+    ...catalogServices.filter((s) => s.slug !== service.slug).map((s) => s.slug),
+  ]),
+]
+  .slice(0, 4)
+  .map(catalogService);
+
+const toc: TocItem[] = [
+  { id: 'overview', label: 'Overview' },
+  ...sections.map(({ id, section }) => ({ id, label: section.tocLabel ?? t(section.heading) })),
+  ...(data.covers ? [{ id: 'covers', label: data.covers.tocLabel ?? data.covers.heading }] : []),
+  { id: 'how-it-works', label: 'How it works' },
+  { id: 'pricing', label: 'Pricing' },
+  ...(data.tips ? [{ id: 'tips', label: data.tips.tocLabel ?? data.tips.heading }] : []),
+  { id: 'reviews', label: 'Reviews' },
+  ...(data.faqs.length > 0 ? [{ id: 'questions', label: 'Questions' }] : []),
+  { id: 'related', label: 'Related services' },
+];
+
+// ---- town chips: the service × town page where it exists, else the town page ----
+const townChips = site.cities.map((c) => ({
+  href: service.cities.includes(c.slug) ? paths.serviceCity(service.slug, c.slug) : paths.city(c.slug),
+  label: `${item.short} in ${c.name}`,
+  current: city?.slug === c.slug,
+}));
+// On a service × town page, link UP to the town page and ACROSS to the other
+// services we have pages for in the same town, ahead of the other towns.
+const chips = city
+  ? [
+      { href: paths.city(city.slug), label: `All plumbing services in ${city.name}`, current: false },
+      ...siblingCombos(service.slug, city.slug).map((pair) => ({
+        href: paths.serviceCity(pair.service.slug, city.slug),
+        label: `${catalogService(pair.service.slug).short} in ${city.name}`,
+        current: false,
+      })),
+      ...townChips.filter((chip) => !chip.current),
+    ]
+  : townChips;
+
+// The SEO team's other internal links (towns, contact, …) with their exact anchors.
+const moreLinks = data.internalLinks.filter(
+  (link) => link.group !== 'service' && !chips.some((chip) => chip.href === link.href && chip.label === link.anchor),
+);
+
+const asideHeading = data.asideHeading ?? (city ? `Need a plumber in ${city.name}?` : 'Need a plumber right now?');
+const asideText = data.asideText ?? 'Same-day visits across San Diego County.';
+---
+
+<ServiceHero
+  crumbs={crumbs}
+  eyebrow={city ? `${group.eyebrow} · ${city.name}` : group.eyebrow}
+  heading={t(data.h1)}
+  lead={data.heroLead ?? `${item.summary} Free estimate, no trip charge.`}
+  art={item.image}
+  service={item.name}
+/>
+
+<div class="svc-body">
+  <div class="svc-body__grid">
+    <article class="svc-article">
+      <CopySection
+        id="overview"
+        lead
+        section={{ heading: overviewHeading, paragraphs: data.intro }}
+      />
+
+      <div class="inline-call on-navy">
+        <p class="inline-call__title">{asideHeading}</p>
+        <p class="inline-call__text">{asideText}</p>
+        <a class="btn btn--call btn--block" href={phoneHref()}><Icon name="phone" size={20} />Call {site.business.phone}</a>
+      </div>
+
+      {sections.map(({ id, section }) => <CopySection id={id} section={section} />)}
+
+      {data.covers && <CoverCards id="covers" heading={data.covers.heading} intro={data.covers.intro} items={data.covers.items} />}
+
+      <div class="article-section">
+        <ProcessSteps
+          id="how-it-works"
+          heading={data.howHeading ?? `How Our ${noun} Service Works`}
+          lead={data.howLead ?? "You'll always know the price before we start."}
+          steps={steps}
+        />
+      </div>
+
+      <div class="article-section">
+        <PricingTiles
+          id="pricing"
+          heading={data.pricingHeading ?? `Upfront ${noun} Pricing`}
+          intro={data.pricingIntro ?? "The price depends on the job, and you'll always know it before we start."}
+        />
+      </div>
+
+      {data.tips && <TipsList id="tips" heading={data.tips.heading} items={data.tips.items} />}
+
+      <div class="article-section">
+        <ServiceReviews id="reviews" match={item.reviewMatch} />
+      </div>
+
+      {
+        data.faqs.length > 0 && (
+          <div class="article-section">
+            <Faq faqs={data.faqs} heading={faqHeading} variant="column" id="questions" mobileCall />
+          </div>
+        )
+      }
+
+      <div class="article-section">
+        <RelatedServices id="related" services={related} />
+        {
+          moreLinks.length > 0 && (
+            <nav class="more-links" aria-label="More from Sedco Plumbing">
+              <ul>
+                {moreLinks.map((link) => (
+                  <li>
+                    <a href={link.href}>
+                      {link.anchor}
+                      <Icon name="arrow-right" size={15} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )
+        }
+      </div>
+    </article>
+
+    <ServiceAside heading={asideHeading} text={asideText} toc={toc} service={item.name} />
+  </div>
+</div>
+
+<AreaChips
+  heading={`${titleCase(item.short)} Across San Diego County`}
+  text="Based in El Cajon, our plumbers work in these towns and right across the county."
+  chips={chips}
+/>
+
+<ContactSection heading={t(data.ctaHeading)} intro={t(data.ctaBody)} service={item.name} formTitle="Get a free estimate" />
+
+<style>
+  .svc-body {
+    padding: 88px var(--gutter) 40px;
+  }
+
+  .svc-body__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 72px;
+    align-items: start;
+    max-width: var(--container);
+    margin: 0 auto;
+  }
+
+  .svc-article {
+    min-width: 0;
+  }
+
+  .inline-call {
+    display: none;
+  }
+
+  .more-links ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    list-style: none;
+  }
+
+  .more-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid var(--blue-200);
+    border-radius: var(--r-pill);
+    background: var(--white);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--blue-700);
+    text-decoration: none;
+  }
+
+  .more-links a:hover {
+    border-color: var(--navy-800);
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  @media (max-width: 1099px) {
+    .svc-body__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .inline-call {
+      display: block;
+      margin-top: 32px;
+      padding: 24px;
+      border-radius: var(--r-xl);
+      background: var(--navy-800);
+    }
+
+    .inline-call__title {
+      font-family: var(--font-title);
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--white);
+    }
+
+    .inline-call__text {
+      margin: 6px 0 18px;
+      font-size: 15px;
+      color: var(--blue-200);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .svc-body {
+      padding: 44px 24px 8px;
+    }
+  }
+</style>

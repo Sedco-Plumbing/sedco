@@ -1,0 +1,123 @@
+---
+/**
+ * "Related Services": a 2×2 grid of service cards (illustration + name +
+ * summary), each linking to the live service URL.
+ */
+import { paths } from '@config/site';
+import { serviceHref, type CatalogService } from '@config/catalog';
+import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
+import Icon from '@components/ui/Icon.astro';
+
+interface Props {
+  id: string;
+  services: CatalogService[];
+}
+
+const { id, services } = Astro.props;
+---
+
+<section class="related" id={id} aria-labelledby={`${id}-heading`}>
+  <div class="related__head">
+    <h2 class="article-h2" id={`${id}-heading`}>Related Services</h2>
+    <a href={paths.servicesHub}>View all services<Icon name="arrow-right" size={16} /></a>
+  </div>
+  <ul class="related__grid">
+    {
+      services.map((service) => (
+        <li>
+          <a class="related__card" href={serviceHref(service)}>
+            <ResponsiveImage name={service.image} alt="" sizes="120px" class="related__img" />
+            <span>
+              <span class="related__name">{service.name}</span>
+              <span class="related__summary">{service.summary}</span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .related__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .related__head a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .related__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 24px;
+    list-style: none;
+  }
+
+  .related__card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    height: 100%;
+    padding: 12px 18px 12px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    background: var(--white);
+    text-decoration: none;
+    transition:
+      border-color var(--t-base) ease,
+      box-shadow var(--t-base) ease,
+      transform var(--t-base) ease;
+  }
+
+  .related__card:hover {
+    border-color: var(--blue-200);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
+  }
+
+  .related__card :global(.related__img) {
+    flex: none;
+    width: 120px;
+    height: 96px;
+    border-radius: 14px;
+    object-fit: contain;
+  }
+
+  .related__name {
+    display: block;
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.25;
+    color: var(--navy-800);
+  }
+
+  .related__summary {
+    display: block;
+    margin-top: 4px;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--slate-600);
+  }
+
+  @media (max-width: 768px) {
+    .related__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .related__card :global(.related__img) {
+      width: 96px;
+      height: 80px;
+    }
+  }
+</style>

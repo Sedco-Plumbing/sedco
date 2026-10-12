@@ -1,0 +1,153 @@
+---
+/**
+ * One section of a page's SEO copy (from its content entry), in the
+ * redesign's article style: H2 (or H3), paragraphs, the list as a two-column
+ * checklist, closing paragraphs, and its internal links as chips. Copy is
+ * rendered verbatim; `th()` resolves placeholders and inline links.
+ */
+import { th } from '@lib/tokens';
+import type { Section } from '@lib/types';
+import Icon from '@components/ui/Icon.astro';
+
+interface Props {
+  id: string;
+  section: Section;
+  /** Bigger heading for the first section after the hero */
+  lead?: boolean;
+}
+
+const { id, section, lead = false } = Astro.props;
+const Tag = section.level === 3 ? 'h3' : 'h2';
+---
+
+<section class="article-section copy" id={id}>
+  <Tag class:list={['article-h2', lead && 'article-h2--lg']} set:html={th(section.heading)} />
+  {section.paragraphs?.map((paragraph) => <p class="copy__p" set:html={th(paragraph)} />)}
+
+  {
+    section.list && section.list.length > 0 && (
+      <ul class="checklist">
+        {section.list.map((item) => (
+          <li>
+            <Icon name="check" size={18} strokeWidth={2.5} />
+            <span set:html={th(item)} />
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {section.outro?.map((paragraph) => <p class="copy__p" set:html={th(paragraph)} />)}
+
+  {
+    section.links && section.links.length > 0 && (
+      <ul class="copy__links">
+        {section.links.map((link) => (
+          <li>
+            <a href={link.href}>
+              {link.anchor}
+              <Icon name="arrow-right" size={15} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</section>
+
+<style>
+  .copy__p {
+    margin-top: 16px;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--slate-700);
+  }
+
+  .copy :global(h2 + .copy__p),
+  .copy :global(h3 + .copy__p) {
+    margin-top: 20px;
+  }
+
+  .copy__p :global(a) {
+    font-weight: 500;
+    text-underline-offset: 3px;
+  }
+
+  .checklist {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+    margin-top: 24px;
+    border-top: 1px solid var(--line);
+    list-style: none;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--navy-800);
+  }
+
+  .checklist :global(svg) {
+    flex: none;
+    color: var(--yellow-500);
+  }
+
+  .copy__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    list-style: none;
+  }
+
+  .copy__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid var(--blue-200);
+    border-radius: var(--r-pill);
+    background: var(--white);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--blue-700);
+    text-decoration: none;
+  }
+
+  .copy__links a:hover {
+    border-color: var(--navy-800);
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  @media (max-width: 768px) {
+    .copy__p {
+      font-size: 16px;
+    }
+
+    .checklist {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      border-top: 0;
+    }
+
+    .checklist li {
+      align-items: flex-start;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      background: var(--white);
+    }
+
+    .checklist :global(svg) {
+      margin-top: 1px;
+    }
+  }
+</style>

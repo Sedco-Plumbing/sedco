@@ -36,4 +36,12 @@ export interface Section {
   outro?: string[];
   /** Links rendered as pills after the list (e.g. "services in [city]") */
   links?: InternalLink[];
+  /** Short label for the service page's "On this page" menu */
+  tocLabel?: string;
+}
+
+/** One entry in a page's "On this page" menu. */
+export interface TocItem {
+  id: string;
+  label: string;
 }

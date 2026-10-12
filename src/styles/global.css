@@ -570,6 +570,55 @@ textarea.input {
 }
 
 /* ---------------------------------------------------------------------------
+ * Article sections — the main column of service and town pages
+ * ------------------------------------------------------------------------- */
+
+.article-section {
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+.article-section ~ .article-section {
+  margin-top: 80px;
+}
+
+.article-h2 {
+  font-weight: 800;
+  font-size: 34px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.article-h2--lg {
+  font-size: 38px;
+}
+
+.article-lead {
+  margin-top: 14px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--slate-700);
+}
+
+@media (max-width: 768px) {
+  .article-section ~ .article-section {
+    margin-top: 56px;
+  }
+
+  .article-h2,
+  .article-h2--lg {
+    font-size: 25px;
+  }
+
+  .article-h2--lg {
+    font-size: 27px;
+  }
+
+  .article-lead {
+    font-size: 16px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
  * Prose — long-form SEO copy on service, town and blog pages
  * ------------------------------------------------------------------------- */
 

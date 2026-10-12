@@ -12,9 +12,11 @@ import type { ImageKey } from '@lib/media';
 interface Props {
   name: ImageKey;
   sizes?: string;
+  /** Only preload when this media query matches (art-directed <picture>) */
+  media?: string;
 }
 
-const { name, sizes } = Astro.props;
+const { name, sizes, media } = Astro.props;
 const img = images[name];
 ---
 
@@ -24,5 +26,6 @@ const img = images[name];
   type="image/webp"
   imagesrcset={img.srcset}
   imagesizes={sizes ?? img.sizes}
+  media={media}
   fetchpriority="high"
 />

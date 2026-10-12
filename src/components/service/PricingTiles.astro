@@ -1,0 +1,79 @@
+---
+/**
+ * "Upfront … Pricing": the three terms that apply to every job (all
+ * confirmed by the client). No prices are quoted.
+ */
+import Icon from '@components/ui/Icon.astro';
+import type { IconName } from '@lib/icons';
+
+interface Props {
+  id: string;
+  heading: string;
+  intro: string;
+}
+
+const { id, heading, intro } = Astro.props;
+
+const tiles: { icon: IconName; title: string; text: string }[] = [
+  { icon: 'free-estimate', title: 'Free estimate', text: 'You get a clear price on site before any work starts.' },
+  { icon: 'no-trip-charge', title: 'No trip charge', text: "There's no call-out fee for coming to see the problem." },
+  { icon: 'guarantee', title: '30-day guarantee', text: "If anything goes wrong with our work, we'll put it right at no charge." },
+];
+---
+
+<section class="pricing" id={id} aria-labelledby={`${id}-heading`}>
+  <h2 class="article-h2" id={`${id}-heading`}>{heading}</h2>
+  <p class="article-lead">{intro}</p>
+  <ul class="pricing__tiles">
+    {
+      tiles.map((tile) => (
+        <li>
+          <Icon name={tile.icon} size={28} strokeWidth={1.8} />
+          <p class="pricing__title">{tile.title}</p>
+          <p class="pricing__text">{tile.text}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .pricing__tiles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 28px;
+    list-style: none;
+  }
+
+  .pricing__tiles li {
+    padding: 24px;
+    border-radius: var(--r-xl);
+    background: var(--yellow-50);
+  }
+
+  .pricing__tiles :global(svg) {
+    color: var(--navy-800);
+  }
+
+  .pricing__title {
+    margin-top: 18px;
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--navy-800);
+  }
+
+  .pricing__text {
+    margin-top: 6px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--slate-600);
+  }
+
+  @media (max-width: 768px) {
+    .pricing__tiles {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

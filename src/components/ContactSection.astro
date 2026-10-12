@@ -18,8 +18,8 @@ interface Props {
   intro?: string;
   /** Pre-selected service name (catalog name) */
   service?: string;
-  /** Pre-selected city name (for the compact form; unused by the standard form) */
-  city?: string;
+  /** Title of the form card */
+  formTitle?: string;
   id?: string;
 }
 
@@ -27,6 +27,7 @@ const {
   heading = 'Talk to a Plumber in El Cajon Today',
   intro = "The quickest way to reach us is to call {phone}, and someone will pick up at any hour from Monday to Saturday. If you'd rather write, fill in the short form below and we'll call you back within 30 minutes to talk about the problem and arrange a visit.",
   service,
+  formTitle = 'Request Service',
   id = 'request',
 } = Astro.props;
 
@@ -75,7 +76,7 @@ const headingId = `${id}-heading`;
       <div class="form-card">
         <div class="form-card__head">
           <div>
-            <p class="form-card__title">Request Service</p>
+            <p class="form-card__title">{formTitle}</p>
             <p class="form-card__lead">We'll call you back within 30 minutes, Monday to Saturday.</p>
           </div>
           <div class="chip-row form-card__chips">

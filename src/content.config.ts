@@ -38,7 +38,49 @@ const section = z.object({
   /** Paragraphs rendered after the list */
   outro: z.array(z.string()).default([]),
   links: z.array(internalLink).default([]),
+  /** Short label for the service page's "On this page" menu; defaults to the heading */
+  tocLabel: z.string().optional(),
 });
+
+/**
+ * Optional presentation fields for the 2026 service-page design. Every one has
+ * a sensible default in the template, so a page renders fully without them;
+ * they let a page carry the design's service-specific blocks (e.g. the drain
+ * cleaning "Drains We Clear" cards) on top of its SEO copy.
+ */
+const servicePageDesign = {
+  /** Short lead under the H1 in the hero (the first intro paragraph moves to Overview) */
+  heroLead: z.string().optional(),
+  /** H2 of the Overview block that holds the intro paragraphs */
+  overviewHeading: z.string().optional(),
+  /** Navy call card in the sidebar */
+  asideHeading: z.string().optional(),
+  asideText: z.string().optional(),
+  /** The 4-step "How it works" card */
+  howHeading: z.string().optional(),
+  howLead: z.string().optional(),
+  steps: z.array(z.object({ title: z.string(), text: z.string() })).length(4).optional(),
+  /** "Upfront … Pricing" tiles */
+  pricingHeading: z.string().optional(),
+  pricingIntro: z.string().optional(),
+  /** Cards block, e.g. "Drains We Clear" */
+  covers: z
+    .object({
+      heading: z.string(),
+      intro: z.string().optional(),
+      tocLabel: z.string().optional(),
+      items: z.array(z.object({ title: z.string(), text: z.string() })).min(1),
+    })
+    .optional(),
+  /** Bulleted tips block, e.g. "How to Keep Your Drains Clear" */
+  tips: z
+    .object({
+      heading: z.string(),
+      tocLabel: z.string().optional(),
+      items: z.array(z.object({ title: z.string(), text: z.string() })).min(1),
+    })
+    .optional(),
+};
 
 const faq = z.object({
   question: z.string().min(1),
@@ -88,6 +130,7 @@ const services = defineCollection({
     heroStatLabel: z.string().optional(),
     /** Green-check credential rows on the frosted hero card */
     heroPoints: z.array(z.string()).default([]),
+    ...servicePageDesign,
   }),
 });
 
@@ -116,6 +159,7 @@ const serviceCity = defineCollection({
     heroStat: z.string().optional(),
     heroStatLabel: z.string().optional(),
     heroPoints: z.array(z.string()).default([]),
+    ...servicePageDesign,
   }),
 });
 
