@@ -157,16 +157,7 @@ const tel = phoneHref();
         class="input"
         id={`${id}-details`}
         name="details"
-        rows={compact ? 2 : 4}
-        aria-describedby={compact ? undefined : `${id}-details-help`}></textarea>
-      {
-        !compact && (
-          <p class="field__help" id={`${id}-details-help`}>
-            A short note is enough, for example which sink is blocked or how long the leak has been
-            going on.
-          </p>
-        )
-      }
+        rows={compact ? 2 : 4}></textarea>
     </div>
 
     <div class="form-alert field--wide" role="alert" data-form-error hidden>

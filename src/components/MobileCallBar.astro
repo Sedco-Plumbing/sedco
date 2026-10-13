@@ -1,7 +1,8 @@
 ---
 /**
- * Sticky action bar on phones (≤ 768px): Call (yellow) and Request Service
- * (deep navy, yellow text) side by side, always at the bottom of the screen.
+ * Sticky action bar on phones and tablets (≤ 1279px, wherever the mobile
+ * header is used): Call (yellow) and Request Service (deep navy, yellow text)
+ * side by side, always at the bottom of the screen.
  * Request Service opens the slide-in request form (RequestDrawer); without JS
  * it falls through to the contact page form. The layout pads the page by the
  * bar's height so it never covers the footer.
@@ -27,7 +28,8 @@ import Icon from '@components/ui/Icon.astro';
     display: none;
   }
 
-  @media (max-width: 768px) {
+  /* Shown wherever the mobile header is used (phones and tablets). */
+  @media (max-width: 1279px) {
     .action-bar {
       position: fixed;
       left: 0;
