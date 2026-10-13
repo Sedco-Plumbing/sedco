@@ -301,10 +301,16 @@ const tel = phoneHref();
     }
 
     .request-form :global(.form-privacy) {
-      justify-content: flex-start;
+      display: block;
       font-size: 15px;
       color: var(--slate-600);
       text-align: left;
+    }
+
+    .request-form :global(.form-privacy svg) {
+      display: inline-block;
+      margin-right: 6px;
+      vertical-align: -2px;
     }
 
     .request-form__button {

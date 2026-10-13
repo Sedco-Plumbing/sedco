@@ -22,14 +22,21 @@ interface Props {
   eyebrow?: string;
   heading: string;
   intro: string;
+  /** Show the Call + Request buttons (off where the page's own form follows) */
+  ctas?: boolean;
+  /** Extra bottom space for a panel that overlaps the hero (see .overlap-panel) */
+  overlap?: boolean;
 }
 
-const { crumbs, eyebrow, heading, intro } = Astro.props;
+const { crumbs, eyebrow, heading, intro, ctas = true, overlap = false } = Astro.props;
 const hasAside = Astro.slots.has('aside');
 const hasBelow = Astro.slots.has('below');
 ---
 
-<section class:list={['page-hero', hasAside && 'page-hero--aside']} aria-labelledby="page-hero-heading">
+<section
+  class:list={['page-hero', hasAside && 'page-hero--aside', overlap && 'page-hero--overlap']}
+  aria-labelledby="page-hero-heading"
+>
   <div class="page-hero__media" aria-hidden="true">
     <picture>
       <source media="(max-width: 768px)" srcset={BLANK_PIXEL} />
@@ -60,12 +67,18 @@ const hasBelow = Astro.slots.has('below');
       <h1 class="page-hero__title" id="page-hero-heading">{heading}</h1>
       <p class="page-hero__intro">{intro}</p>
 
-      <div class="page-hero__ctas">
-        <a class="btn btn--call btn--lg" href={phoneHref()}>
-          <Icon name="phone" size={22} />Call {site.business.phone}
-        </a>
-        <a class="btn btn--request btn--lg" href={`${paths.contact}#request`} data-open-request>Request Service</a>
-      </div>
+      {
+        ctas && (
+          <div class="page-hero__ctas">
+            <a class="btn btn--call btn--lg" href={phoneHref()}>
+              <Icon name="phone" size={22} />Call {site.business.phone}
+            </a>
+            <a class="btn btn--request btn--lg" href={`${paths.contact}#request`} data-open-request>
+              Request Service
+            </a>
+          </div>
+        )
+      }
     </div>
 
     {hasAside && <div class="page-hero__aside"><slot name="aside" /></div>}
@@ -82,6 +95,10 @@ const hasBelow = Astro.slots.has('below');
     overflow: hidden;
     border-radius: var(--r-section);
     background: var(--navy-800);
+  }
+
+  .page-hero--overlap {
+    padding-bottom: 152px;
   }
 
   .page-hero__media {
@@ -244,6 +261,10 @@ const hasBelow = Astro.slots.has('below');
   @media (max-width: 768px) {
     .page-hero {
       padding: 28px 20px 28px;
+    }
+
+    .page-hero--overlap {
+      padding-bottom: 28px;
     }
 
     .crumbs ol {

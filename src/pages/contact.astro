@@ -1,9 +1,13 @@
 ---
 /**
- * CONTACT — design "Sedco Contact".
- * Hero → four info cards (call, hours, where we work, licence) → request
- * form section (#request, the no-JS target of every "Request Service" link)
- * → FAQ → service-area map.
+ * CONTACT — a single "contact desk": compact hero with three quick facts, then
+ * one panel that overlaps it, holding the request form (left) and a navy
+ * contact-details column (right: phone + text, email, hours, area, licence,
+ * urgent and gas-safety notes). Then what happens after a request, the FAQ
+ * and the service-area map.
+ *
+ * The form panel carries id="request", the no-JS target of every "Request
+ * Service" link on the site.
  */
 import { site, paths } from '@config/site';
 import { commonFaqs } from '@config/faqs';
@@ -11,7 +15,7 @@ import { phoneHref, emailHref, isPlaceholder } from '@lib/tokens';
 import { PAGE_HERO_SIZES, HERO_PHOTO_MEDIA } from '@lib/media';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PageHero from '@components/PageHero.astro';
-import ContactSection from '@components/ContactSection.astro';
+import RequestForm from '@components/RequestForm.astro';
 import Faq from '@components/Faq.astro';
 import ServiceAreasSection from '@components/ServiceAreasSection.astro';
 import Icon from '@components/ui/Icon.astro';
@@ -22,8 +26,27 @@ const description =
   'Contact Sedco Plumbing in El Cajon, CA. Request service anywhere in San Diego County — same-day appointments available. Call [PHONE] or book online.';
 const path = paths.contact;
 const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Contact' }];
+
+const phone = site.business.phone;
+const tel = phoneHref();
+const sms = `sms:${tel.replace('tel:', '')}`;
 const email = site.business.email;
 const hasEmail = !isPlaceholder(email) && email.length > 0;
+
+const steps = [
+  {
+    title: 'We call you back',
+    text: 'Within 30 minutes, Monday to Saturday, to talk about the problem and schedule plumbing service in El Cajon or wherever you are in San Diego County.',
+  },
+  {
+    title: 'A plumber comes to you',
+    text: 'Same-day visits are available, and there is no trip charge for coming out to see the problem.',
+  },
+  {
+    title: 'You get a free estimate',
+    text: 'A clear price before any work starts. Nothing goes ahead until you say yes, and the work is guaranteed for 30 days.',
+  },
+];
 ---
 
 <BaseLayout
@@ -41,47 +64,116 @@ const hasEmail = !isPlaceholder(email) && email.length > 0;
     crumbs={crumbs}
     eyebrow="Contact us"
     heading="Contact Sedco Plumbing"
-    intro="Contact a plumber in El Cajon at any hour from Monday to Saturday, or send a request and we’ll call you back within 30 minutes to schedule a visit. Every visit starts with a free estimate, with no trip charge."
-  />
-
-  <section class="info" aria-label="How to reach us">
-    <ul class="info__grid">
-      <li class="info__card">
-        <span class="info__icon"><Icon name="phone" size={24} /></span>
-        <p class="info__title">Call us</p>
-        <a class="info__phone" href={phoneHref()}>{site.business.phone}</a>
-        <p class="info__text">Someone picks up at any hour, Monday to Saturday.</p>
-        {hasEmail && <p class="info__text">Or email <a href={emailHref()}>{email}</a></p>}
-      </li>
-      <li class="info__card">
-        <span class="info__icon"><Icon name="clock" size={24} /></span>
-        <p class="info__title">Opening hours</p>
-        <p class="info__text">Open 24 hours, Monday to Saturday. Need a same-day plumber in El Cajon? Same-day visits are available.</p>
-        <p class="info__text">Closed Sunday. Requests sent on Sunday are answered on Monday.</p>
-      </li>
-      <li class="info__card">
-        <span class="info__icon"><Icon name="map-pin" size={24} /></span>
-        <p class="info__title">Where we work</p>
-        <p class="info__text">
-          Based in {site.business.locality}, {site.business.region}, serving homes and businesses across{' '}
-          <a href={paths.areasHub}>San Diego County</a>. We come to you, so there's no storefront to visit.
-        </p>
-      </li>
-      <li class="info__card">
-        <span class="info__icon"><Icon name="licensed" size={24} /></span>
-        <p class="info__title">Licensed contractor</p>
-        <p class="info__text">
-          Licensed CA {site.business.licenseClass} plumbing contractor, with a 30-day guarantee on all work.
-        </p>
-      </li>
+    intro="Contact a plumber in El Cajon at any hour from Monday to Saturday. Call us, or send a request below and we’ll call you back within 30 minutes."
+    ctas={false}
+    overlap
+  >
+    <ul class="facts" slot="below">
+      <li><Icon name="phone" size={20} /><strong>Call any hour, Mon–Sat</strong></li>
+      <li><Icon name="clock" size={20} /><strong>30-minute callback</strong></li>
+      <li><Icon name="free-estimate" size={20} /><strong>Free estimate, no trip charge</strong></li>
     </ul>
-    <p class="info__safety">
-      <Icon name="alert-circle" size={20} />
-      <span><strong>If you smell gas</strong>, leave the building first and call your gas utility, then call us.</span>
-    </p>
+  </PageHero>
+
+  <section class="desk" id="request" aria-label="Send a request or contact us">
+    <a class="desk__call-mobile btn btn--call btn--lg" href={tel}>
+      <Icon name="phone" size={22} />Call {phone}
+    </a>
+
+    <div class="desk__panel">
+      <div class="desk__form">
+        <div class="desk__form-head">
+          <h2 class="desk__title">Send us a request</h2>
+          <p class="desk__lead">Tell us what's going on and we'll call you back within 30 minutes, Monday to Saturday.</p>
+          <div class="chip-row">
+            <span class="chip"><Icon name="check" size={16} strokeWidth={2.75} />Free Estimates</span>
+            <span class="chip"><Icon name="check" size={16} strokeWidth={2.75} />No Trip Charge</span>
+          </div>
+        </div>
+        <RequestForm id="contact-form" source="contact-page" />
+      </div>
+
+      <aside class="desk__details on-navy" aria-labelledby="details-heading">
+        <h2 class="details__title" id="details-heading">Contact details</h2>
+
+        <div class="details__phone">
+          <p class="details__label">Phone</p>
+          <a class="details__number" href={tel}>{phone}</a>
+          <p class="details__note">A real person picks up, at any hour Monday to Saturday.</p>
+          <div class="details__actions">
+            <a class="btn btn--call btn--md" href={tel}><Icon name="phone" size={18} />Call now</a>
+            <a class="btn btn--outline-dark btn--md" href={sms}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              Text us
+            </a>
+          </div>
+        </div>
+
+        <dl class="details__list">
+          {
+            hasEmail && (
+              <div class="details__row">
+                <dt><Icon name="mail" size={18} />Email</dt>
+                <dd><a href={emailHref()}>{email}</a></dd>
+              </div>
+            )
+          }
+          <div class="details__row">
+            <dt><Icon name="clock" size={18} />Hours</dt>
+            <dd>
+              <table class="hours">
+                <tbody>
+                  <tr><th scope="row">Monday – Saturday</th><td>Open 24 hours</td></tr>
+                  <tr><th scope="row">Sunday</th><td>Closed</td></tr>
+                </tbody>
+              </table>
+              <span class="details__small">Need a same-day plumber in El Cajon? Same-day visits are available. Requests sent on Sunday are answered on Monday.</span>
+            </dd>
+          </div>
+          <div class="details__row">
+            <dt><Icon name="map-pin" size={18} />Service area</dt>
+            <dd>
+              Based in {site.business.locality}, {site.business.region}, serving homes and businesses across{' '}
+              <a href={paths.areasHub}>{site.business.county}</a>. We come to you; there's no storefront to visit.
+            </dd>
+          </div>
+          <div class="details__row">
+            <dt><Icon name="licensed" size={18} />Licence</dt>
+            <dd>Licensed CA {site.business.licenseClass} plumbing contractor, with a 30-day guarantee on all work.</dd>
+          </div>
+        </dl>
+
+        <div class="details__alerts">
+          <p class="alert">
+            <Icon name="warning" size={18} />
+            <span><strong>Leaking or backing up right now?</strong> Call <a href={tel}>{phone}</a> instead of using the form.</span>
+          </p>
+          <p class="alert">
+            <Icon name="warning" size={18} />
+            <span><strong>If you smell gas</strong>, leave the building first and call your gas utility, then call us.</span>
+          </p>
+        </div>
+      </aside>
+    </div>
   </section>
 
-  <ContactSection />
+  <section class="next" aria-labelledby="next-heading">
+    <div class="container">
+      <p class="eyebrow">What happens next</p>
+      <h2 class="next__title" id="next-heading">After You Send a Request</h2>
+      <ol class="next__steps">
+        {
+          steps.map((step, index) => (
+            <li>
+              <span class="next__num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <h3 class="next__step-title">{step.title}</h3>
+              <p class="next__step-text">{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
 
   <Faq faqs={commonFaqs} mobileCall />
 
@@ -89,103 +181,378 @@ const hasEmail = !isPlaceholder(email) && email.length > 0;
 </BaseLayout>
 
 <style>
-  .info {
-    max-width: calc(var(--container) + 2 * var(--gutter));
-    margin: 0 auto;
-    padding: 40px var(--gutter) 0;
-  }
+  /* ---- hero quick facts ---- */
 
-  .info__grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 32px;
     list-style: none;
   }
 
-  .info__card {
-    padding: 28px;
-    border: 1px solid var(--line);
-    border-radius: 22px;
-    background: var(--white);
-  }
-
-  .info__icon {
+  .facts li {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 52px;
-    height: 52px;
-    border-radius: var(--r-md);
-    background: var(--navy-800);
+    gap: 10px;
+    font-size: 15px;
+    color: var(--blue-200);
+  }
+
+  .facts :global(svg) {
+    flex: none;
     color: var(--yellow-500);
   }
 
-  .info__title {
-    margin-top: 22px;
-    font-family: var(--font-title);
-    font-weight: 700;
-    font-size: 20px;
-    color: var(--navy-800);
+  .facts strong {
+    font-weight: 600;
+    color: var(--white);
   }
 
-  .info__phone {
-    display: inline-block;
-    margin-top: 10px;
-    font-family: var(--font-title);
+  /* ---- the contact desk ---- */
+
+  .desk {
+    position: relative;
+    z-index: 2;
+    max-width: calc(var(--container) + 2 * var(--gutter));
+    margin: -104px auto 0;
+    padding: 0 var(--gutter);
+  }
+
+  .desk__call-mobile {
+    display: none;
+  }
+
+  .desk__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-2xl);
+    background: var(--white);
+    box-shadow: var(--shadow-menu);
+  }
+
+  .desk__form {
+    padding: 44px 48px 48px;
+  }
+
+  .desk__form-head {
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .desk__title {
     font-weight: 800;
-    font-size: 24px;
-    color: var(--navy-800);
-    text-decoration: none;
+    font-size: 34px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
   }
 
-  .info__phone:hover {
-    color: var(--blue-700);
-  }
-
-  .info__text {
-    margin-top: 8px;
+  .desk__lead {
+    margin: 8px 0 16px;
     font-size: 16px;
     line-height: 1.55;
     color: var(--slate-600);
   }
 
-  .info__safety {
+  /* ---- details column ---- */
+
+  .desk__details {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 44px 40px;
+    background: var(--navy-800);
+    color: var(--blue-100);
+  }
+
+  .details__title {
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--white);
+  }
+
+  .details__label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-300);
+  }
+
+  .details__number {
+    display: inline-block;
+    margin-top: 6px;
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 34px;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .details__number:hover {
+    color: var(--yellow-500);
+  }
+
+  .details__note {
+    margin-top: 4px;
+    font-size: 15px;
+    color: var(--blue-200);
+  }
+
+  .details__actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .details__actions .btn {
+    flex: 1;
+  }
+
+  .details__list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border-top: 1px solid var(--navy-600);
+  }
+
+  .details__row {
+    display: grid;
+    grid-template-columns: 128px minmax(0, 1fr);
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--navy-600);
+  }
+
+  .details__row dt {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    margin-top: 16px;
-    padding: 16px 20px;
-    border-left: 4px solid var(--yellow-500);
-    border-radius: var(--r-md);
-    background: var(--yellow-100);
-    font-size: 16px;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .details__row dt :global(svg) {
+    flex: none;
+    margin-top: 1px;
+    color: var(--yellow-500);
+  }
+
+  .details__row dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--blue-100);
+  }
+
+  .details__row a {
+    color: var(--white);
+    word-break: break-word;
+  }
+
+  .details__row a:hover {
+    color: var(--yellow-500);
+  }
+
+  .hours {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .hours th,
+  .hours td {
+    padding: 0 0 4px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 400;
+    vertical-align: top;
+  }
+
+  .hours th {
+    color: var(--blue-100);
+  }
+
+  .hours td {
+    text-align: right;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .details__small {
+    display: block;
+    margin-top: 6px;
+    font-size: 13.5px;
     line-height: 1.5;
+    color: var(--blue-300);
+  }
+
+  .details__alerts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+  }
+
+  .alert {
+    display: flex;
+    gap: 10px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--yellow-500);
+    border-radius: var(--r-md);
+    background: var(--navy-700);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--blue-100);
+  }
+
+  .alert :global(svg) {
+    flex: none;
+    margin-top: 1px;
+    color: var(--yellow-500);
+  }
+
+  .alert strong {
+    color: var(--white);
+  }
+
+  .alert a {
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  /* ---- what happens next ---- */
+
+  .next {
+    padding: 88px 0 24px;
+  }
+
+  .next__title {
+    margin-top: 10px;
+    font-weight: 800;
+    font-size: 36px;
+    letter-spacing: -0.02em;
+  }
+
+  .next__steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 32px;
+    list-style: none;
+  }
+
+  .next__steps li {
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    background: var(--white);
+  }
+
+  .next__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--yellow-500);
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 15px;
     color: var(--navy-800);
   }
 
-  .info__safety :global(svg) {
-    flex: none;
-    margin-top: 1px;
-    color: var(--gold-text);
+  .next__step-title {
+    margin-top: 18px;
+    font-weight: 700;
+    font-size: 20px;
   }
 
+  .next__step-text {
+    margin-top: 8px;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--slate-600);
+  }
+
+  /* ---- reflow ---- */
+
   @media (max-width: 1099px) {
-    .info__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .desk__panel {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .desk__details {
+      padding: 36px 40px;
+    }
+
+    .details__alerts {
+      margin-top: 0;
+    }
+  }
+
+  @media (max-width: 959px) {
+    .next__steps {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 
   @media (max-width: 768px) {
-    .info {
-      padding: 28px 16px 0;
+    .facts {
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .info__grid {
+    .desk {
+      margin-top: 16px;
+      padding: 0 var(--section-inset);
+    }
+
+    .desk__call-mobile {
+      display: flex;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .desk__panel {
+      border-radius: var(--r-xl);
+      box-shadow: var(--shadow-card);
+    }
+
+    .desk__form {
+      padding: 28px 20px;
+    }
+
+    .desk__title {
+      font-size: 26px;
+    }
+
+    .desk__details {
+      padding: 28px 20px;
+    }
+
+    .details__number {
+      font-size: 30px;
+    }
+
+    .details__row {
       grid-template-columns: minmax(0, 1fr);
-      gap: 12px;
+      gap: 6px;
     }
 
-    .info__card {
+    .next {
+      padding: 56px 0 8px;
+    }
+
+    .next__title {
+      font-size: 28px;
+    }
+
+    .next__steps li {
       padding: 22px;
     }
   }
