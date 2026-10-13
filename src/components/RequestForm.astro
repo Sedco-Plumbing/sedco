@@ -383,10 +383,17 @@ const tel = phoneHref();
         }
 
         // Lead-conversion event for GTM — fires only once Web3Forms confirms
-        // delivery, never on a click or a failed validation.
+        // delivery, never on a click or a failed validation. `form_name` keeps
+        // the pre-redesign value so existing triggers/reports still match;
+        // `form_location` says which form it was (drawer, contact-section,
+        // home-hero).
         const w = window as Window & { dataLayer?: unknown[] };
         w.dataLayer = w.dataLayer || [];
-        w.dataLayer.push({ event: 'form_submit_lead', form_name: form.dataset.source });
+        w.dataLayer.push({
+          event: 'form_submit_lead',
+          form_name: 'service_request',
+          form_location: form.dataset.source,
+        });
 
         form.hidden = true;
         if (success) {
