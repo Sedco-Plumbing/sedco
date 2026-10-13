@@ -3,7 +3,8 @@
  * Site header (sticky). Desktop: the logo aligned with the page container,
  * the nav (Services mega menu, Service Areas dropdown), then the service search
  * and Call + Request Service pushed to the right edge. Mobile (≤ 1279px): logo,
- * search, call and a menu button that opens a full-width link list.
+ * search and a menu button that opens the slide-in menu; Call and Request
+ * Service live in the sticky bottom bar.
  *
  * The menus are progressive: every trigger is also a plain link target, so the
  * site navigates without JavaScript. Closed menus are `display: none`, which
@@ -102,9 +103,6 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
     </div>
 
     <div class="mobile-ctas">
-      <a class="icon-btn icon-btn--call" href={tel} aria-label={`Call ${phone}`}>
-        <Icon name="phone" size={22} />
-      </a>
       <button
         type="button"
         class="icon-btn icon-btn--menu"
@@ -507,13 +505,6 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
     color: var(--navy-800);
   }
 
-  .icon-btn--call {
-    background: var(--yellow-500);
-  }
-
-  .icon-btn--call:active {
-    background: var(--yellow-700);
-  }
 
   /* Deep navy with a yellow icon, so the menu button stands out. */
   .icon-btn--menu {
@@ -587,13 +578,6 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
 
   }
 
-  /* Small phones: the sticky bottom bar already has Call, so the header
-     keeps the logo, search and menu. */
-  @media (max-width: 420px) {
-    .icon-btn--call {
-      display: none;
-    }
-  }
 
   @media (max-width: 768px) {
     .brand {
