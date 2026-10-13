@@ -2,8 +2,7 @@
 /**
  * CONTACT — a single "contact desk": compact hero with three quick facts, then
  * one panel that overlaps it, holding the request form (left) and a navy
- * contact-details column (right: phone + text, email, hours, area, licence,
- * urgent and gas-safety notes). Then what happens after a request, the FAQ
+ * contact-details column (right: phone, email, hours, area, licence). Then what happens after a request, the FAQ
  * and the service-area map.
  *
  * The form panel carries id="request", the no-JS target of every "Request
@@ -29,7 +28,6 @@ const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Contact' }];
 
 const phone = site.business.phone;
 const tel = phoneHref();
-const sms = `sms:${tel.replace('tel:', '')}`;
 const email = site.business.email;
 const hasEmail = !isPlaceholder(email) && email.length > 0;
 
@@ -102,10 +100,6 @@ const steps = [
           <p class="details__note">A real person picks up, at any hour Monday to Saturday.</p>
           <div class="details__actions">
             <a class="btn btn--call btn--md" href={tel}><Icon name="phone" size={18} />Call now</a>
-            <a class="btn btn--outline-dark btn--md" href={sms}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              Text us
-            </a>
           </div>
         </div>
 
@@ -142,17 +136,6 @@ const steps = [
             <dd>Licensed CA {site.business.licenseClass} plumbing contractor, with a 30-day guarantee on all work.</dd>
           </div>
         </dl>
-
-        <div class="details__alerts">
-          <p class="alert">
-            <Icon name="warning" size={18} />
-            <span><strong>Leaking or backing up right now?</strong> Call <a href={tel}>{phone}</a> instead of using the form.</span>
-          </p>
-          <p class="alert">
-            <Icon name="warning" size={18} />
-            <span><strong>If you smell gas</strong>, leave the building first and call your gas utility, then call us.</span>
-          </p>
-        </div>
       </aside>
     </div>
   </section>
@@ -309,7 +292,7 @@ const steps = [
   }
 
   .details__actions .btn {
-    flex: 1;
+    width: 100%;
   }
 
   .details__list {
@@ -390,39 +373,7 @@ const steps = [
     color: var(--blue-300);
   }
 
-  .details__alerts {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: auto;
-  }
 
-  .alert {
-    display: flex;
-    gap: 10px;
-    padding: 14px 16px;
-    border-left: 3px solid var(--yellow-500);
-    border-radius: var(--r-md);
-    background: var(--navy-700);
-    font-size: 14px;
-    line-height: 1.5;
-    color: var(--blue-100);
-  }
-
-  .alert :global(svg) {
-    flex: none;
-    margin-top: 1px;
-    color: var(--yellow-500);
-  }
-
-  .alert strong {
-    color: var(--white);
-  }
-
-  .alert a {
-    font-weight: 600;
-    color: var(--white);
-  }
 
   /* ---- what happens next ---- */
 
@@ -488,10 +439,6 @@ const steps = [
 
     .desk__details {
       padding: 36px 40px;
-    }
-
-    .details__alerts {
-      margin-top: 0;
     }
   }
 
