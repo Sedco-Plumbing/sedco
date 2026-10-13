@@ -1,10 +1,9 @@
 ---
 /**
  * Split hero for service (and service × city) pages. Left: breadcrumb, the
- * "5.0 on Google" pill, eyebrow, H1, lead and buttons. Right (desktop): the
- * job-site photo with the perks bar over it. On phones the photo is swapped
- * for the service's illustration via <picture>, so only one image downloads,
- * and the perks move under the buttons.
+ * "5.0 on Google" pill, eyebrow, H1, lead, buttons, and the perks strip under
+ * them. Right (desktop): the job-site photo. On phones the photo is swapped
+ * for the service's illustration via <picture>, so only one image downloads.
  */
 import { site, paths } from '@config/site';
 import { phoneHref } from '@lib/tokens';
@@ -125,7 +124,8 @@ const perks: { icon: IconName; label: string }[] = [
   .svc-hero__eyebrow,
   .svc-hero__title,
   .svc-hero__lead,
-  .svc-hero__ctas {
+  .svc-hero__ctas,
+  .svc-hero__perks {
     grid-column: 1;
     margin-left: max(64px, calc((50vw - var(--section-inset) - 600px) / 2 + 40px));
     margin-right: 64px;
@@ -234,7 +234,6 @@ const perks: { icon: IconName; label: string }[] = [
     flex-wrap: wrap;
     gap: 12px;
     margin-top: 32px;
-    margin-bottom: 64px;
   }
 
   .svc-hero__ctas .btn--lg {
@@ -273,20 +272,17 @@ const perks: { icon: IconName; label: string }[] = [
     background: linear-gradient(90deg, var(--navy-800) 0%, rgba(11, 37, 69, 0.55) 22%, rgba(11, 37, 69, 0) 48%);
   }
 
+  /* Under the buttons, in the left column */
   .svc-hero__perks {
-    grid-column: 2;
     grid-row: 7;
-    align-self: end;
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 12px 24px;
-    margin: 0 28px 28px;
-    padding: 18px 24px;
-    border-radius: 18px;
-    background: rgba(11, 37, 69, 0.9);
+    align-self: start;
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 14px 40px;
+    margin-top: 28px;
+    margin-bottom: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--navy-600);
     list-style: none;
   }
 
@@ -294,7 +290,7 @@ const perks: { icon: IconName; label: string }[] = [
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--white);
     white-space: nowrap;
@@ -314,13 +310,10 @@ const perks: { icon: IconName; label: string }[] = [
     .svc-hero__eyebrow,
     .svc-hero__title,
     .svc-hero__lead,
-    .svc-hero__ctas {
+    .svc-hero__ctas,
+    .svc-hero__perks {
       margin-left: 48px;
       margin-right: 40px;
-    }
-
-    .svc-hero__perks {
-      justify-content: flex-start;
     }
   }
 
@@ -390,6 +383,11 @@ const perks: { icon: IconName; label: string }[] = [
       aspect-ratio: 1;
       object-fit: contain;
       filter: drop-shadow(0 20px 22px rgba(0, 0, 0, 0.35));
+    }
+
+    .svc-hero__ctas,
+    .svc-hero__perks {
+      align-self: stretch;
     }
 
     .svc-hero__ctas {
