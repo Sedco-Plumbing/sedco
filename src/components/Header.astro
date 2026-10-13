@@ -240,10 +240,13 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
       color var(--t-fast) ease;
   }
 
+  /* Hover, keyboard focus and an open menu: deep navy with yellow text,
+     matching the mega-menu and dropdown rows. */
   .nav__item:hover,
+  .nav__item:focus-visible,
   .nav__item[aria-expanded='true'] {
-    background: var(--blue-50);
-    color: var(--blue-700);
+    background: var(--navy-800);
+    color: var(--yellow-500);
   }
 
   .nav__item[aria-current='page'] {
@@ -577,10 +580,22 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
       display: flex;
       align-items: center;
       height: 52px;
+      margin: 0 -12px;
+      padding: 0 12px;
+      border-radius: 10px;
       font-size: 17px;
       font-weight: 500;
       color: var(--navy-800);
       text-decoration: none;
+      transition:
+        background-color var(--t-fast) ease,
+        color var(--t-fast) ease;
+    }
+
+    .mobile-menu li a:hover,
+    .mobile-menu li a:active {
+      background: var(--navy-800);
+      color: var(--yellow-500);
     }
 
     .mobile-menu__ctas {
