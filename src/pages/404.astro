@@ -1,0 +1,770 @@
+---
+/**
+ * 404 — served by Cloudflare (via the Astro adapter) with a real 404 status
+ * for any URL that does not exist. Built as dist/client/404.html.
+ *
+ * Its job is to keep the visitor: say plainly what happened, show the URL that
+ * failed, and offer the next step — call, request service, search the
+ * services, or jump to a popular service, a town, or a main page.
+ *
+ * noindex and no canonical: the page is served at whatever URL was not found,
+ * so it must not claim one. Not in the sitemap (@astrojs/sitemap skips 404).
+ */
+import { site, paths } from '@config/site';
+import { catalogService, serviceHref } from '@config/catalog';
+import { phoneHref } from '@lib/tokens';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Icon from '@components/ui/Icon.astro';
+import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
+
+const title = `Page Not Found | ${site.business.name}`;
+const description =
+  'The page you were looking for could not be found. Find a plumbing service, a service area, or call Sedco Plumbing at [PHONE].';
+
+// P1 focus services from the SEO keyword map, then two everyday repairs.
+const popular = [
+  'drain-cleaning',
+  'water-heater',
+  'slab-leak-repair',
+  'sewer-lines',
+  'water-lines',
+  'general-plumbing',
+  'toilet-repair-installation',
+  'faucet-services',
+].map(catalogService);
+
+const pages = [
+  { name: 'Home', href: paths.home, icon: 'arrow-right' },
+  { name: 'All plumbing services', href: paths.servicesHub, icon: 'wrench' },
+  { name: 'Service areas', href: paths.areasHub, icon: 'map-pin' },
+  { name: 'Customer reviews', href: paths.reviews, icon: 'star-outline' },
+  { name: 'About Sedco Plumbing', href: paths.about, icon: 'shield-check' },
+  { name: 'Plumbing tips blog', href: paths.blog, icon: 'list' },
+  { name: 'Contact us', href: paths.contact, icon: 'mail' },
+] as const;
+---
+
+<BaseLayout title={title} description={description} path="/404/" noindex canonical={false}>
+  <section class="nf-hero on-navy" aria-labelledby="nf-heading">
+    <div class="nf-hero__inner">
+      <div class="nf-hero__main">
+        <p class="nf-hero__eyebrow">Error 404 · Page not found</p>
+        <h1 class="nf-hero__title" id="nf-heading">This Page Went Down the Drain</h1>
+        <p class="nf-hero__intro">
+          The page you're looking for has moved, been renamed, or never existed. Let's get you where you
+          were going, or get a licensed plumber on the phone right now.
+        </p>
+        <p class="nf-hero__path" data-nf-path-wrap hidden>
+          <Icon name="alert-circle" size={18} />
+          <span>Not found: <code data-nf-path></code></span>
+        </p>
+
+        <div class="nf-hero__ctas">
+          <a class="btn btn--call btn--lg" href={phoneHref()}>
+            <Icon name="phone" size={22} />Call {site.business.phone}
+          </a>
+          <a class="btn btn--outline-dark btn--lg" href={`${paths.contact}#request`} data-open-request>
+            Request Service
+          </a>
+        </div>
+
+        <button type="button" class="nf-search" data-nf-search>
+          <Icon name="search" size={20} />
+          <span>What service are you looking for?</span>
+          <kbd>Search</kbd>
+        </button>
+      </div>
+
+      <div class="nf-code" aria-hidden="true">
+        <span class="nf-code__digit">4</span>
+        <svg class="nf-code__pipe" viewBox="0 0 200 240" focusable="false">
+          <defs>
+            <linearGradient id="nf-pipe-shine" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#FFD166" />
+              <stop offset="1" stop-color="#E1A105" />
+            </linearGradient>
+          </defs>
+          <circle cx="100" cy="100" r="80" fill="none" stroke="url(#nf-pipe-shine)" stroke-width="34" />
+          <circle cx="100" cy="100" r="63" fill="none" stroke="#06182F" stroke-opacity="0.35" stroke-width="4" />
+          <circle cx="100" cy="100" r="97" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="2" />
+          <path class="nf-code__drop" d="M100 186c0 0-16 20-16 32a16 16 0 0 0 32 0c0-12-16-32-16-32z" fill="#96C6F5" />
+        </svg>
+        <span class="nf-code__digit">4</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="nf-services" aria-labelledby="nf-services-heading">
+    <div class="container">
+      <div class="nf-head">
+        <div>
+          <p class="eyebrow">Popular services</p>
+          <h2 class="nf-head__title" id="nf-services-heading">Maybe You Were Looking for One of These</h2>
+        </div>
+        <a class="nf-head__all" href={paths.servicesHub}>View all services<Icon name="arrow-right" size={18} /></a>
+      </div>
+
+      <ul class="nf-grid">
+        {
+          popular.map((service) => (
+            <li>
+              <a class="nf-card" href={serviceHref(service)}>
+                <span class="nf-card__thumb" aria-hidden="true">
+                  <ResponsiveImage name={service.image} alt="" sizes="72px" class="nf-card__img" />
+                </span>
+                <span class="nf-card__name">{service.name}</span>
+                <Icon name="arrow-right" size={18} class="nf-card__arrow" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="nf-more" aria-label="More ways to find what you need">
+    <div class="container nf-more__grid">
+      <div class="nf-panel">
+        <h2 class="nf-panel__title">Service Areas</h2>
+        <p class="nf-panel__text">Licensed plumbers based in El Cajon, serving East County and San Diego.</p>
+        <ul class="nf-towns">
+          {
+            site.cities.map((city) => (
+              <li>
+                <a href={paths.city(city.slug)}>
+                  <Icon name="map-pin" size={16} />
+                  {city.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="nf-help">
+          <span class="nf-help__icon" aria-hidden="true"><Icon name="phone" size={22} /></span>
+          <p>
+            <strong>Not sure which service you need?</strong>
+            Describe the problem and we'll tell you. Free estimates, no trip charge.
+          </p>
+          <a class="btn btn--call btn--md" href={phoneHref()}>Call {site.business.phone}</a>
+        </div>
+      </div>
+
+      <div class="nf-panel">
+        <h2 class="nf-panel__title">Main Pages</h2>
+        <ul class="nf-pages">
+          {
+            pages.map((page) => (
+              <li>
+                <a href={page.href}>
+                  <span class="nf-pages__icon" aria-hidden="true"><Icon name={page.icon} size={18} /></span>
+                  {page.name}
+                  <Icon name="chevron-right" size={16} class="nf-pages__chev" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---- hero ---- */
+
+  .nf-hero {
+    margin: 16px var(--section-inset) 0;
+    border-radius: var(--r-section);
+    background:
+      radial-gradient(70% 90% at 85% 40%, rgba(55, 133, 201, 0.32) 0%, rgba(11, 37, 69, 0) 65%),
+      radial-gradient(50% 60% at 0% 100%, rgba(255, 183, 3, 0.1) 0%, rgba(11, 37, 69, 0) 70%),
+      var(--navy-800);
+    color: var(--blue-200);
+    overflow: hidden;
+  }
+
+  .nf-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: center;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 88px var(--gutter) 96px;
+  }
+
+  .nf-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border: 1px solid rgba(255, 183, 3, 0.4);
+    border-radius: var(--r-pill);
+    background: rgba(255, 183, 3, 0.1);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--yellow-500);
+  }
+
+  .nf-hero__title {
+    margin-top: 20px;
+    font-weight: 800;
+    font-size: 60px;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: var(--white);
+  }
+
+  .nf-hero__intro {
+    max-width: 560px;
+    margin-top: 20px;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--blue-100);
+  }
+
+  .nf-hero__path {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
+    margin-top: 18px;
+    font-size: 15px;
+    color: var(--blue-300);
+  }
+
+  .nf-hero__path :global(svg) {
+    flex: none;
+    color: var(--yellow-500);
+  }
+
+  .nf-hero__path span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nf-hero__path code {
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    font: 500 14px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--white);
+  }
+
+  .nf-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .nf-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 520px;
+    height: 56px;
+    margin-top: 16px;
+    padding: 0 10px 0 18px;
+    border: 1.5px solid rgba(150, 198, 245, 0.3);
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, 0.06);
+    font: 500 16px/1 var(--font-body);
+    color: var(--blue-200);
+    text-align: left;
+    cursor: pointer;
+    transition:
+      border-color var(--t-fast) ease,
+      background-color var(--t-fast) ease;
+  }
+
+  .nf-search:hover {
+    border-color: var(--yellow-500);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .nf-search:focus-visible {
+    outline: 3px solid var(--blue-300);
+    outline-offset: 3px;
+  }
+
+  .nf-search :global(svg) {
+    flex: none;
+    color: var(--yellow-500);
+  }
+
+  .nf-search span {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nf-search kbd {
+    flex: none;
+    padding: 9px 14px;
+    border-radius: var(--r-sm);
+    background: var(--yellow-500);
+    font: 700 14px/1 var(--font-body);
+    color: var(--navy-800);
+  }
+
+  /* The "404" with a pipe cross-section for the zero */
+  .nf-code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 220px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--white);
+    user-select: none;
+  }
+
+  .nf-code__digit {
+    text-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  }
+
+  .nf-code__pipe {
+    width: 0.78em;
+    height: auto;
+    margin-top: 0.14em;
+    filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.35));
+  }
+
+  .nf-code__drop {
+    animation: nf-drip 2.4s var(--ease-out) infinite;
+  }
+
+  @keyframes nf-drip {
+    0%,
+    25% {
+      opacity: 0;
+      transform: translateY(-18px) scale(0.6);
+    }
+
+    45% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    85% {
+      opacity: 1;
+      transform: translateY(14px) scale(1);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translateY(22px) scale(0.9);
+    }
+  }
+
+  /* ---- popular services ---- */
+
+  .nf-services {
+    padding: 80px 0 24px;
+  }
+
+  .nf-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 32px;
+    flex-wrap: wrap;
+  }
+
+  .nf-head__title {
+    margin-top: 10px;
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .nf-head__all {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--blue-600);
+    text-decoration: none;
+  }
+
+  .nf-head__all:hover {
+    color: var(--blue-700);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .nf-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+    list-style: none;
+  }
+
+  .nf-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 100%;
+    padding: 14px 16px 14px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--navy-800);
+    text-decoration: none;
+    transition:
+      border-color var(--t-fast) ease,
+      box-shadow var(--t-fast) ease,
+      transform var(--t-base) var(--ease-out);
+  }
+
+  .nf-card:hover {
+    border-color: var(--navy-800);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
+  }
+
+  .nf-card__thumb {
+    flex: none;
+    width: 64px;
+    height: 64px;
+  }
+
+  .nf-card__thumb :global(.nf-card__img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .nf-card__name {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .nf-card :global(.nf-card__arrow) {
+    flex: none;
+    color: var(--slate-400);
+    transition:
+      color var(--t-fast) ease,
+      transform var(--t-base) var(--ease-out);
+  }
+
+  .nf-card:hover :global(.nf-card__arrow) {
+    color: var(--navy-800);
+    transform: translateX(3px);
+  }
+
+  /* ---- areas + pages ---- */
+
+  .nf-more {
+    padding: 40px 0 96px;
+  }
+
+  .nf-more__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .nf-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-2xl);
+    background: var(--white);
+  }
+
+  .nf-panel__title {
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+  }
+
+  .nf-panel__text {
+    margin-top: 8px;
+    font-size: 16px;
+    color: var(--slate-600);
+  }
+
+  .nf-towns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0 28px;
+    list-style: none;
+  }
+
+  .nf-towns a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 16px 0 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--sky-50);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy-800);
+    text-decoration: none;
+    transition:
+      background-color var(--t-fast) ease,
+      border-color var(--t-fast) ease,
+      color var(--t-fast) ease;
+  }
+
+  .nf-towns a :global(svg) {
+    color: var(--blue-600);
+  }
+
+  .nf-towns a:hover {
+    border-color: var(--navy-800);
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  .nf-towns a:hover :global(svg) {
+    color: var(--yellow-500);
+  }
+
+  .nf-help {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: auto;
+    padding: 20px;
+    border-radius: var(--r-lg);
+    background: var(--navy-800);
+    color: var(--blue-200);
+  }
+
+  .nf-help__icon {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--r-md);
+    background: var(--navy-700);
+    color: var(--yellow-500);
+  }
+
+  .nf-help p {
+    flex: 1;
+    min-width: 0;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .nf-help strong {
+    display: block;
+    font-size: 16px;
+    color: var(--white);
+  }
+
+  .nf-help .btn {
+    flex: none;
+  }
+
+  .nf-pages {
+    margin-top: 12px;
+    list-style: none;
+  }
+
+  .nf-pages li + li {
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .nf-pages a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+    padding: 0 8px;
+    border-radius: var(--r-md);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy-800);
+    text-decoration: none;
+    transition:
+      background-color var(--t-fast) ease,
+      color var(--t-fast) ease;
+  }
+
+  .nf-pages__icon {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--r-sm);
+    background: var(--blue-50);
+    color: var(--blue-600);
+  }
+
+  .nf-pages a :global(.nf-pages__chev) {
+    margin-left: auto;
+    color: var(--slate-400);
+  }
+
+  .nf-pages a:hover {
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  .nf-pages a:hover .nf-pages__icon {
+    background: var(--navy-700);
+    color: var(--yellow-500);
+  }
+
+  .nf-pages a:hover :global(.nf-pages__chev) {
+    color: var(--yellow-500);
+  }
+
+  /* ---- responsive ---- */
+
+  @media (max-width: 1099px) {
+    .nf-hero__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+      padding: 56px var(--gutter) 64px;
+    }
+
+    .nf-code {
+      order: -1;
+      justify-content: flex-start;
+      font-size: 140px;
+    }
+
+    .nf-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .nf-more__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .nf-hero {
+      margin-top: 8px;
+      border-radius: var(--r-2xl);
+    }
+
+    .nf-hero__inner {
+      padding: 36px 20px 40px;
+    }
+
+    .nf-code {
+      font-size: 96px;
+    }
+
+    .nf-hero__title {
+      margin-top: 16px;
+      font-size: 36px;
+    }
+
+    .nf-hero__intro {
+      font-size: 17px;
+    }
+
+    .nf-hero__ctas .btn {
+      width: 100%;
+    }
+
+    .nf-search {
+      max-width: none;
+    }
+
+    .nf-services {
+      padding-top: 56px;
+    }
+
+    .nf-head__title {
+      font-size: 28px;
+    }
+
+    .nf-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .nf-card__thumb {
+      width: 52px;
+      height: 52px;
+    }
+
+    .nf-more {
+      padding: 28px 0 56px;
+    }
+
+    .nf-panel {
+      padding: 24px 20px;
+    }
+
+    .nf-help {
+      flex-wrap: wrap;
+    }
+
+    .nf-help .btn {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nf-code__drop {
+      animation: none;
+    }
+
+    .nf-card:hover,
+    .nf-card:hover :global(.nf-card__arrow) {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // Show which URL failed (the page is served at the missing URL itself).
+  const wrap = document.querySelector<HTMLElement>('[data-nf-path-wrap]');
+  const code = document.querySelector<HTMLElement>('[data-nf-path]');
+  let missing = window.location.pathname;
+  try {
+    missing = decodeURI(missing);
+  } catch {
+    // Malformed escape sequence: show the raw path.
+  }
+  if (wrap && code && missing !== '/404/' && missing !== '/404.html') {
+    code.textContent = missing;
+    wrap.hidden = false;
+  }
+
+  // The search button opens the header's service search.
+  document.querySelector('[data-nf-search]')?.addEventListener('click', (event) => {
+    // Stop here so the search's own outside-click handler does not close it again.
+    event.stopPropagation();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (!document.querySelector('[data-search][data-open]')) {
+      document.querySelector<HTMLButtonElement>('[data-search-toggle]')?.click();
+    }
+  });
+</script>

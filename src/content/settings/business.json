@@ -12,7 +12,7 @@
   "postalCode": "[ZIP]",
   "profiles": {
     "google": "https://maps.app.goo.gl/t2xymWfQC2dsq2W2A",
-    "googleReview": "[GOOGLE REVIEW LINK]",
+    "googleReview": "https://maps.app.goo.gl/t2xymWfQC2dsq2W2A",
     "yelp": "[YELP URL]",
     "facebook": "[FACEBOOK URL]"
   }

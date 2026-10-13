@@ -122,3 +122,9 @@ export const emailHref = (): string => {
   const { email } = site.business;
   return isPlaceholder(email) ? 'mailto:EMAIL' : `mailto:${email}`;
 };
+
+/** Google "leave a review" link, or null until a real one is set in Keystatic. */
+export const googleReviewHref = (): string | null => {
+  const link = site.profiles.googleReview;
+  return !link || isPlaceholder(link) ? null : link;
+};

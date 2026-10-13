@@ -35,6 +35,8 @@ interface Props {
   ogImage?: string;
   publishedTime?: Date;
   noindex?: boolean;
+  /** Emit the self-referencing canonical (off only for the 404 page) */
+  canonical?: boolean;
   /**
    * The page's LCP image(s), preloaded in <head>. Match `sizes` to the rendered
    * <img>; pass one entry per `media` query for an art-directed <picture>.
@@ -52,6 +54,7 @@ const {
   ogImage,
   publishedTime,
   noindex,
+  canonical = true,
   preloadImage,
   drawerService,
 } = Astro.props;
@@ -103,6 +106,7 @@ const googleSiteVerification = site.integrations.googleSiteVerification;
       ogImage={ogImage}
       publishedTime={publishedTime}
       noindex={noindex}
+      canonical={canonical}
     />
 
     {crumbs && crumbs.length > 1 && <BreadcrumbSchema crumbs={crumbs} />}

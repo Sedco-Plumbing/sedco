@@ -10,6 +10,7 @@ import { reviews } from '@config/reviews';
 import { paths } from '@config/site';
 import Icon from '@components/ui/Icon.astro';
 import Stars from '@components/ui/Stars.astro';
+import GoogleReviewButton from '@components/ui/GoogleReviewButton.astro';
 
 interface Props {
   heading?: string;
@@ -40,6 +41,7 @@ const rows = [reviews.slice(0, half), reviews.slice(half)];
         <div class="rating__meta">
           <Stars size={26} label="Rated 5 out of 5" />
           <p>Rated 5.0 on Google</p>
+          <GoogleReviewButton variant="text" />
         </div>
       </div>
     </div>

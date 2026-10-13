@@ -21,9 +21,11 @@ interface Props {
   /** Article publish date for blog posts */
   publishedTime?: Date;
   noindex?: boolean;
+  /** Off for the 404 page, which is served at whatever URL was not found */
+  canonical?: boolean;
 }
 
-const { title, description, path, ogImage, publishedTime, noindex = false } = Astro.props;
+const { title, description, path, ogImage, publishedTime, noindex = false, canonical: withCanonical = true } = Astro.props;
 
 const canonical = absolute(path);
 /** Branded 1200×630 card: logo, "Licensed Plumber in El Cajon, CA" and the phone number. */
@@ -36,7 +38,7 @@ const resolvedDescription = t(description);
 
 <title>{resolvedTitle}</title>
 <meta name="description" content={resolvedDescription} />
-<link rel="canonical" href={canonical} />
+{withCanonical && <link rel="canonical" href={canonical} />}
 
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
@@ -44,7 +46,7 @@ const resolvedDescription = t(description);
 <meta property="og:site_name" content={site.business.name} />
 <meta property="og:title" content={resolvedTitle} />
 <meta property="og:description" content={resolvedDescription} />
-<meta property="og:url" content={canonical} />
+{withCanonical && <meta property="og:url" content={canonical} />}
 <meta property="og:image" content={shareImage} />
 {
   isDefaultImage && (

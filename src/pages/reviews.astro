@@ -8,16 +8,16 @@
  * client's Yelp and Foursquare profiles (src/config/reviews.ts), and Google
  * allows that markup only for first-party reviews collected on the site.
  */
-import { site, paths, getCity } from '@config/site';
+import { paths, getCity } from '@config/site';
 import { reviews } from '@config/reviews';
 import { commonFaqs } from '@config/faqs';
-import { isPlaceholder } from '@lib/tokens';
 import { PAGE_HERO_SIZES, HERO_PHOTO_MEDIA } from '@lib/media';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PageHero from '@components/PageHero.astro';
 import Faq from '@components/Faq.astro';
 import ContactSection from '@components/ContactSection.astro';
 import Stars from '@components/ui/Stars.astro';
+import GoogleReviewButton from '@components/ui/GoogleReviewButton.astro';
 import PageSchema from '@components/schema/PageSchema.astro';
 
 const title = 'Sedco Plumbing Reviews | El Cajon & San Diego County';
@@ -27,8 +27,6 @@ const path = paths.reviews;
 const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Reviews' }];
 
 const sources = [...new Set(reviews.map((r) => r.source))];
-const reviewLink = site.profiles.googleReview;
-const reviewLinkReady = !isPlaceholder(reviewLink) && reviewLink.length > 0;
 ---
 
 <BaseLayout
@@ -60,6 +58,7 @@ const reviewLinkReady = !isPlaceholder(reviewLink) && reviewLink.length > 0;
         Reviews from homeowners, landlords and businesses across San Diego County, on Google, Yelp
         and Foursquare.
       </p>
+      <GoogleReviewButton variant="text" label="Review us on Google" class="rating-card__link" />
     </div>
   </PageHero>
 
@@ -103,14 +102,7 @@ const reviewLinkReady = !isPlaceholder(reviewLink) && reviewLink.length > 0;
         <h2 class="ask__title" id="ask-heading">Had a Job Done by Sedco?</h2>
         <p class="ask__text">We read every review, and it helps other homeowners find a plumber they can trust.</p>
       </div>
-      {
-        reviewLinkReady && (
-          <a class="btn btn--navy btn--md ask__btn" href={reviewLink} target="_blank" rel="noopener">
-            <Stars size={18} />
-            Leave a Google review
-          </a>
-        )
-      }
+      <GoogleReviewButton />
     </div>
   </section>
 
@@ -314,8 +306,8 @@ const reviewLinkReady = !isPlaceholder(reviewLink) && reviewLink.length > 0;
     color: var(--slate-600);
   }
 
-  .ask__btn :global(.stars) {
-    gap: 0;
+  .rating-card :global(.rating-card__link) {
+    margin-top: 16px;
   }
 
   @media (max-width: 1099px) {
