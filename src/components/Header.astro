@@ -1,7 +1,7 @@
 ---
 /**
  * Site header (sticky). Desktop: logo, nav with the Services mega menu and the
- * Service Areas dropdown, Call + Request Service. Mobile (≤ 1180px): logo, a
+ * Service Areas dropdown, Call + Request Service. Mobile (≤ 1279px): logo, a
  * call button and a menu button that opens a full-width link list.
  *
  * The menus are progressive: every trigger is also a plain link target, so the
@@ -37,6 +37,7 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
     </a>
 
     <nav class="nav" aria-label="Main">
+      <a class="nav__item" href={paths.home} aria-current={current === paths.home ? 'page' : undefined} data-menu-close>Home</a>
       <a
         class="nav__item"
         href={paths.servicesHub}
@@ -154,6 +155,7 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
 
   <nav id="mobile-menu" class="mobile-menu" aria-label="Main" data-mobile-menu>
     <ul>
+      <li><a href={paths.home}>Home</a></li>
       <li><a href={paths.servicesHub}>Services</a></li>
       <li><a href={paths.areasHub}>Service Areas</a></li>
       <li><a href={paths.reviews}>Reviews</a></li>
@@ -179,7 +181,7 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
   .bar {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 28px;
     max-width: calc(var(--container) + 2 * var(--gutter));
     height: var(--header-h);
     margin: 0 auto;
@@ -187,6 +189,7 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
   }
 
   .brand {
+    flex: none;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -225,11 +228,12 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
   }
 
   .nav__item {
+    flex: none;
     display: flex;
     align-items: center;
     gap: 6px;
     height: 44px;
-    padding: 0 14px;
+    padding: 0 10px;
     border-radius: var(--r-sm);
     font: 500 16px var(--font-body);
     color: var(--navy-800);
@@ -254,6 +258,7 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
   }
 
   .nav__item :global(.nav__chev) {
+    flex: none;
     transition: transform 200ms ease;
   }
 
@@ -537,7 +542,7 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
     display: block;
   }
 
-  @media (max-width: 1180px) {
+  @media (max-width: 1279px) {
     .nav,
     .ctas,
     .mega,
@@ -635,7 +640,7 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
       mega: header.querySelector<HTMLElement>('[data-menu="mega"]'),
       areas: header.querySelector<HTMLElement>('[data-menu="areas"]'),
     };
-    const desktop = window.matchMedia('(min-width: 1181px)');
+    const desktop = window.matchMedia('(min-width: 1280px)');
     const hoverable = window.matchMedia('(hover: hover)');
     let areasTimer: number | undefined;
 
