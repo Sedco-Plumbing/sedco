@@ -130,6 +130,30 @@ const GROUP_META: Omit<CatalogGroup, 'services'>[] = [
 
 export const catalogServices: CatalogService[] = SERVICES;
 
+/**
+ * Extra words people use for each service, so the header search can find it
+ * ("clog" → Drain cleaning). Only the service name and icon are displayed.
+ */
+export const SEARCH_TERMS: Record<string, string> = {
+  'general-plumbing': 'plumber repair leak leaking pipe valve fixture inspection emergency',
+  'faucet-services': 'faucet tap drip dripping leaky kitchen bathroom fixture',
+  'sink-services': 'sink basin kitchen bathroom leaking slow drain p-trap',
+  'garbage-disposal': 'disposal garburator jammed humming kitchen sink',
+  'water-pressure-regulators': 'pressure regulator prv valve low high water pressure',
+  'property-management-plumbing': 'landlord rental tenant property manager hoa apartment commercial',
+  'drain-cleaning': 'drain clog clogged blocked slow backup hydro jetting snake rooter main line',
+  'sewer-lines': 'sewer line main lateral backup roots broken pipe septic camera',
+  'grease-trap': 'grease trap interceptor restaurant commercial kitchen',
+  'toilet-repair-installation': 'toilet running clogged leaking wc install replace flush',
+  'shower-installation': 'shower tub bathtub valve remodel walk-in conversion',
+  'kitchen-bath-remodels': 'remodel renovation kitchen bathroom rough-in plumbing',
+  'water-heater': 'water heater hot water tank tankless boiler no hot water leaking',
+  'slab-leak-repair': 'slab leak foundation hidden leak detection under floor high water bill',
+  'water-lines': 'water line repipe repiping galvanized copper pex main supply pipe',
+  'gas-lines': 'gas line leak stove range bbq dryer fire pit shutoff',
+  'water-filtration': 'water filter filtration softener hard water purification whole house',
+};
+
 export const catalogGroups: CatalogGroup[] = GROUP_META.map((g) => ({
   ...g,
   services: SERVICES.filter((s) => s.group === g.key),

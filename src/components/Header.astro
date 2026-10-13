@@ -1,8 +1,9 @@
 ---
 /**
- * Site header (sticky). Desktop: logo, nav with the Services mega menu and the
- * Service Areas dropdown, Call + Request Service. Mobile (≤ 1279px): logo, a
- * call button and a menu button that opens a full-width link list.
+ * Site header (sticky). Desktop: the logo aligned with the page container,
+ * the nav (Services mega menu, Service Areas dropdown), then the service search
+ * and Call + Request Service pushed to the right edge. Mobile (≤ 1279px): logo,
+ * search, call and a menu button that opens a full-width link list.
  *
  * The menus are progressive: every trigger is also a plain link target, so the
  * site navigates without JavaScript. Closed menus are `display: none`, which
@@ -16,6 +17,7 @@ import { catalogGroups, serviceHref } from '@config/catalog';
 import { phoneHref } from '@lib/tokens';
 import Icon from '@components/ui/Icon.astro';
 import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
+import HeaderSearch from './HeaderSearch.astro';
 
 const phone = site.business.phone;
 const tel = phoneHref();
@@ -84,6 +86,8 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
       <a class="nav__item" href={paths.blog} aria-current={isCurrent(paths.blog) ? 'page' : undefined} data-menu-close>Blog</a>
       <a class="nav__item" href={paths.contact} aria-current={isCurrent(paths.contact) ? 'page' : undefined} data-menu-close>Contact</a>
     </nav>
+
+    <HeaderSearch />
 
     <div class="ctas">
       <a class="btn btn--call btn--sm" href={tel}>
@@ -182,12 +186,10 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
   .bar {
     display: flex;
     align-items: center;
-    gap: 20px;
-    /* A little wider than the page content so all seven menu items fit. */
-    max-width: calc(var(--container) + 80px + 2 * var(--gutter));
+    gap: 16px;
     height: var(--header-h);
-    margin: 0 auto;
-    padding: 0 var(--gutter);
+    /* Logo lines up with the page container; the actions sit at the right edge. */
+    padding: 0 32px 0 max(var(--gutter), calc((100% - var(--container)) / 2));
   }
 
   .brand {
@@ -226,7 +228,12 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
 
   .nav {
     display: flex;
-    margin-left: auto;
+    margin-inline: auto;
+  }
+
+  /* The open search takes the menu's place. */
+  .site-header:has(.search[data-open]) .nav {
+    display: none;
   }
 
   .nav__item {
@@ -235,7 +242,7 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
     align-items: center;
     gap: 6px;
     height: 44px;
-    padding: 0 8px;
+    padding: 0 12px;
     border-radius: var(--r-sm);
     font: 500 16px var(--font-body);
     color: var(--navy-800);
@@ -547,6 +554,39 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
     display: block;
   }
 
+  /* With the logo held on the container line, the bar gets tighter as the
+     screen narrows: trim spacing and type a step rather than drop items. */
+  @media (max-width: 1599px) {
+    .nav__item {
+      padding: 0 8px;
+    }
+  }
+
+  @media (max-width: 1439px) {
+    .bar {
+      gap: 12px;
+      padding-right: 24px;
+    }
+
+    .brand__name {
+      font-size: 20px;
+    }
+
+    .nav__item {
+      padding: 0 6px;
+      font-size: 15px;
+    }
+
+    .ctas {
+      gap: 6px;
+    }
+
+    .ctas .btn {
+      padding: 0 14px;
+      font-size: 15px;
+    }
+  }
+
   @media (max-width: 1279px) {
     .nav,
     .ctas,
@@ -658,6 +698,7 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
 
     const open = (name: MenuName) => {
       window.clearTimeout(areasTimer);
+      document.dispatchEvent(new CustomEvent('sedco:menu-open'));
       setOpen(name === 'mega' ? 'areas' : 'mega', false);
       setOpen(name, true);
     };
@@ -732,9 +773,17 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
       mobileToggle?.setAttribute('aria-expanded', String(openMenu));
       mobileToggle?.setAttribute('aria-label', openMenu ? 'Close menu' : 'Menu');
     };
-    mobileToggle?.addEventListener('click', () =>
-      setMobile(!mobileMenu?.hasAttribute('data-open')),
-    );
+    mobileToggle?.addEventListener('click', () => {
+      const opening = !mobileMenu?.hasAttribute('data-open');
+      if (opening) document.dispatchEvent(new CustomEvent('sedco:menu-open'));
+      setMobile(opening);
+    });
+
+    // Opening the service search closes every menu.
+    document.addEventListener('sedco:search-open', () => {
+      closeAll();
+      setMobile(false);
+    });
     mobileMenu?.querySelectorAll('a').forEach((link) =>
       link.addEventListener('click', () => setMobile(false)),
     );

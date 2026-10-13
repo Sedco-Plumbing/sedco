@@ -1,0 +1,428 @@
+---
+/**
+ * Service search in the header. A magnifier button expands an input ("What
+ * service are you looking for?"); as the visitor types, matching services
+ * appear with their icon and name only. Choosing one opens its service page.
+ *
+ * Every service is rendered as a real link in the HTML (hidden until it
+ * matches), so the results need no data fetch and no icons are shipped in JS.
+ * Matching uses each service's name plus the search words in catalog.ts.
+ * Keyboard: ↑/↓ move, Enter opens, Escape closes. ARIA combobox pattern.
+ *
+ * Desktop: the input takes the menu's place in the bar. Mobile: it opens as a
+ * panel under the header.
+ */
+import { catalogServices, serviceHref, SEARCH_TERMS } from '@config/catalog';
+import { site } from '@config/site';
+import { phoneHref } from '@lib/tokens';
+import Icon from '@components/ui/Icon.astro';
+
+const options = catalogServices.map((service) => ({
+  id: `search-opt-${service.slug}`,
+  href: serviceHref(service),
+  name: service.name,
+  icon: service.icon,
+  terms: [service.name, service.short, SEARCH_TERMS[service.slug] ?? '']
+    .join(' ')
+    .toLowerCase(),
+}));
+---
+
+<div class="search" data-search>
+  <button
+    type="button"
+    class="search__toggle"
+    aria-label="Search services"
+    aria-expanded="false"
+    aria-controls="site-search-panel"
+    data-search-toggle
+  >
+    <Icon name="search" size={21} />
+  </button>
+
+  <div class="search__panel" id="site-search-panel" role="search" data-search-panel>
+    <div class="search__field">
+      <Icon name="search" size={20} class="search__glass" />
+      <label class="visually-hidden" for="site-search-input">What service are you looking for?</label>
+      <input
+        id="site-search-input"
+        class="search__input"
+        type="text"
+        placeholder="What service are you looking for?"
+        autocomplete="off"
+        spellcheck="false"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded="false"
+        aria-controls="site-search-list"
+        data-search-input
+      />
+      <button type="button" class="search__close" aria-label="Close search" data-search-close>
+        <Icon name="close" size={18} />
+      </button>
+    </div>
+
+    <div class="search__results" data-search-results hidden>
+      <ul class="search__list" id="site-search-list" role="listbox" aria-label="Matching services">
+        {
+          options.map((option) => (
+            <li role="presentation" data-terms={option.terms} data-name={option.name.toLowerCase()} hidden>
+              <a id={option.id} role="option" href={option.href} tabindex="-1" aria-selected="false">
+                <span class="search__icon" aria-hidden="true"><Icon name={option.icon} size={20} /></span>
+                <span class="search__name">{option.name}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="search__empty" data-search-empty hidden>
+        No service matches that. Call <a href={phoneHref()}>{site.business.phone}</a> and we'll help.
+      </p>
+    </div>
+    <p class="visually-hidden" aria-live="polite" data-search-status></p>
+  </div>
+</div>
+
+<style>
+  .search {
+    display: flex;
+    justify-content: flex-end;
+    flex: none;
+  }
+
+  .search__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border: 1.5px solid var(--blue-200);
+    border-radius: var(--r-md);
+    background: var(--white);
+    color: var(--navy-800);
+    cursor: pointer;
+    transition:
+      background-color var(--t-fast) ease,
+      color var(--t-fast) ease,
+      border-color var(--t-fast) ease;
+  }
+
+  .search__toggle:hover,
+  .search__toggle[aria-expanded='true'] {
+    border-color: var(--navy-800);
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  /* ---- panel (closed: display none) ---- */
+
+  .search__panel {
+    position: relative;
+    display: none;
+  }
+
+  .search[data-open] .search__panel {
+    display: block;
+    animation: search-in 220ms var(--ease-out);
+  }
+
+  @keyframes search-in {
+    from {
+      opacity: 0;
+      transform: translateX(12px);
+    }
+  }
+
+  .search__field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 48px;
+    padding: 0 6px 0 16px;
+    border: 1.5px solid var(--navy-800);
+    border-radius: var(--r-md);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(11, 116, 217, 0.12);
+  }
+
+  .search__field :global(.search__glass) {
+    flex: none;
+    color: var(--slate-500);
+  }
+
+  .search__input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font: 500 16px var(--font-body);
+    color: var(--ink);
+  }
+
+  .search__input::placeholder {
+    color: var(--slate-500);
+  }
+
+  .search__close {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: var(--r-sm);
+    background: var(--slate-50);
+    color: var(--navy-800);
+    cursor: pointer;
+  }
+
+  .search__close:hover {
+    background: var(--blue-100);
+  }
+
+  /* ---- results ---- */
+
+  .search__results {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 8px);
+    z-index: 45;
+    max-height: min(420px, 70vh);
+    overflow-y: auto;
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--white);
+    box-shadow: var(--shadow-dropdown);
+  }
+
+  .search__list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+  }
+
+  .search__list a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy-800);
+    text-decoration: none;
+    transition:
+      background-color var(--t-fast) ease,
+      color var(--t-fast) ease;
+  }
+
+  .search__list a:hover,
+  .search__list a[aria-selected='true'] {
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  .search__icon {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--blue-50);
+    color: var(--blue-600);
+    transition:
+      background-color var(--t-fast) ease,
+      color var(--t-fast) ease;
+  }
+
+  .search__list a:hover .search__icon,
+  .search__list a[aria-selected='true'] .search__icon {
+    background: var(--navy-700);
+    color: var(--yellow-500);
+  }
+
+  .search__empty {
+    padding: 12px;
+    font-size: 15px;
+    color: var(--slate-600);
+  }
+
+  .search__empty a {
+    font-weight: 600;
+  }
+
+  /* ---- desktop: the open search takes the menu's place ---- */
+  @media (min-width: 1280px) {
+    .search[data-open] {
+      flex: 1 1 auto;
+    }
+
+    .search[data-open] .search__toggle {
+      display: none;
+    }
+
+    .search[data-open] .search__panel {
+      width: 100%;
+    }
+  }
+
+  /* ---- mobile: a panel under the header ---- */
+  @media (max-width: 1279px) {
+    .search__toggle {
+      width: 48px;
+      height: 48px;
+    }
+
+    .search[data-open] .search__panel {
+      position: absolute;
+      top: var(--header-h);
+      left: 0;
+      right: 0;
+      padding: 12px 16px 16px;
+      border-top: 1px solid var(--blue-200);
+      background: var(--page);
+      box-shadow: 0 16px 30px rgba(11, 37, 69, 0.12);
+      animation: none;
+    }
+
+    .search__results {
+      position: static;
+      margin-top: 8px;
+      max-height: 60vh;
+      box-shadow: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-search]');
+
+  if (root) {
+    const toggle = root.querySelector<HTMLButtonElement>('[data-search-toggle]')!;
+    const input = root.querySelector<HTMLInputElement>('[data-search-input]')!;
+    const close = root.querySelector<HTMLButtonElement>('[data-search-close]')!;
+    const results = root.querySelector<HTMLElement>('[data-search-results]')!;
+    const empty = root.querySelector<HTMLElement>('[data-search-empty]')!;
+    const status = root.querySelector<HTMLElement>('[data-search-status]')!;
+    const items = [...root.querySelectorAll<HTMLLIElement>('.search__list > li')];
+    const MAX = 8;
+    let visible: HTMLAnchorElement[] = [];
+    let active = -1;
+
+    const isOpen = () => root.hasAttribute('data-open');
+
+    const setActive = (index: number) => {
+      visible.forEach((a, i) => a.setAttribute('aria-selected', String(i === index)));
+      active = index;
+      if (index >= 0) {
+        input.setAttribute('aria-activedescendant', visible[index].id);
+        visible[index].scrollIntoView({ block: 'nearest' });
+      } else {
+        input.removeAttribute('aria-activedescendant');
+      }
+    };
+
+    /** Score a service against the query; lower is better, null = no match. */
+    const score = (li: HTMLLIElement, words: string[], query: string): number | null => {
+      const name = li.dataset.name ?? '';
+      const terms = li.dataset.terms ?? '';
+      const tokens = terms.split(/[^a-z0-9-]+/);
+      const all = words.every((w) => tokens.some((t) => t.startsWith(w)) || terms.includes(w));
+      if (!all) return null;
+      if (name.startsWith(query)) return 0;
+      if (name.split(/\s+/).some((t) => t.startsWith(words[0]))) return 1;
+      return 2;
+    };
+
+    const update = () => {
+      const query = input.value.trim().toLowerCase();
+      if (!query) {
+        results.hidden = true;
+        input.setAttribute('aria-expanded', 'false');
+        visible = [];
+        setActive(-1);
+        status.textContent = '';
+        return;
+      }
+      const words = query.split(/\s+/);
+      const ranked = items
+        .map((li, order) => ({ li, order, s: score(li, words, query) }))
+        .filter((r) => r.s !== null)
+        .sort((a, b) => (a.s! - b.s!) || a.order - b.order)
+        .slice(0, MAX);
+
+      items.forEach((li) => (li.hidden = true));
+      ranked.forEach((r, i) => {
+        r.li.hidden = false;
+        r.li.style.order = String(i);
+      });
+      visible = ranked.map((r) => r.li.querySelector('a')!);
+      empty.hidden = visible.length > 0;
+      results.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+      setActive(visible.length ? 0 : -1);
+      status.textContent = visible.length
+        ? `${visible.length} matching service${visible.length === 1 ? '' : 's'}`
+        : 'No matching services';
+    };
+
+    const open = () => {
+      document.dispatchEvent(new CustomEvent('sedco:search-open'));
+      root.setAttribute('data-open', '');
+      toggle.setAttribute('aria-expanded', 'true');
+      requestAnimationFrame(() => input.focus());
+    };
+
+    const shut = (returnFocus = false) => {
+      root.removeAttribute('data-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      input.value = '';
+      update();
+      if (returnFocus) toggle.focus();
+    };
+
+    toggle.addEventListener('click', () => (isOpen() ? shut() : open()));
+    close.addEventListener('click', () => shut(true));
+    input.addEventListener('input', update);
+
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' && visible.length) {
+        event.preventDefault();
+        setActive((active + 1) % visible.length);
+      } else if (event.key === 'ArrowUp' && visible.length) {
+        event.preventDefault();
+        setActive((active - 1 + visible.length) % visible.length);
+      } else if (event.key === 'Enter') {
+        event.preventDefault();
+        const target = visible[Math.max(active, 0)];
+        if (target) window.location.href = target.href;
+      } else if (event.key === 'Escape') {
+        event.preventDefault();
+        shut(true);
+      }
+    });
+
+    // Hovering a result makes it the active one.
+    items.forEach((li) =>
+      li.querySelector('a')!.addEventListener('mousemove', (event) => {
+        const index = visible.indexOf(event.currentTarget as HTMLAnchorElement);
+        if (index !== active && index >= 0) setActive(index);
+      }),
+    );
+
+    // Close on outside click, or when a header menu opens.
+    document.addEventListener('click', (event) => {
+      if (isOpen() && !root.contains(event.target as Node)) shut();
+    });
+    document.addEventListener('sedco:menu-open', () => {
+      if (isOpen()) shut();
+    });
+  }
+</script>
