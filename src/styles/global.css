@@ -448,6 +448,11 @@ summary::-webkit-details-marker {
     background-color var(--t-fast) ease;
 }
 
+.input::placeholder {
+  color: var(--slate-500);
+  opacity: 1;
+}
+
 .input:hover {
   border-color: var(--slate-400);
 }

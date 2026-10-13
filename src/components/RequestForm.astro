@@ -42,15 +42,6 @@ const compact = variant === 'compact';
 const accessKey = site.integrations.web3formsKey;
 const phone = site.business.phone;
 const tel = phoneHref();
-
-/** Callback / visit window the customer prefers (we're open 24h Mon–Sat). */
-const PREFERRED_TIMES = [
-  'As soon as possible',
-  'Morning (8am – 12pm)',
-  'Afternoon (12pm – 5pm)',
-  'Evening (after 5pm)',
-  'Any time',
-];
 ---
 
 <div class:list={['request-form', compact && 'request-form--compact']} data-request-form-root>
@@ -188,13 +179,17 @@ const PREFERRED_TIMES = [
           </div>
 
           <div class="field">
-            <label class="field__label" for={`${id}-time`}>Preferred time</label>
-            <div class="select">
-              <select class="input" id={`${id}-time`} name="preferred_time">
-                {PREFERRED_TIMES.map((option) => <option>{option}</option>)}
-              </select>
-              <Icon name="chevron-down" size={18} />
-            </div>
+            <label class="field__label" for={`${id}-time`}>
+              Preferred day &amp; time <span class="field__hint">Optional</span>
+            </label>
+            <input
+              class="input"
+              id={`${id}-time`}
+              name="preferred_time"
+              type="text"
+              maxlength="80"
+              placeholder="e.g. Tuesday after 3pm"
+            />
           </div>
         </>
       )
