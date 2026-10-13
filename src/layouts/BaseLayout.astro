@@ -71,18 +71,53 @@ const googleSiteVerification = site.integrations.googleSiteVerification;
   <head>
     <meta charset="utf-8" />
     {
-      gtm && (
-        <script is:inline define:vars={{ gtm }}>
-          (function (w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-            var f = d.getElementsByTagName(s)[0],
-              j = d.createElement(s),
-              dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-          })(window, document, 'script', 'dataLayer', gtm);
+      /*
+       * GTM and GA4, loaded once the page is ready: on the visitor's first
+       * scroll, tap, click or key press, or 5 seconds after the page loads,
+       * whichever comes first. Their ~470 KB of script then never competes
+       * with the first render on a phone. The dataLayer and gtag() queue
+       * exist from the start, so nothing is lost: GA4's config (page_view)
+       * and any dataLayer events (e.g. form_submit_lead) are processed as
+       * soon as the scripts arrive.
+       */
+      (gtm || ga4) && (
+        <script is:inline define:vars={{ gtm, ga4 }}>
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () {
+            window.dataLayer.push(arguments);
+          };
+          if (gtm) window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          if (ga4) {
+            window.gtag('js', new Date());
+            window.gtag('config', ga4);
+          }
+          (function () {
+            var loaded = false;
+            var events = ['scroll', 'pointerdown', 'keydown', 'touchstart'];
+            var add = function (src) {
+              var script = document.createElement('script');
+              script.async = true;
+              script.src = src;
+              document.head.appendChild(script);
+            };
+            var load = function () {
+              if (loaded) return;
+              loaded = true;
+              events.forEach(function (name) {
+                window.removeEventListener(name, load);
+              });
+              if (gtm) add('https://www.googletagmanager.com/gtm.js?id=' + gtm);
+              if (ga4) add('https://www.googletagmanager.com/gtag/js?id=' + ga4);
+            };
+            events.forEach(function (name) {
+              window.addEventListener(name, load, { once: true, passive: true });
+            });
+            var later = function () {
+              setTimeout(load, 5000);
+            };
+            if (document.readyState === 'complete') later();
+            else window.addEventListener('load', later);
+          })();
         </script>
       )
     }
@@ -114,22 +149,6 @@ const googleSiteVerification = site.integrations.googleSiteVerification;
 
     {crumbs && crumbs.length > 1 && <BreadcrumbSchema crumbs={crumbs} />}
     <slot name="head" />
-
-    {
-      ga4 && (
-        <>
-          <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4}`} />
-          <script is:inline define:vars={{ ga4 }}>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-              dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-            gtag('config', ga4);
-          </script>
-        </>
-      )
-    }
   </head>
 
   <body>

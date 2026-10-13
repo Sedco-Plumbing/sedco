@@ -691,3 +691,19 @@ textarea.input {
     font-size: 20px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Below-the-fold sections: the browser skips their layout and paint until
+ * they come near the viewport (faster first render on phones). `auto` in
+ * contain-intrinsic-size remembers each section's real height once rendered.
+ * ------------------------------------------------------------------------- */
+
+.reviews,
+.areas-section,
+.faq,
+.contact,
+.how,
+.footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}

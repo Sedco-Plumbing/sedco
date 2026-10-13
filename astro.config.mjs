@@ -64,7 +64,12 @@ export default defineConfig({
    * 8), exclude /keystatic and /api/keystatic from it for the same reason.
    */
   trailingSlash: 'ignore',
-  build: { format: 'directory' },
+  /**
+   * CSS is inlined into each page (about 13 KB gzipped): no render-blocking
+   * stylesheet request, so the first paint needs one round trip fewer on slow
+   * mobile connections.
+   */
+  build: { format: 'directory', inlineStylesheets: 'always' },
 
   adapter,
 
