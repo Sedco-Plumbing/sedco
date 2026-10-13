@@ -21,6 +21,8 @@ interface Props {
   source: string;
   /** Pre-selected service (catalog name) */
   service?: string;
+  /** Pre-selected town (city name) */
+  city?: string;
   title?: string;
   lead?: string;
   /** h2 when the desk is a top-level section, h3 under a section heading */
@@ -33,6 +35,7 @@ const {
   id,
   source,
   service,
+  city,
   title = 'Send us a request',
   lead = "Tell us what's going on and we'll call you back within 30 minutes, Monday to Saturday.",
   headingLevel = 'h2',
@@ -58,11 +61,11 @@ const detailsHeadingId = `${id}-details-heading`;
       </div>
     </div>
     <div class="desk-panel__inline-form">
-      <RequestForm id={`${id}-form`} source={source} service={service} />
+      <RequestForm id={`${id}-form`} source={source} service={service} city={city} />
     </div>
     {
       !mobileForm && (
-        <a class="desk-panel__request" href={`${paths.contact}#request`} data-open-request data-service={service}>
+        <a class="desk-panel__request" href={`${paths.contact}#request`} data-open-request data-service={service} data-city={city}>
           <Icon name="free-estimate" size={22} />
           Request Service
         </a>
@@ -89,13 +92,13 @@ const detailsHeadingId = `${id}-details-heading`;
           </div>
         )
       }
-      <div class="details__row">
+      <div class="details__row details__row--stack">
         <dt><Icon name="clock" size={18} />Hours</dt>
         <dd>
           <table class="hours">
             <tbody>
-              <tr><th scope="row">Monday – Saturday</th><td>Open 24 hours</td></tr>
-              <tr><th scope="row">Sunday</th><td>Closed</td></tr>
+              <tr><th scope="row"><span class="day-full">Monday – Saturday</span><span class="day-short">Mon – Sat</span></th><td><span class="status status--open">Open 24 hours</span></td></tr>
+              <tr><th scope="row">Sunday</th><td><span class="status status--closed">Closed</span></td></tr>
             </tbody>
           </table>
         </dd>
@@ -257,28 +260,83 @@ const detailsHeadingId = `${id}-details-heading`;
     color: var(--yellow-500);
   }
 
+  /* Hours get the column's full width: label above, one row per day group. */
+  .details__row--stack {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  /* Each day group is its own row with a status badge. */
   .hours {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+    margin: -6px 0;
   }
 
   .hours th,
   .hours td {
-    padding: 0 0 4px;
-    text-align: left;
-    font-size: 15px;
-    font-weight: 400;
-    vertical-align: top;
+    padding: 9px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    vertical-align: middle;
   }
 
   .hours th {
-    color: var(--blue-100);
+    border-radius: 10px 0 0 10px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
   }
 
   .hours td {
+    border-radius: 0 10px 10px 0;
     text-align: right;
-    font-weight: 600;
-    color: var(--white);
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 10px;
+    border-radius: var(--r-pill);
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+
+  .status--open {
+    background: rgba(255, 183, 3, 0.16);
+    color: var(--yellow-500);
+  }
+
+  .status--open::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 0 3px rgba(255, 183, 3, 0.25);
+  }
+
+  .status--closed {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--blue-300);
+  }
+
+  .day-short {
+    display: none;
+  }
+
+  @media (max-width: 420px) {
+    .day-full {
+      display: none;
+    }
+
+    .day-short {
+      display: inline;
+    }
   }
 
   /* ---- reflow ---- */

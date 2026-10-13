@@ -20,6 +20,8 @@ interface Props {
   intro?: string;
   /** Pre-selected service name (catalog name) */
   service?: string;
+  /** Pre-selected town (city name) */
+  city?: string;
   /** Title of the form column */
   formTitle?: string;
   id?: string;
@@ -29,6 +31,7 @@ const {
   heading = 'Talk to a Plumber in El Cajon Today',
   intro = "The quickest way to reach us is to call {phone}, and someone will pick up at any hour from Monday to Saturday. If you'd rather write, send us a short request and we'll call you back within 30 minutes to talk about the problem and arrange a visit.",
   service,
+  city,
   formTitle,
   id = 'request',
 } = Astro.props;
@@ -56,7 +59,7 @@ const headingId = `${id}-heading`;
   </div>
 
   <div class="contact__desk">
-    <ContactDesk id={id} source="contact-section" service={service} title={formTitle} headingLevel="h3" />
+    <ContactDesk id={id} source="contact-section" service={service} city={city} title={formTitle} headingLevel="h3" />
   </div>
 </section>
 

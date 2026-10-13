@@ -236,7 +236,7 @@ const asideText = data.asideText ?? 'Same-day visits across San Diego County.';
   chips={chips}
 />
 
-<ContactSection heading={t(data.ctaHeading)} intro={t(data.ctaBody)} service={item.name} formTitle="Get a free estimate" />
+<ContactSection heading={t(data.ctaHeading)} intro={t(data.ctaBody)} service={item.name} city={city?.name} formTitle="Get a free estimate" />
 
 <style>
   .svc-body {

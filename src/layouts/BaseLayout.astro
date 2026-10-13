@@ -42,8 +42,10 @@ interface Props {
    * <img>; pass one entry per `media` query for an art-directed <picture>.
    */
   preloadImage?: PreloadSpec | PreloadSpec[];
-  /** Service pre-selected in the Request drawer (catalog name) */
+  /** The page's service, pre-selected in the Request drawer (catalog name) */
   drawerService?: string;
+  /** The page's town, pre-selected in the Request drawer (city name) */
+  drawerCity?: string;
 }
 
 const {
@@ -57,6 +59,7 @@ const {
   canonical = true,
   preloadImage,
   drawerService,
+  drawerCity,
 } = Astro.props;
 const ga4 = site.integrations.ga4;
 const gtm = site.integrations.gtm;
@@ -153,6 +156,6 @@ const googleSiteVerification = site.integrations.googleSiteVerification;
     <Footer />
 
     <MobileCallBar />
-    <RequestDrawer service={drawerService} />
+    <RequestDrawer service={drawerService} city={drawerCity} />
   </body>
 </html>

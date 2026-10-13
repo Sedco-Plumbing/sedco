@@ -52,6 +52,7 @@ const item = catalogService(service.slug);
   path={path}
   crumbs={crumbs}
   drawerService={item.name}
+  drawerCity={city.name}
   preloadImage={[
     { name: 'hero/sedco-plumber-el-cajon', sizes: SERVICE_HERO_PHOTO_SIZES, media: '(min-width: 769px)' },
     { name: item.image, sizes: SERVICE_HERO_ART_SIZES, media: '(max-width: 768px)' },

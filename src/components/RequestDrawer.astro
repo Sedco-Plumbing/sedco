@@ -7,19 +7,35 @@
  *
  * Any element with [data-open-request] opens it. Those elements are links to
  * /contact/#request, so without JavaScript they still reach a working form.
+ *
+ * Context pre-fill, applied every time it opens:
+ *   service — the trigger's data-service (e.g. a service card), else the page's
+ *             service (service and service-in-town pages), else none
+ *   city    — the trigger's data-city, else the page's town (town and
+ *             service-in-town pages), else none
+ * So buttons with no context (home hero, header, Contact page, blog) open it
+ * with nothing selected.
  */
 import RequestForm from './RequestForm.astro';
 import Icon from '@components/ui/Icon.astro';
 
 interface Props {
-  /** Pre-selected service name on service pages */
+  /** The page's service (catalog name) on service pages */
   service?: string;
+  /** The page's town (city name) on town pages */
+  city?: string;
 }
 
-const { service } = Astro.props;
+const { service, city } = Astro.props;
 ---
 
-<dialog class="drawer" aria-labelledby="drawer-title" data-request-drawer>
+<dialog
+  class="drawer"
+  aria-labelledby="drawer-title"
+  data-request-drawer
+  data-page-service={service}
+  data-page-city={city}
+>
   <div class="drawer__head">
     <div>
       <p id="drawer-title" class="drawer__title">Request Service</p>
@@ -34,7 +50,7 @@ const { service } = Astro.props;
     </button>
   </div>
   <div class="drawer__body">
-    <RequestForm id="drawer" source="drawer" service={service} closeButton />
+    <RequestForm id="drawer" source="drawer" closeButton />
   </div>
 </dialog>
 
@@ -177,14 +193,21 @@ const { service } = Astro.props;
   const drawer = document.querySelector<HTMLDialogElement>('[data-request-drawer]');
 
   if (drawer) {
+    const prefill = (name: string, value: string | undefined) => {
+      const select = drawer.querySelector<HTMLSelectElement>(`select[name="${name}"]`);
+      if (!select) return;
+      const match = !!value && [...select.options].some((o) => o.value === value);
+      select.value = match && value ? value : '';
+      // A pre-filled field is no longer an error from an earlier attempt.
+      select.closest('.field')?.removeAttribute('data-invalid');
+      select.removeAttribute('aria-invalid');
+    };
+
     const open = (event: Event, trigger: HTMLElement) => {
       event.preventDefault();
-      // A trigger can pre-select its service, e.g. a service card's estimate button.
-      const service = trigger.dataset.service;
-      const select = drawer.querySelector<HTMLSelectElement>('select[name="service"]');
-      if (service && select && [...select.options].some((o) => o.value === service)) {
-        select.value = service;
-      }
+      // Pre-fill from the trigger, else the page's context, else clear.
+      prefill('service', trigger.dataset.service ?? drawer.dataset.pageService);
+      prefill('city', trigger.dataset.city ?? drawer.dataset.pageCity);
       drawer.showModal();
       // Focus the first field rather than the close button.
       drawer.querySelector<HTMLInputElement>('input[name="name"]')?.focus();

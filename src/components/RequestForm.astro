@@ -4,8 +4,14 @@
  * Used by the Request drawer, the contact section on every page and the
  * homepage hero estimate card.
  *
- *  - variant="standard"  Name*, Phone*, ZIP*, What do you need?, What's happening?
+ *  - variant="standard"  Name*, Phone*, Email, City*, Service needed, Preferred
+ *                        time, What's happening? (two columns when the form is
+ *                        at least 520px wide)
  *  - variant="compact"   Name*, Phone*, City*, Service*, Brief description (hero card)
+ *
+ * `service` / `city` pre-select the dropdowns (service and town pages). The
+ * Request drawer sets them again each time it opens, from the button clicked
+ * or the page's context (see RequestDrawer.astro).
  *
  * States: form → error alert (role="alert") → success (role="status"). On a
  * confirmed submission it pushes `form_submit_lead` to the GTM dataLayer.
@@ -36,6 +42,15 @@ const compact = variant === 'compact';
 const accessKey = site.integrations.web3formsKey;
 const phone = site.business.phone;
 const tel = phoneHref();
+
+/** Callback / visit window the customer prefers (we're open 24h Mon–Sat). */
+const PREFERRED_TIMES = [
+  'As soon as possible',
+  'Morning (8am – 12pm)',
+  'Afternoon (12pm – 5pm)',
+  'Evening (after 5pm)',
+  'Any time',
+];
 ---
 
 <div class:list={['request-form', compact && 'request-form--compact']} data-request-form-root>
@@ -89,64 +104,101 @@ const tel = phoneHref();
 
     {
       compact ? (
-        <div class="field">
-          <label class="field__label" for={`${id}-city`}>Service address city</label>
-          <div class="select">
-            <select class="input" id={`${id}-city`} name="city" required aria-describedby={`${id}-city-error`}>
-              <option value="">Your city...</option>
-              {requestCityOptions.map((option) => (
-                <option selected={option === city}>{option}</option>
-              ))}
-            </select>
-            <Icon name="chevron-down" size={18} />
+        <>
+          <div class="field">
+            <label class="field__label" for={`${id}-city`}>Service address city</label>
+            <div class="select">
+              <select class="input" id={`${id}-city`} name="city" required aria-describedby={`${id}-city-error`}>
+                <option value="">Your city...</option>
+                {requestCityOptions.map((option) => (
+                  <option selected={option === city}>{option}</option>
+                ))}
+              </select>
+              <Icon name="chevron-down" size={18} />
+            </div>
+            <p class="field__error" id={`${id}-city-error`}>Please choose the city the job is in.</p>
           </div>
-          <p class="field__error" id={`${id}-city-error`}>Please choose the city the job is in.</p>
-        </div>
+
+          <div class="field">
+            <label class="field__label" for={`${id}-service`}>What do you need help with?</label>
+            <div class="select">
+              <select class="input" id={`${id}-service`} name="service" required aria-describedby={`${id}-service-error`}>
+                <option value="">Choose a service...</option>
+                {requestServiceOptions
+                  .filter((option) => option !== 'Not sure')
+                  .map((option) => <option selected={option === service}>{option}</option>)}
+              </select>
+              <Icon name="chevron-down" size={18} />
+            </div>
+            <p class="field__error" id={`${id}-service-error`}>Please choose a service.</p>
+          </div>
+        </>
       ) : (
-        <div class="field">
-          <label class="field__label" for={`${id}-zip`}>
-            ZIP code <span class="field__hint">Required</span>
-          </label>
-          <input
-            class="input"
-            id={`${id}-zip`}
-            name="zip"
-            type="text"
-            inputmode="numeric"
-            autocomplete="postal-code"
-            maxlength="10"
-            required
-            aria-describedby={`${id}-zip-help ${id}-zip-error`}
-          />
-          <p class="field__help" id={`${id}-zip-help`}>So we know where to send our plumber.</p>
-          <p class="field__error" id={`${id}-zip-error`}>Please enter a 5-digit ZIP code.</p>
-        </div>
+        <>
+          <div class="field">
+            <label class="field__label" for={`${id}-email`}>
+              Email <span class="field__hint">Optional</span>
+            </label>
+            <input
+              class="input"
+              id={`${id}-email`}
+              name="email"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              aria-describedby={`${id}-email-error`}
+            />
+            <p class="field__error" id={`${id}-email-error`}>Please enter a valid email address, or leave it blank.</p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for={`${id}-city`}>
+              City <span class="field__hint">Required</span>
+            </label>
+            <div class="select">
+              <select
+                class="input"
+                id={`${id}-city`}
+                name="city"
+                required
+                autocomplete="address-level2"
+                aria-describedby={`${id}-city-error`}
+              >
+                <option value="">Select your city</option>
+                {requestCityOptions.map((option) => (
+                  <option selected={option === city}>{option}</option>
+                ))}
+              </select>
+              <Icon name="chevron-down" size={18} />
+            </div>
+            <p class="field__error" id={`${id}-city-error`}>Please choose the city the job is in.</p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for={`${id}-service`}>Service needed</label>
+            <div class="select">
+              <select class="input" id={`${id}-service`} name="service">
+                <option value="">Select a service</option>
+                {requestServiceOptions.map((option) => (
+                  <option selected={option === service}>{option}</option>
+                ))}
+              </select>
+              <Icon name="chevron-down" size={18} />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for={`${id}-time`}>Preferred time</label>
+            <div class="select">
+              <select class="input" id={`${id}-time`} name="preferred_time">
+                {PREFERRED_TIMES.map((option) => <option>{option}</option>)}
+              </select>
+              <Icon name="chevron-down" size={18} />
+            </div>
+          </div>
+        </>
       )
     }
-
-    <div class="field">
-      <label class="field__label" for={`${id}-service`}>
-        {compact ? 'What do you need help with?' : 'What do you need?'}
-      </label>
-      <div class="select">
-        <select
-          class="input"
-          id={`${id}-service`}
-          name="service"
-          required={compact}
-          aria-describedby={compact ? `${id}-service-error` : undefined}
-        >
-          {compact && <option value="">Choose a service...</option>}
-          {
-            requestServiceOptions
-              .filter((option) => !(compact && option === 'Not sure'))
-              .map((option) => <option selected={option === service}>{option}</option>)
-          }
-        </select>
-        <Icon name="chevron-down" size={18} />
-      </div>
-      {compact && <p class="field__error" id={`${id}-service-error`}>Please choose a service.</p>}
-    </div>
 
     <div class="field field--wide">
       <label class="field__label" for={`${id}-details`}>
@@ -198,11 +250,32 @@ const tel = phoneHref();
 </div>
 
 <style>
+  .request-form {
+    container-type: inline-size;
+  }
+
   .request-form__form {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 18px;
     align-items: start;
+  }
+
+  /* Wide enough (drawer, contact desk): fields in pairs. */
+  @container (min-width: 520px) {
+    .request-form:not(.request-form--compact) .request-form__form {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 16px;
+    }
+
+    .request-form:not(.request-form--compact) .field--wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* An unchosen dropdown reads as a placeholder. */
+  .request-form :global(select.input:has(option[value='']:checked)) {
+    color: var(--slate-500);
   }
 
   .request-form__submit {
@@ -313,7 +386,7 @@ const tel = phoneHref();
 
 <script>
   const PHONE_RE = /^[\d\s()+.\-]{7,}$/;
-  const ZIP_RE = /^\d{5}(-\d{4})?$/;
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   document.querySelectorAll<HTMLFormElement>('[data-request-form]').forEach((form) => {
     const root = form.closest<HTMLElement>('[data-request-form-root]');
@@ -325,7 +398,7 @@ const tel = phoneHref();
     const rules: Record<string, (value: string) => boolean> = {
       name: (v) => v.trim().length > 0,
       phone: (v) => PHONE_RE.test(v.trim()) && v.replace(/\D/g, '').length >= 10,
-      zip: (v) => ZIP_RE.test(v.trim()),
+      email: (v) => EMAIL_RE.test(v.trim()),
       city: (v) => v.length > 0,
       service: (v) => v.length > 0,
     };
@@ -335,8 +408,9 @@ const tel = phoneHref();
       let firstInvalid: HTMLElement | null = null;
       for (const [name, rule] of Object.entries(rules)) {
         const field = form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | null;
-        if (!field || !field.required) continue;
-        const ok = rule(field.value);
+        if (!field) continue;
+        // Optional fields are only checked once something is typed in them.
+        const ok = !field.required && field.value.trim() === '' ? true : rule(field.value);
         field.closest('.field')?.toggleAttribute('data-invalid', !ok);
         field.setAttribute('aria-invalid', String(!ok));
         if (!ok && !firstInvalid) firstInvalid = field;
