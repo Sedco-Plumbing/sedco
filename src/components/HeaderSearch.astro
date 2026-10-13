@@ -1,31 +1,32 @@
 ---
 /**
- * Service search in the header. A magnifier button expands an input ("What
- * service are you looking for?"); as the visitor types, matching services
- * appear with their icon and name only. Choosing one opens its service page.
+ * Service search in the header. The magnifier button slides a panel down from
+ * under the header (full width, its content lined up with the page
+ * container) with "What service are you looking for?". As the visitor types,
+ * matching services appear with their card illustration and name only;
+ * choosing one opens its service page.
  *
  * Every service is rendered as a real link in the HTML (hidden until it
- * matches), so the results need no data fetch and no icons are shipped in JS.
+ * matches), so results need no data fetch. The panel is display:none while
+ * closed, so the lazy thumbnails only download once someone searches.
  * Matching uses each service's name plus the search words in catalog.ts.
  * Keyboard: ↑/↓ move, Enter opens, Escape closes. ARIA combobox pattern.
- *
- * Desktop: the input takes the menu's place in the bar. Mobile: it opens as a
- * panel under the header.
  */
 import { catalogServices, serviceHref, SEARCH_TERMS } from '@config/catalog';
 import { site } from '@config/site';
 import { phoneHref } from '@lib/tokens';
 import Icon from '@components/ui/Icon.astro';
+import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
 
 const options = catalogServices.map((service) => ({
   id: `search-opt-${service.slug}`,
   href: serviceHref(service),
   name: service.name,
-  icon: service.icon,
-  terms: [service.name, service.short, SEARCH_TERMS[service.slug] ?? '']
-    .join(' ')
-    .toLowerCase(),
+  image: service.image,
+  terms: [service.name, service.short, SEARCH_TERMS[service.slug] ?? ''].join(' ').toLowerCase(),
 }));
+
+const EXAMPLES = ['Drain clog', 'Water heater', 'Leak', 'Toilet', 'Gas line'];
 ---
 
 <div class="search" data-search>
@@ -37,56 +38,64 @@ const options = catalogServices.map((service) => ({
     aria-controls="site-search-panel"
     data-search-toggle
   >
-    <Icon name="search" size={21} />
+    <Icon name="search" size={21} class="search__toggle-open" />
+    <Icon name="close" size={20} class="search__toggle-close" />
   </button>
 
   <div class="search__panel" id="site-search-panel" role="search" data-search-panel>
-    <div class="search__field">
-      <Icon name="search" size={20} class="search__glass" />
-      <label class="visually-hidden" for="site-search-input">What service are you looking for?</label>
-      <input
-        id="site-search-input"
-        class="search__input"
-        type="text"
-        placeholder="What service are you looking for?"
-        autocomplete="off"
-        spellcheck="false"
-        role="combobox"
-        aria-autocomplete="list"
-        aria-expanded="false"
-        aria-controls="site-search-list"
-        data-search-input
-      />
-      <button type="button" class="search__close" aria-label="Close search" data-search-close>
-        <Icon name="close" size={18} />
-      </button>
-    </div>
+    <div class="search__inner">
+      <div class="search__field">
+        <Icon name="search" size={22} class="search__glass" />
+        <label class="visually-hidden" for="site-search-input">What service are you looking for?</label>
+        <input
+          id="site-search-input"
+          class="search__input"
+          type="text"
+          placeholder="What service are you looking for?"
+          autocomplete="off"
+          spellcheck="false"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded="false"
+          aria-controls="site-search-list"
+          data-search-input
+        />
+      </div>
 
-    <div class="search__results" data-search-results hidden>
-      <ul class="search__list" id="site-search-list" role="listbox" aria-label="Matching services">
-        {
-          options.map((option) => (
-            <li role="presentation" data-terms={option.terms} data-name={option.name.toLowerCase()} hidden>
-              <a id={option.id} role="option" href={option.href} tabindex="-1" aria-selected="false">
-                <span class="search__icon" aria-hidden="true"><Icon name={option.icon} size={20} /></span>
-                <span class="search__name">{option.name}</span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-      <p class="search__empty" data-search-empty hidden>
-        No service matches that. Call <a href={phoneHref()}>{site.business.phone}</a> and we'll help.
-      </p>
+      <div class="search__hint" data-search-hint>
+        <span>Try:</span>
+        {EXAMPLES.map((example) => (
+          <button type="button" data-search-example={example.toLowerCase()}>{example}</button>
+        ))}
+      </div>
+
+      <div class="search__results" data-search-results hidden>
+        <ul class="search__list" id="site-search-list" role="listbox" aria-label="Matching services">
+          {
+            options.map((option) => (
+              <li role="presentation" data-terms={option.terms} data-name={option.name.toLowerCase()} hidden>
+                <a id={option.id} role="option" href={option.href} tabindex="-1" aria-selected="false">
+                  <span class="search__thumb" aria-hidden="true">
+                    <ResponsiveImage name={option.image} alt="" sizes="56px" class="search__img" />
+                  </span>
+                  <span class="search__name">{option.name}</span>
+                  <Icon name="arrow-right" size={18} class="search__arrow" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="search__empty" data-search-empty hidden>
+          No service matches that. Call <a href={phoneHref()}>{site.business.phone}</a> and we'll help.
+        </p>
+      </div>
+      <p class="visually-hidden" aria-live="polite" data-search-status></p>
     </div>
-    <p class="visually-hidden" aria-live="polite" data-search-status></p>
   </div>
 </div>
 
 <style>
   .search {
-    display: flex;
-    justify-content: flex-end;
     flex: none;
   }
 
@@ -114,33 +123,62 @@ const options = catalogServices.map((service) => ({
     color: var(--yellow-500);
   }
 
-  /* ---- panel (closed: display none) ---- */
+  .search__toggle :global(.search__toggle-close),
+  .search__toggle[aria-expanded='true'] :global(.search__toggle-open) {
+    display: none;
+  }
+
+  .search__toggle[aria-expanded='true'] :global(.search__toggle-close) {
+    display: block;
+  }
+
+  /* ---- slide-down panel under the header ---- */
 
   .search__panel {
-    position: relative;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--header-h);
+    z-index: 35;
     display: none;
+    border-top: 1px solid var(--line);
+    background: var(--white);
+    box-shadow: var(--shadow-menu);
+    opacity: 0;
+    transform: translateY(-12px);
+    transition:
+      opacity 240ms ease,
+      transform 280ms var(--ease-out),
+      display 280ms allow-discrete;
   }
 
   .search[data-open] .search__panel {
     display: block;
-    animation: search-in 220ms var(--ease-out);
+    opacity: 1;
+    transform: none;
   }
 
-  @keyframes search-in {
-    from {
+  @starting-style {
+    .search[data-open] .search__panel {
       opacity: 0;
-      transform: translateX(12px);
+      transform: translateY(-12px);
     }
+  }
+
+  .search__inner {
+    max-width: calc(var(--container) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 28px var(--gutter) 32px;
   }
 
   .search__field {
     display: flex;
     align-items: center;
-    gap: 10px;
-    height: 48px;
-    padding: 0 6px 0 16px;
+    gap: 12px;
+    height: 60px;
+    padding: 0 20px;
     border: 1.5px solid var(--navy-800);
-    border-radius: var(--r-md);
+    border-radius: var(--r-lg);
     background: var(--white);
     box-shadow: 0 0 0 4px rgba(11, 116, 217, 0.12);
   }
@@ -157,7 +195,7 @@ const options = catalogServices.map((service) => ({
     border: 0;
     outline: 0;
     background: transparent;
-    font: 500 16px var(--font-body);
+    font: 500 18px var(--font-body);
     color: var(--ink);
   }
 
@@ -165,91 +203,107 @@ const options = catalogServices.map((service) => ({
     color: var(--slate-500);
   }
 
-  .search__close {
-    flex: none;
+
+  .search__hint {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border: 0;
-    border-radius: var(--r-sm);
-    background: var(--slate-50);
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--slate-600);
+  }
+
+  .search__hint button {
+    height: 34px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--sky-50);
+    font-size: 14px;
+    font-weight: 600;
     color: var(--navy-800);
     cursor: pointer;
   }
 
-  .search__close:hover {
-    background: var(--blue-100);
+  .search__hint button:hover {
+    border-color: var(--navy-800);
+    background: var(--navy-800);
+    color: var(--yellow-500);
   }
 
   /* ---- results ---- */
 
   .search__results {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: calc(100% + 8px);
-    z-index: 45;
-    max-height: min(420px, 70vh);
+    margin-top: 18px;
+    max-height: min(460px, 60vh);
     overflow-y: auto;
-    padding: 8px;
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    background: var(--white);
-    box-shadow: var(--shadow-dropdown);
   }
 
   .search__list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
     list-style: none;
   }
 
   .search__list a {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
-    border-radius: 10px;
+    gap: 14px;
+    padding: 8px 14px 8px 8px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
     font-size: 16px;
     font-weight: 600;
+    line-height: 1.3;
     color: var(--navy-800);
     text-decoration: none;
     transition:
       background-color var(--t-fast) ease,
-      color var(--t-fast) ease;
+      color var(--t-fast) ease,
+      border-color var(--t-fast) ease;
   }
 
   .search__list a:hover,
   .search__list a[aria-selected='true'] {
+    border-color: var(--navy-800);
     background: var(--navy-800);
     color: var(--yellow-500);
   }
 
-  .search__icon {
+  .search__thumb {
     flex: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    background: var(--blue-50);
-    color: var(--blue-600);
-    transition:
-      background-color var(--t-fast) ease,
-      color var(--t-fast) ease;
+    width: 56px;
+    height: 56px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--navy-800);
   }
 
-  .search__list a:hover .search__icon,
-  .search__list a[aria-selected='true'] .search__icon {
-    background: var(--navy-700);
+  .search__thumb :global(.search__img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .search__name {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .search__list :global(.search__arrow) {
+    flex: none;
+    color: var(--blue-600);
+  }
+
+  .search__list a:hover :global(.search__arrow),
+  .search__list a[aria-selected='true'] :global(.search__arrow) {
     color: var(--yellow-500);
   }
 
   .search__empty {
-    padding: 12px;
+    padding: 8px 2px;
     font-size: 15px;
     color: var(--slate-600);
   }
@@ -258,45 +312,39 @@ const options = catalogServices.map((service) => ({
     font-weight: 600;
   }
 
-  /* ---- desktop: the open search takes the menu's place ---- */
-  @media (min-width: 1280px) {
-    .search[data-open] {
-      flex: 1 1 auto;
-    }
-
-    .search[data-open] .search__toggle {
-      display: none;
-    }
-
-    .search[data-open] .search__panel {
-      width: 100%;
-    }
-  }
-
-  /* ---- mobile: a panel under the header ---- */
   @media (max-width: 1279px) {
     .search__toggle {
       width: 48px;
       height: 48px;
     }
+  }
 
-    .search[data-open] .search__panel {
-      position: absolute;
-      top: var(--header-h);
-      left: 0;
-      right: 0;
-      padding: 12px 16px 16px;
-      border-top: 1px solid var(--blue-200);
-      background: var(--page);
-      box-shadow: 0 16px 30px rgba(11, 37, 69, 0.12);
-      animation: none;
+  @media (max-width: 768px) {
+    .search__inner {
+      padding: 16px 16px 20px;
+    }
+
+    .search__field {
+      height: 54px;
+      padding-left: 14px;
+    }
+
+    .search__input {
+      font-size: 16px;
+    }
+
+    .search__list {
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .search__results {
-      position: static;
-      margin-top: 8px;
-      max-height: 60vh;
-      box-shadow: none;
+      max-height: 55vh;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .search__panel {
+      transform: none;
     }
   }
 </style>
@@ -307,10 +355,10 @@ const options = catalogServices.map((service) => ({
   if (root) {
     const toggle = root.querySelector<HTMLButtonElement>('[data-search-toggle]')!;
     const input = root.querySelector<HTMLInputElement>('[data-search-input]')!;
-    const close = root.querySelector<HTMLButtonElement>('[data-search-close]')!;
     const results = root.querySelector<HTMLElement>('[data-search-results]')!;
     const empty = root.querySelector<HTMLElement>('[data-search-empty]')!;
     const status = root.querySelector<HTMLElement>('[data-search-status]')!;
+    const hint = root.querySelector<HTMLElement>('[data-search-hint]')!;
     const items = [...root.querySelectorAll<HTMLLIElement>('.search__list > li')];
     const MAX = 8;
     let visible: HTMLAnchorElement[] = [];
@@ -345,12 +393,14 @@ const options = catalogServices.map((service) => ({
       const query = input.value.trim().toLowerCase();
       if (!query) {
         results.hidden = true;
+        hint.hidden = false;
         input.setAttribute('aria-expanded', 'false');
         visible = [];
         setActive(-1);
         status.textContent = '';
         return;
       }
+      hint.hidden = true;
       const words = query.split(/\s+/);
       const ranked = items
         .map((li, order) => ({ li, order, s: score(li, words, query) }))
@@ -377,19 +427,20 @@ const options = catalogServices.map((service) => ({
       document.dispatchEvent(new CustomEvent('sedco:search-open'));
       root.setAttribute('data-open', '');
       toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close search');
       requestAnimationFrame(() => input.focus());
     };
 
     const shut = (returnFocus = false) => {
       root.removeAttribute('data-open');
       toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Search services');
       input.value = '';
       update();
       if (returnFocus) toggle.focus();
     };
 
     toggle.addEventListener('click', () => (isOpen() ? shut() : open()));
-    close.addEventListener('click', () => shut(true));
     input.addEventListener('input', update);
 
     input.addEventListener('keydown', (event) => {
@@ -408,6 +459,15 @@ const options = catalogServices.map((service) => ({
         shut(true);
       }
     });
+
+    // Example searches fill the box.
+    root.querySelectorAll<HTMLButtonElement>('[data-search-example]').forEach((button) =>
+      button.addEventListener('click', () => {
+        input.value = button.dataset.searchExample ?? '';
+        update();
+        input.focus();
+      }),
+    );
 
     // Hovering a result makes it the active one.
     items.forEach((li) =>
