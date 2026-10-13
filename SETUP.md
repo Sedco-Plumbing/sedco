@@ -239,6 +239,11 @@ layout.
 Set `integrations.ga4` in config to the GA4 measurement ID (`G-XXXXXXXXXX`). Leave it empty and no
 analytics script is injected at all.
 
+GTM and GA4 load once the page is ready — on the visitor's first scroll, tap or key press, or 5 seconds
+after load — so they don't slow the first render on phones (PageSpeed mobile). The `dataLayer` and
+`gtag()` queue exist from the start, so the page_view and any `form_submit_lead` event are still sent
+when the scripts arrive. Visitors who leave within 5 seconds without touching the page aren't counted.
+
 For Search Console, either verify the domain with a DNS TXT record (no code), or set
 `integrations.googleSiteVerification` to the token from Google's HTML-tag method — the `content`
 value of the `google-site-verification` meta tag. Leave it empty and no tag is emitted.
