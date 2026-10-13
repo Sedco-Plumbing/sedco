@@ -1,154 +1,342 @@
 ---
 /**
- * Navy "How it works" card with a horizontal four-step timeline (numbered
- * yellow dots on a dashed line). Vertical list on narrow screens.
+ * Navy "How it works" card on service pages: a vertical timeline of the four
+ * steps (numbered markers joined by a connector, each step in its own panel
+ * with an icon, so longer step text has the full width), then a call to
+ * action strip. Same layout on every screen size.
  */
+import { site, paths } from '@config/site';
+import { phoneHref } from '@lib/tokens';
+import Icon from '@components/ui/Icon.astro';
+import type { IconName } from '@lib/icons';
+
 interface Props {
   id: string;
   heading: string;
   lead: string;
   steps: { title: string; text: string }[];
+  /** Service pre-selected when the Request button opens the drawer */
+  service?: string;
 }
 
-const { id, heading, lead, steps } = Astro.props;
+const { id, heading, lead, steps, service } = Astro.props;
+
+/** One icon per stage of a job: contact, visit, estimate, finished work. */
+const STEP_ICONS: IconName[] = ['phone', 'truck', 'clipboard-check', 'shield-check'];
 ---
 
 <section class="process" id={id} aria-labelledby={`${id}-heading`}>
-  <p class="process__eyebrow">How it works</p>
-  <h2 class="process__title" id={`${id}-heading`}>{heading}</h2>
-  <p class="process__lead">{lead}</p>
-  <ol class="process__steps">
+  <div class="process__head">
+    <p class="process__eyebrow">How it works</p>
+    <h2 class="process__title" id={`${id}-heading`}>{heading}</h2>
+    <p class="process__lead">{lead}</p>
+  </div>
+
+  <ol class="timeline">
     {
       steps.map((step, index) => (
-        <li class="process__step">
-          <span class="process__dot" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-          <h3 class="process__step-title">{step.title}</h3>
-          <p class="process__step-text">{step.text}</p>
+        <li class="timeline__step">
+          <span class="timeline__marker" aria-hidden="true">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <div class="timeline__panel">
+            <div class="timeline__top">
+              <span class="timeline__icon" aria-hidden="true">
+                <Icon name={STEP_ICONS[index] ?? 'check'} size={20} />
+              </span>
+              <span class="timeline__count">
+                Step {index + 1} of {steps.length}
+              </span>
+            </div>
+            <h3 class="timeline__title">{step.title}</h3>
+            <p class="timeline__text">{step.text}</p>
+          </div>
         </li>
       ))
     }
   </ol>
+
+  <div class="process__cta on-navy">
+    <ul class="process__promises" aria-label="Every job includes">
+      <li><Icon name="check" size={16} strokeWidth={3} />Free estimate</li>
+      <li><Icon name="check" size={16} strokeWidth={3} />No trip charge</li>
+      <li><Icon name="check" size={16} strokeWidth={3} />30-day guarantee</li>
+    </ul>
+    <div class="process__buttons">
+      <a class="btn btn--call btn--md" href={phoneHref()}>
+        <Icon name="phone" size={18} />Call {site.business.phone}
+      </a>
+      <a class="btn btn--outline-dark btn--md" href={`${paths.contact}#request`} data-open-request data-service={service}>
+        Request Service
+      </a>
+    </div>
+  </div>
 </section>
 
 <style>
   .process {
-    padding: 44px 40px 40px;
+    position: relative;
+    overflow: hidden;
+    padding: 48px 44px 0;
     border-radius: var(--r-2xl);
-    background: var(--navy-800);
+    background:
+      radial-gradient(120% 70% at 100% 0%, rgba(55, 133, 201, 0.28) 0%, rgba(11, 37, 69, 0) 60%),
+      var(--navy-800);
+    color: var(--blue-100);
   }
 
+  /* ---- header ---- */
+
   .process__eyebrow {
-    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--yellow-500);
   }
 
+  .process__eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--yellow-500);
+  }
+
   .process__title {
-    margin-top: 10px;
+    margin-top: 12px;
     font-weight: 800;
     font-size: 34px;
-    line-height: 1.15;
+    line-height: 1.12;
     letter-spacing: -0.02em;
     color: var(--white);
   }
 
   .process__lead {
-    margin-top: 10px;
+    max-width: 560px;
+    margin-top: 12px;
     font-size: 17px;
     line-height: 1.6;
     color: var(--blue-200);
   }
 
-  .process__steps {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0 14px;
-    margin-top: 40px;
+  /* ---- vertical timeline ---- */
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 36px;
     list-style: none;
   }
 
-  .process__step {
+  .timeline__step {
     position: relative;
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    column-gap: 20px;
   }
 
-  /* Dashed connector from each dot to the next */
-  .process__step:not(:last-child)::before {
+  /* Connector from each marker down to the next one */
+  .timeline__step:not(:last-child)::before {
     content: '';
     position: absolute;
-    top: 21px;
-    left: 54px;
-    right: -4px;
-    border-top: 2px dashed rgba(255, 183, 3, 0.75);
+    top: 56px;
+    bottom: -16px;
+    left: 25px;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, rgba(255, 183, 3, 0.85), rgba(255, 183, 3, 0.25));
   }
 
-  .process__dot {
+  .timeline__marker {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     background: var(--yellow-500);
+    box-shadow:
+      0 0 0 6px rgba(255, 183, 3, 0.16),
+      0 10px 24px rgba(0, 0, 0, 0.25);
     font-family: var(--font-title);
     font-weight: 800;
-    font-size: 15px;
+    font-size: 17px;
     color: var(--navy-800);
   }
 
-  .process__step-title {
-    margin-top: 18px;
+  .timeline__panel {
+    padding: 20px 24px 22px;
+    border: 1px solid rgba(150, 198, 245, 0.16);
+    border-radius: var(--r-lg);
+    background: rgba(255, 255, 255, 0.04);
+    transition:
+      background-color var(--t-base) ease,
+      border-color var(--t-base) ease,
+      transform var(--t-base) var(--ease-out);
+  }
+
+  .timeline__step:hover .timeline__panel {
+    border-color: rgba(255, 183, 3, 0.45);
+    background: rgba(255, 255, 255, 0.07);
+    transform: translateX(4px);
+  }
+
+  .timeline__top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .timeline__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--navy-700);
+    color: var(--yellow-500);
+  }
+
+  .timeline__count {
+    font-size: 12px;
     font-weight: 700;
-    font-size: 18px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-300);
+  }
+
+  .timeline__title {
+    margin-top: 14px;
+    font-weight: 700;
+    font-size: 20px;
     line-height: 1.3;
     color: var(--white);
   }
 
-  .process__step-text {
-    margin-top: 8px;
-    font-size: 15px;
-    line-height: 1.55;
+  .timeline__text {
+    margin-top: 6px;
+    font-size: 16px;
+    line-height: 1.65;
     color: var(--blue-200);
+  }
+
+  /* ---- call to action strip ---- */
+
+  .process__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px 24px;
+    margin: 36px -44px 0;
+    padding: 24px 44px;
+    border-top: 1px solid var(--navy-600);
+    background: rgba(6, 24, 47, 0.55);
+  }
+
+  .process__promises {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    list-style: none;
+  }
+
+  .process__promises li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .process__promises :global(svg) {
+    color: var(--yellow-500);
+  }
+
+  .process__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .timeline__step:hover .timeline__panel {
+      transform: none;
+    }
   }
 
   @media (max-width: 768px) {
     .process {
-      padding: 32px 22px;
+      padding: 32px 20px 0;
       border-radius: var(--r-xl);
     }
 
     .process__title {
-      font-size: 25px;
+      font-size: 26px;
     }
 
-    .process__steps {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 24px;
+    .process__lead {
+      font-size: 16px;
+    }
+
+    .timeline {
+      gap: 14px;
       margin-top: 28px;
     }
 
-    .process__step {
-      display: grid;
-      grid-template-columns: 44px minmax(0, 1fr);
-      column-gap: 16px;
+    .timeline__step {
+      grid-template-columns: 40px minmax(0, 1fr);
+      column-gap: 14px;
     }
 
-    .process__step:not(:last-child)::before {
-      top: 52px;
-      left: 21px;
-      right: auto;
-      bottom: -18px;
-      border-top: 0;
-      border-left: 2px dashed rgba(255, 183, 3, 0.75);
+    .timeline__step:not(:last-child)::before {
+      top: 44px;
+      bottom: -14px;
+      left: 19px;
     }
 
-    .process__dot {
-      grid-row: 1 / span 2;
+    .timeline__marker {
+      width: 40px;
+      height: 40px;
+      font-size: 14px;
+      box-shadow: 0 0 0 4px rgba(255, 183, 3, 0.16);
     }
 
-    .process__step-title {
-      margin-top: 10px;
+    .timeline__panel {
+      padding: 16px 16px 18px;
+    }
+
+    .timeline__icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .timeline__title {
+      margin-top: 12px;
+      font-size: 18px;
+    }
+
+    .timeline__text {
+      font-size: 15.5px;
+    }
+
+    .process__cta {
+      margin: 28px -20px 0;
+      padding: 22px 20px;
+    }
+
+    .process__buttons,
+    .process__buttons .btn {
+      width: 100%;
     }
   }
 </style>
