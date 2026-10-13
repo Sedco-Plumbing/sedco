@@ -118,14 +118,14 @@ export const site = {
      * when the policy text changes — never derive it from the build date, or
      * every deploy tells visitors the policy was revised when it was not.
      */
-    privacyPolicyUpdated: 'July 2026',
+    privacyPolicyUpdated: 'October 2026',
     /**
      * Set true once the client has reviewed and approved the privacy policy
      * (with legal advice). `npm run verify` warns while this is false: the text
      * describes what the website collects, but only the client can confirm how
      * the business handles that data off the website.
      */
-    privacyPolicyApproved: false,
+    privacyPolicyApproved: true,
   },
 
   integrations: {

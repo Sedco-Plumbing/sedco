@@ -11,7 +11,7 @@
   "estimatePolicy": "Free estimates, no trip charge",
   "postalCode": "[ZIP]",
   "profiles": {
-    "google": "[GOOGLE BUSINESS PROFILE URL]",
+    "google": "https://maps.app.goo.gl/t2xymWfQC2dsq2W2A",
     "googleReview": "[GOOGLE REVIEW LINK]",
     "yelp": "[YELP URL]",
     "facebook": "[FACEBOOK URL]"
