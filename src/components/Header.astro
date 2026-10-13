@@ -244,17 +244,20 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
       color var(--t-fast) ease;
   }
 
+  /* The current page's item: navy text, slightly bolder. */
+  .nav__item[aria-current='page'] {
+    font-weight: 600;
+    color: var(--navy-800);
+  }
+
   /* Hover, keyboard focus and an open menu: deep navy with yellow text,
-     matching the mega-menu and dropdown rows. */
+     matching the mega-menu and dropdown rows. Declared after the current-page
+     rule so it also wins on the current item. */
   .nav__item:hover,
   .nav__item:focus-visible,
   .nav__item[aria-expanded='true'] {
     background: var(--navy-800);
     color: var(--yellow-500);
-  }
-
-  .nav__item[aria-current='page'] {
-    color: var(--blue-700);
   }
 
   .nav__item :global(.nav__chev) {
