@@ -1,0 +1,357 @@
+---
+/**
+ * The "contact desk": one white panel with the request form on the left and a
+ * navy contact-details column on the right (phone + Call now, email, hours,
+ * service area, licence). Used by the Contact page and by ContactSection at
+ * the foot of the other pages, so every contact block on the site matches.
+ *
+ * On phones (≤ 768px), with `mobileForm` off, the inline form is replaced by a
+ * Request Service button that opens the slide-in form (RequestDrawer). The
+ * Contact page keeps the form inline.
+ */
+import { site, paths } from '@config/site';
+import { phoneHref, emailHref, isPlaceholder } from '@lib/tokens';
+import Icon from '@components/ui/Icon.astro';
+import RequestForm from './RequestForm.astro';
+
+interface Props {
+  /** Unique prefix for the form's field ids and the headings' ids */
+  id: string;
+  /** Reported to GTM as form_location */
+  source: string;
+  /** Pre-selected service (catalog name) */
+  service?: string;
+  title?: string;
+  lead?: string;
+  /** h2 when the desk is a top-level section, h3 under a section heading */
+  headingLevel?: 'h2' | 'h3';
+  /** Keep the inline form on phones (Contact page) instead of the drawer button */
+  mobileForm?: boolean;
+}
+
+const {
+  id,
+  source,
+  service,
+  title = 'Send us a request',
+  lead = "Tell us what's going on and we'll call you back within 30 minutes, Monday to Saturday.",
+  headingLevel = 'h2',
+  mobileForm = false,
+} = Astro.props;
+
+const Heading = headingLevel;
+const phone = site.business.phone;
+const tel = phoneHref();
+const email = site.business.email;
+const hasEmail = !isPlaceholder(email) && email.length > 0;
+const detailsHeadingId = `${id}-details-heading`;
+---
+
+<div class:list={['desk-panel', !mobileForm && 'desk-panel--drawer']}>
+  <div class="desk-panel__form">
+    <div class="desk-panel__form-head">
+      <Heading class="desk-panel__title">{title}</Heading>
+      <p class="desk-panel__lead">{lead}</p>
+      <div class="chip-row">
+        <span class="chip"><Icon name="check" size={16} strokeWidth={2.75} />Free Estimates</span>
+        <span class="chip"><Icon name="check" size={16} strokeWidth={2.75} />No Trip Charge</span>
+      </div>
+    </div>
+    <div class="desk-panel__inline-form">
+      <RequestForm id={`${id}-form`} source={source} service={service} />
+    </div>
+    {
+      !mobileForm && (
+        <a class="desk-panel__request" href={`${paths.contact}#request`} data-open-request data-service={service}>
+          <Icon name="free-estimate" size={22} />
+          Request Service
+        </a>
+      )
+    }
+  </div>
+
+  <aside class="desk-panel__details on-navy" aria-labelledby={detailsHeadingId}>
+    <Heading class="details__title" id={detailsHeadingId}>Contact details</Heading>
+
+    <div class="details__phone">
+      <p class="details__label">Phone</p>
+      <a class="details__number" href={tel}>{phone}</a>
+      <p class="details__note">A real person picks up, at any hour Monday to Saturday.</p>
+      <a class="btn btn--call btn--md details__call" href={tel}><Icon name="phone" size={18} />Call now</a>
+    </div>
+
+    <dl class="details__list">
+      {
+        hasEmail && (
+          <div class="details__row">
+            <dt><Icon name="mail" size={18} />Email</dt>
+            <dd><a href={emailHref()}>{email}</a></dd>
+          </div>
+        )
+      }
+      <div class="details__row">
+        <dt><Icon name="clock" size={18} />Hours</dt>
+        <dd>
+          <table class="hours">
+            <tbody>
+              <tr><th scope="row">Monday – Saturday</th><td>Open 24 hours</td></tr>
+              <tr><th scope="row">Sunday</th><td>Closed</td></tr>
+            </tbody>
+          </table>
+        </dd>
+      </div>
+      <div class="details__row">
+        <dt><Icon name="map-pin" size={18} />Service area</dt>
+        <dd>
+          Based in {site.business.locality}, {site.business.region}, serving homes and businesses across{' '}
+          <a href={paths.areasHub}>{site.business.county}</a>. We come to you; there's no storefront to visit.
+        </dd>
+      </div>
+      <div class="details__row">
+        <dt><Icon name="licensed" size={18} />Licence</dt>
+        <dd>Licensed CA {site.business.licenseClass} plumbing contractor, with a 30-day guarantee on all work.</dd>
+      </div>
+    </dl>
+  </aside>
+</div>
+
+<style>
+  .desk-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-2xl);
+    background: var(--white);
+    box-shadow: var(--shadow-menu);
+    color: var(--ink);
+  }
+
+  /* ---- form column ---- */
+
+  .desk-panel__form {
+    padding: 44px 48px 48px;
+  }
+
+  .desk-panel__form-head {
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .desk-panel__title {
+    font-weight: 800;
+    font-size: 34px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--navy-800);
+  }
+
+  .desk-panel__lead {
+    margin: 8px 0 16px;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--slate-600);
+  }
+
+  .desk-panel__request {
+    display: none;
+  }
+
+  /* ---- details column ---- */
+
+  .desk-panel__details {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 44px 40px;
+    background: var(--navy-800);
+    color: var(--blue-100);
+  }
+
+  .details__title {
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--white);
+  }
+
+  .details__label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-300);
+  }
+
+  .details__number {
+    display: inline-block;
+    margin-top: 6px;
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 34px;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .details__number:hover {
+    color: var(--yellow-500);
+  }
+
+  .details__note {
+    margin-top: 4px;
+    font-size: 15px;
+    color: var(--blue-200);
+  }
+
+  .details__call {
+    width: 100%;
+    margin-top: 18px;
+  }
+
+  .details__list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border-top: 1px solid var(--navy-600);
+  }
+
+  .details__row {
+    display: grid;
+    grid-template-columns: 128px minmax(0, 1fr);
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--navy-600);
+  }
+
+  .details__row dt {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .details__row dt :global(svg) {
+    flex: none;
+    margin-top: 1px;
+    color: var(--yellow-500);
+  }
+
+  .details__row dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--blue-100);
+  }
+
+  .details__row a {
+    color: var(--white);
+    word-break: break-word;
+  }
+
+  .details__row a:hover {
+    color: var(--yellow-500);
+  }
+
+  .hours {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .hours th,
+  .hours td {
+    padding: 0 0 4px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 400;
+    vertical-align: top;
+  }
+
+  .hours th {
+    color: var(--blue-100);
+  }
+
+  .hours td {
+    text-align: right;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  /* ---- reflow ---- */
+
+  @media (max-width: 1099px) {
+    .desk-panel {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .desk-panel__details {
+      padding: 36px 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .desk-panel {
+      border-radius: var(--r-xl);
+      box-shadow: var(--shadow-card);
+    }
+
+    .desk-panel__form {
+      padding: 28px 20px;
+    }
+
+    .desk-panel__title {
+      font-size: 26px;
+    }
+
+    .desk-panel__details {
+      padding: 28px 20px;
+    }
+
+    .details__number {
+      font-size: 30px;
+    }
+
+    .details__row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 6px;
+    }
+
+    /* Phones: the form opens in the slide-in drawer instead. */
+    .desk-panel--drawer .desk-panel__inline-form {
+      display: none;
+    }
+
+    .desk-panel--drawer .desk-panel__form-head {
+      margin-bottom: 20px;
+    }
+
+    .desk-panel--drawer .desk-panel__request {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 58px;
+      border-radius: var(--r-md);
+      background: var(--navy-800);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--yellow-500);
+      text-decoration: none;
+    }
+
+    .desk-panel--drawer .desk-panel__request:hover,
+    .desk-panel--drawer .desk-panel__request:active {
+      background: var(--navy-700);
+      color: var(--yellow-500);
+    }
+
+    .desk-panel__request:focus-visible {
+      outline: 3px solid var(--blue-600);
+      outline-offset: 3px;
+    }
+  }
+</style>

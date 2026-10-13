@@ -1,20 +1,20 @@
 ---
 /**
  * CONTACT — a single "contact desk": compact hero with three quick facts, then
- * one panel that overlaps it, holding the request form (left) and a navy
- * contact-details column (right: phone, email, hours, area, licence). Then what happens after a request, the FAQ
- * and the service-area map.
+ * the ContactDesk panel overlapping it (request form left, navy contact
+ * details right; the same panel ContactSection uses on other pages). Then what
+ * happens after a request, the FAQ and the service-area map.
  *
  * The form panel carries id="request", the no-JS target of every "Request
  * Service" link on the site.
  */
 import { site, paths } from '@config/site';
 import { commonFaqs } from '@config/faqs';
-import { phoneHref, emailHref, isPlaceholder } from '@lib/tokens';
+import { phoneHref } from '@lib/tokens';
 import { PAGE_HERO_SIZES, HERO_PHOTO_MEDIA } from '@lib/media';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PageHero from '@components/PageHero.astro';
-import RequestForm from '@components/RequestForm.astro';
+import ContactDesk from '@components/ContactDesk.astro';
 import Faq from '@components/Faq.astro';
 import ServiceAreasSection from '@components/ServiceAreasSection.astro';
 import Icon from '@components/ui/Icon.astro';
@@ -28,8 +28,6 @@ const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Contact' }];
 
 const phone = site.business.phone;
 const tel = phoneHref();
-const email = site.business.email;
-const hasEmail = !isPlaceholder(email) && email.length > 0;
 
 const steps = [
   {
@@ -78,65 +76,7 @@ const steps = [
       <Icon name="phone" size={22} />Call {phone}
     </a>
 
-    <div class="desk__panel">
-      <div class="desk__form">
-        <div class="desk__form-head">
-          <h2 class="desk__title">Send us a request</h2>
-          <p class="desk__lead">Tell us what's going on and we'll call you back within 30 minutes, Monday to Saturday.</p>
-          <div class="chip-row">
-            <span class="chip"><Icon name="check" size={16} strokeWidth={2.75} />Free Estimates</span>
-            <span class="chip"><Icon name="check" size={16} strokeWidth={2.75} />No Trip Charge</span>
-          </div>
-        </div>
-        <RequestForm id="contact-form" source="contact-page" />
-      </div>
-
-      <aside class="desk__details on-navy" aria-labelledby="details-heading">
-        <h2 class="details__title" id="details-heading">Contact details</h2>
-
-        <div class="details__phone">
-          <p class="details__label">Phone</p>
-          <a class="details__number" href={tel}>{phone}</a>
-          <p class="details__note">A real person picks up, at any hour Monday to Saturday.</p>
-          <div class="details__actions">
-            <a class="btn btn--call btn--md" href={tel}><Icon name="phone" size={18} />Call now</a>
-          </div>
-        </div>
-
-        <dl class="details__list">
-          {
-            hasEmail && (
-              <div class="details__row">
-                <dt><Icon name="mail" size={18} />Email</dt>
-                <dd><a href={emailHref()}>{email}</a></dd>
-              </div>
-            )
-          }
-          <div class="details__row">
-            <dt><Icon name="clock" size={18} />Hours</dt>
-            <dd>
-              <table class="hours">
-                <tbody>
-                  <tr><th scope="row">Monday – Saturday</th><td>Open 24 hours</td></tr>
-                  <tr><th scope="row">Sunday</th><td>Closed</td></tr>
-                </tbody>
-              </table>
-            </dd>
-          </div>
-          <div class="details__row">
-            <dt><Icon name="map-pin" size={18} />Service area</dt>
-            <dd>
-              Based in {site.business.locality}, {site.business.region}, serving homes and businesses across{' '}
-              <a href={paths.areasHub}>{site.business.county}</a>. We come to you; there's no storefront to visit.
-            </dd>
-          </div>
-          <div class="details__row">
-            <dt><Icon name="licensed" size={18} />Licence</dt>
-            <dd>Licensed CA {site.business.licenseClass} plumbing contractor, with a 30-day guarantee on all work.</dd>
-          </div>
-        </dl>
-      </aside>
-    </div>
+    <ContactDesk id="contact" source="contact-page" mobileForm />
   </section>
 
   <section class="next" aria-labelledby="next-heading">
@@ -204,169 +144,6 @@ const steps = [
     display: none;
   }
 
-  .desk__panel {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: var(--r-2xl);
-    background: var(--white);
-    box-shadow: var(--shadow-menu);
-  }
-
-  .desk__form {
-    padding: 44px 48px 48px;
-  }
-
-  .desk__form-head {
-    margin-bottom: 28px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--slate-200);
-  }
-
-  .desk__title {
-    font-weight: 800;
-    font-size: 34px;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-  }
-
-  .desk__lead {
-    margin: 8px 0 16px;
-    font-size: 16px;
-    line-height: 1.55;
-    color: var(--slate-600);
-  }
-
-  /* ---- details column ---- */
-
-  .desk__details {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    padding: 44px 40px;
-    background: var(--navy-800);
-    color: var(--blue-100);
-  }
-
-  .details__title {
-    font-weight: 800;
-    font-size: 22px;
-    color: var(--white);
-  }
-
-  .details__label {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--blue-300);
-  }
-
-  .details__number {
-    display: inline-block;
-    margin-top: 6px;
-    font-family: var(--font-title);
-    font-weight: 800;
-    font-size: 34px;
-    letter-spacing: -0.01em;
-    color: var(--white);
-    text-decoration: none;
-  }
-
-  .details__number:hover {
-    color: var(--yellow-500);
-  }
-
-  .details__note {
-    margin-top: 4px;
-    font-size: 15px;
-    color: var(--blue-200);
-  }
-
-  .details__actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 18px;
-  }
-
-  .details__actions .btn {
-    width: 100%;
-  }
-
-  .details__list {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    border-top: 1px solid var(--navy-600);
-  }
-
-  .details__row {
-    display: grid;
-    grid-template-columns: 128px minmax(0, 1fr);
-    gap: 12px;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--navy-600);
-  }
-
-  .details__row dt {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--white);
-  }
-
-  .details__row dt :global(svg) {
-    flex: none;
-    margin-top: 1px;
-    color: var(--yellow-500);
-  }
-
-  .details__row dd {
-    margin: 0;
-    font-size: 15px;
-    line-height: 1.55;
-    color: var(--blue-100);
-  }
-
-  .details__row a {
-    color: var(--white);
-    word-break: break-word;
-  }
-
-  .details__row a:hover {
-    color: var(--yellow-500);
-  }
-
-  .hours {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .hours th,
-  .hours td {
-    padding: 0 0 4px;
-    text-align: left;
-    font-size: 15px;
-    font-weight: 400;
-    vertical-align: top;
-  }
-
-  .hours th {
-    color: var(--blue-100);
-  }
-
-  .hours td {
-    text-align: right;
-    font-weight: 600;
-    color: var(--white);
-  }
-
-
-
-
   /* ---- what happens next ---- */
 
   .next {
@@ -424,16 +201,6 @@ const steps = [
 
   /* ---- reflow ---- */
 
-  @media (max-width: 1099px) {
-    .desk__panel {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .desk__details {
-      padding: 36px 40px;
-    }
-  }
-
   @media (max-width: 959px) {
     .next__steps {
       grid-template-columns: minmax(0, 1fr);
@@ -455,32 +222,6 @@ const steps = [
       display: flex;
       width: 100%;
       margin-bottom: 16px;
-    }
-
-    .desk__panel {
-      border-radius: var(--r-xl);
-      box-shadow: var(--shadow-card);
-    }
-
-    .desk__form {
-      padding: 28px 20px;
-    }
-
-    .desk__title {
-      font-size: 26px;
-    }
-
-    .desk__details {
-      padding: 28px 20px;
-    }
-
-    .details__number {
-      font-size: 30px;
-    }
-
-    .details__row {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 6px;
     }
 
     .next {
