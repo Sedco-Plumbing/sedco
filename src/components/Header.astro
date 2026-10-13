@@ -18,6 +18,7 @@ import { phoneHref } from '@lib/tokens';
 import Icon from '@components/ui/Icon.astro';
 import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
 import HeaderSearch from './HeaderSearch.astro';
+import MobileMenu from './MobileMenu.astro';
 
 const phone = site.business.phone;
 const tel = phoneHref();
@@ -107,13 +108,12 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
       <button
         type="button"
         class="icon-btn icon-btn--menu"
-        aria-label="Menu"
+        aria-label="Open menu"
         aria-expanded="false"
         aria-controls="mobile-menu"
         data-mobile-toggle
       >
-        <Icon name="menu" size={22} class="icon-btn__open" />
-        <Icon name="close" size={22} class="icon-btn__close" />
+        <Icon name="menu" size={24} strokeWidth={2.4} />
       </button>
     </div>
   </div>
@@ -158,21 +158,7 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
     </div>
   </div>
 
-  <nav id="mobile-menu" class="mobile-menu" aria-label="Main" data-mobile-menu>
-    <ul>
-      <li><a href={paths.home}>Home</a></li>
-      <li><a href={paths.servicesHub}>Services</a></li>
-      <li><a href={paths.areasHub}>Service Areas</a></li>
-      <li><a href={paths.reviews}>Reviews</a></li>
-      <li><a href={paths.about}>About</a></li>
-      <li><a href={paths.blog}>Blog</a></li>
-      <li><a href={paths.contact}>Contact</a></li>
-    </ul>
-    <div class="mobile-menu__ctas">
-      <a class="btn btn--call btn--block" href={tel}><Icon name="phone" size={20} />Call {phone}</a>
-      <a class="btn btn--request btn--block" href={`${paths.contact}#request`} data-open-request>Request Service</a>
-    </div>
-  </nav>
+  <MobileMenu />
 </header>
 
 <style>
@@ -507,8 +493,7 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
 
   /* ---- mobile ---- */
 
-  .mobile-ctas,
-  .mobile-menu {
+  .mobile-ctas {
     display: none;
   }
 
@@ -530,23 +515,19 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
     background: var(--yellow-700);
   }
 
+  /* Deep navy with a yellow icon, so the menu button stands out. */
   .icon-btn--menu {
-    border: 1.5px solid var(--blue-200);
-    background: var(--white);
+    border: 0;
+    background: var(--navy-800);
+    color: var(--yellow-500);
+    box-shadow: 0 6px 16px rgba(11, 37, 69, 0.25);
     cursor: pointer;
+    transition: background-color var(--t-fast) ease;
   }
 
+  .icon-btn--menu:hover,
   .icon-btn--menu:active {
-    background: var(--blue-50);
-  }
-
-  .icon-btn :global(.icon-btn__close),
-  .icon-btn[aria-expanded='true'] :global(.icon-btn__open) {
-    display: none;
-  }
-
-  .icon-btn[aria-expanded='true'] :global(.icon-btn__close) {
-    display: block;
+    background: var(--navy-700);
   }
 
   /* With the logo held on the container line, the bar gets tighter as the
@@ -604,51 +585,6 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
       gap: 8px;
     }
 
-    .mobile-menu[data-open] {
-      display: block;
-      max-height: calc(100dvh - var(--header-h));
-      overflow-y: auto;
-      padding: 0 20px 20px;
-      border-top: 1px solid var(--blue-200);
-      background: var(--page);
-    }
-
-    .mobile-menu ul {
-      list-style: none;
-    }
-
-    .mobile-menu li + li {
-      border-top: 1px solid var(--blue-100);
-    }
-
-    .mobile-menu li a {
-      display: flex;
-      align-items: center;
-      height: 52px;
-      margin: 0 -12px;
-      padding: 0 12px;
-      border-radius: 10px;
-      font-size: 17px;
-      font-weight: 500;
-      color: var(--navy-800);
-      text-decoration: none;
-      transition:
-        background-color var(--t-fast) ease,
-        color var(--t-fast) ease;
-    }
-
-    .mobile-menu li a:hover,
-    .mobile-menu li a:active {
-      background: var(--navy-800);
-      color: var(--yellow-500);
-    }
-
-    .mobile-menu__ctas {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 12px;
-    }
   }
 
   /* Small phones: the sticky bottom bar already has Call, so the header
@@ -753,10 +689,6 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
         closeAll();
         triggers[openName]?.focus();
       }
-      if (mobileMenu?.hasAttribute('data-open')) {
-        setMobile(false);
-        mobileToggle?.focus();
-      }
     });
 
     // Close when focus or a click moves outside the header.
@@ -768,32 +700,9 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
       if (next && !header.contains(next)) closeAll();
     });
 
-    // ---- mobile menu ----
-    const mobileToggle = header.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
-    const mobileMenu = header.querySelector<HTMLElement>('[data-mobile-menu]');
-    const setMobile = (openMenu: boolean) => {
-      mobileMenu?.toggleAttribute('data-open', openMenu);
-      mobileToggle?.setAttribute('aria-expanded', String(openMenu));
-      mobileToggle?.setAttribute('aria-label', openMenu ? 'Close menu' : 'Menu');
-    };
-    mobileToggle?.addEventListener('click', () => {
-      const opening = !mobileMenu?.hasAttribute('data-open');
-      if (opening) document.dispatchEvent(new CustomEvent('sedco:menu-open'));
-      setMobile(opening);
-    });
-
     // Opening the service search closes every menu.
-    document.addEventListener('sedco:search-open', () => {
-      closeAll();
-      setMobile(false);
-    });
-    mobileMenu?.querySelectorAll('a').forEach((link) =>
-      link.addEventListener('click', () => setMobile(false)),
-    );
+    document.addEventListener('sedco:search-open', closeAll);
 
-    desktop.addEventListener('change', () => {
-      closeAll();
-      setMobile(false);
-    });
+    desktop.addEventListener('change', closeAll);
   }
 </script>

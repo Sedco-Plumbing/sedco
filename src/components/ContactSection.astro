@@ -2,12 +2,13 @@
 /**
  * "Talk to a Plumber" contact section at the foot of most pages.
  * Desktop: navy rounded panel, intro + call card + hours on the left, the
- * request form card on the right. Mobile: light panel with a large call
- * button, a text button and an urgent-leak note above the form (as designed).
+ * request form card on the right. Mobile: light panel with a large Call
+ * button and a Request Service button that opens the slide-in form (the
+ * inline form is hidden on phones), plus an urgent-leak note.
  *
- * Its id (`request`) is the no-JS target of every "Request Service" link.
+ * (The no-JS target of "Request Service" links is the Contact page form.)
  */
-import { site } from '@config/site';
+import { site, paths } from '@config/site';
 import { phoneHref } from '@lib/tokens';
 import Icon from '@components/ui/Icon.astro';
 import RequestForm from './RequestForm.astro';
@@ -25,7 +26,7 @@ interface Props {
 
 const {
   heading = 'Talk to a Plumber in El Cajon Today',
-  intro = "The quickest way to reach us is to call {phone}, and someone will pick up at any hour from Monday to Saturday. If you'd rather write, fill in the short form below and we'll call you back within 30 minutes to talk about the problem and arrange a visit.",
+  intro = "The quickest way to reach us is to call {phone}, and someone will pick up at any hour from Monday to Saturday. If you'd rather write, send us a short request and we'll call you back within 30 minutes to talk about the problem and arrange a visit.",
   service,
   formTitle = 'Request Service',
   id = 'request',
@@ -33,7 +34,6 @@ const {
 
 const phone = site.business.phone;
 const tel = phoneHref();
-const sms = `sms:${tel.replace('tel:', '')}`;
 const [introBefore, introAfter = ''] = intro.split('{phone}');
 const headingId = `${id}-heading`;
 ---
@@ -55,9 +55,8 @@ const headingId = `${id}-heading`;
           </span>
         </a>
         <a class="call-mobile" href={tel}><Icon name="phone" size={26} />Call {phone}</a>
-        <a class="text-mobile" href={sms}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-          Text Us at {phone}
+        <a class="request-mobile" href={`${paths.contact}#request`} data-open-request data-service={service}>
+          <Icon name="free-estimate" size={22} />Request Service
         </a>
         <div class="urgent-mobile" role="note">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4M12 17h.01"></path></svg>
@@ -195,7 +194,7 @@ const headingId = `${id}-heading`;
   }
 
   .call-mobile,
-  .text-mobile,
+  .request-mobile,
   .urgent-mobile {
     display: none;
   }
@@ -350,20 +349,24 @@ const headingId = `${id}-heading`;
       background: var(--yellow-700);
     }
 
-    .text-mobile {
+    .request-mobile {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      height: 56px;
+      height: 60px;
       margin: 10px -8px 0;
-      border: 2px solid var(--navy-800);
-      border-radius: 14px;
-      background: var(--white);
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--navy-800);
+      border-radius: var(--r-lg);
+      background: var(--navy-800);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--yellow-500);
       text-decoration: none;
+    }
+
+    .request-mobile:active {
+      background: var(--navy-700);
+      color: var(--yellow-500);
     }
 
     .urgent-mobile {
@@ -411,14 +414,8 @@ const headingId = `${id}-heading`;
       color: var(--blue-600);
     }
 
+    /* On phones the form opens in the slide-in drawer instead. */
     .form-card {
-      padding: 24px 20px;
-      border: 1px solid var(--blue-200);
-      border-radius: var(--r-lg);
-      box-shadow: none;
-    }
-
-    .form-card__head {
       display: none;
     }
   }

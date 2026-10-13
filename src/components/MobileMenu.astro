@@ -1,0 +1,400 @@
+---
+/**
+ * Mobile / tablet menu (≤ 1279px): a panel that slides in from the right.
+ * A native <dialog> opened with showModal(), so the browser handles the focus
+ * trap, Escape and the inert page behind it. Services and Service Areas
+ * expand in place (native <details>); the footer holds the hours and the
+ * Call / Request Service buttons.
+ *
+ * Opened by [data-mobile-toggle] in the header. Closed while it is closed,
+ * the dialog is display:none, so its lazy thumbnails only load once opened.
+ */
+import { site, paths } from '@config/site';
+import { catalogServices, serviceHref } from '@config/catalog';
+import { phoneHref } from '@lib/tokens';
+import Icon from '@components/ui/Icon.astro';
+import ResponsiveImage from '@components/ui/ResponsiveImage.astro';
+
+const current = Astro.url.pathname;
+const isCurrent = (href: string) => current === href || (href !== '/' && current.startsWith(href));
+const here = (href: string) => (isCurrent(href) ? 'page' : undefined);
+---
+
+<dialog id="mobile-menu" class="mmenu" aria-label="Menu" data-mobile-menu>
+  <div class="mmenu__head">
+    <a class="mmenu__brand" href={paths.home}>
+      <img src="/images/brand/sedco-plumbing-logo-84w.webp" alt="" width="40" height="40" />
+      <span>{site.business.name}</span>
+    </a>
+    <button type="button" class="mmenu__close" aria-label="Close menu" data-mobile-close>
+      <Icon name="close" size={22} />
+    </button>
+  </div>
+
+  <nav class="mmenu__nav" aria-label="Main">
+    <ul class="mmenu__list">
+      <li><a class="mmenu__link" href={paths.home} aria-current={current === paths.home ? 'page' : undefined}>Home</a></li>
+
+      <li>
+        <details class="mmenu__group" open={isCurrent(paths.servicesHub)}>
+          <summary class="mmenu__link">
+            Services<Icon name="chevron-down" size={18} class="mmenu__chev" />
+          </summary>
+          <ul class="mmenu__sub">
+            {
+              catalogServices.map((service) => (
+                <li>
+                  <a href={serviceHref(service)} aria-current={here(serviceHref(service))}>
+                    <span class="mmenu__thumb" aria-hidden="true">
+                      <ResponsiveImage name={service.image} alt="" sizes="40px" class="mmenu__img" />
+                    </span>
+                    {service.name}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+          <a class="mmenu__all" href={paths.servicesHub}>View all services<Icon name="arrow-right" size={16} /></a>
+        </details>
+      </li>
+
+      <li>
+        <details class="mmenu__group" open={isCurrent(paths.areasHub)}>
+          <summary class="mmenu__link">
+            Service Areas<Icon name="chevron-down" size={18} class="mmenu__chev" />
+          </summary>
+          <ul class="mmenu__sub mmenu__sub--towns">
+            {
+              site.cities.map((city) => (
+                <li>
+                  <a href={paths.city(city.slug)} aria-current={here(paths.city(city.slug))}>
+                    <Icon name="map-pin" size={16} />
+                    {city.name}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+          <a class="mmenu__all" href={paths.areasHub}>See all service areas<Icon name="arrow-right" size={16} /></a>
+        </details>
+      </li>
+
+      <li><a class="mmenu__link" href={paths.reviews} aria-current={here(paths.reviews)}>Reviews</a></li>
+      <li><a class="mmenu__link" href={paths.about} aria-current={here(paths.about)}>About</a></li>
+      <li><a class="mmenu__link" href={paths.blog} aria-current={here(paths.blog)}>Blog</a></li>
+      <li><a class="mmenu__link" href={paths.contact} aria-current={here(paths.contact)}>Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="mmenu__foot">
+    <p class="mmenu__hours"><Icon name="clock" size={18} />Open 24 hours, Monday to Saturday</p>
+    <a class="btn btn--call btn--block" href={phoneHref()}><Icon name="phone" size={20} />Call {site.business.phone}</a>
+    <a class="btn btn--block mmenu__request" href={`${paths.contact}#request`} data-open-request>
+      <Icon name="free-estimate" size={20} />Request Service
+    </a>
+  </div>
+</dialog>
+
+<style>
+  .mmenu {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(380px, 88vw);
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--white);
+    box-shadow: var(--shadow-drawer);
+    color: var(--ink);
+    overflow: hidden;
+    transform: translateX(100%);
+    transition:
+      transform 360ms var(--ease-drawer),
+      overlay 360ms allow-discrete,
+      display 360ms allow-discrete;
+  }
+
+  .mmenu[open] {
+    display: flex;
+    flex-direction: column;
+    transform: translateX(0);
+  }
+
+  @starting-style {
+    .mmenu[open] {
+      transform: translateX(100%);
+    }
+  }
+
+  .mmenu::backdrop {
+    background: rgba(6, 24, 48, 0);
+    transition:
+      background-color 300ms ease,
+      overlay 300ms allow-discrete,
+      display 300ms allow-discrete;
+  }
+
+  .mmenu[open]::backdrop {
+    background: rgba(6, 24, 48, 0.55);
+  }
+
+  @starting-style {
+    .mmenu[open]::backdrop {
+      background: rgba(6, 24, 48, 0);
+    }
+  }
+
+  /* ---- head ---- */
+
+  .mmenu__head {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    height: var(--header-h);
+    padding: 0 16px 0 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .mmenu__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 19px;
+    letter-spacing: -0.02em;
+    color: var(--navy-800);
+    text-decoration: none;
+  }
+
+  .mmenu__brand img {
+    border-radius: var(--r-sm);
+  }
+
+  .mmenu__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: var(--r-md);
+    background: var(--navy-800);
+    color: var(--yellow-500);
+    cursor: pointer;
+  }
+
+  /* ---- links ---- */
+
+  .mmenu__nav {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 8px 16px 16px;
+  }
+
+  .mmenu__list {
+    list-style: none;
+  }
+
+  .mmenu__list > li + li {
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .mmenu__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 54px;
+    padding: 0 12px;
+    border-radius: var(--r-md);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy-800);
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color var(--t-fast) ease,
+      color var(--t-fast) ease;
+  }
+
+  .mmenu__link:hover,
+  .mmenu__link:active,
+  .mmenu__link[aria-current] {
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  .mmenu__link :global(.mmenu__chev) {
+    transition: transform 200ms ease;
+  }
+
+  .mmenu__group[open] > .mmenu__link :global(.mmenu__chev) {
+    transform: rotate(180deg);
+  }
+
+  .mmenu__sub {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 0 4px;
+    list-style: none;
+  }
+
+  .mmenu__sub--towns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mmenu__sub a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 15.5px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--slate-700);
+    text-decoration: none;
+  }
+
+  .mmenu__sub--towns a {
+    gap: 8px;
+  }
+
+  .mmenu__sub--towns :global(svg) {
+    flex: none;
+    color: var(--blue-600);
+  }
+
+  .mmenu__sub a:hover,
+  .mmenu__sub a:active,
+  .mmenu__sub a[aria-current] {
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  .mmenu__sub a:hover :global(svg),
+  .mmenu__sub a[aria-current] :global(svg) {
+    color: var(--yellow-500);
+  }
+
+  .mmenu__thumb {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: var(--navy-800);
+  }
+
+  .mmenu__thumb :global(.mmenu__img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mmenu__all {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    margin-bottom: 8px;
+    padding: 0 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--blue-600);
+    text-decoration: none;
+  }
+
+  /* ---- foot ---- */
+
+  .mmenu__foot {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 20px calc(20px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    background: var(--sky-50);
+  }
+
+  .mmenu__hours {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--slate-700);
+  }
+
+  .mmenu__hours :global(svg) {
+    color: var(--blue-600);
+  }
+
+  .mmenu__foot .btn {
+    height: 54px;
+    font-size: 17px;
+  }
+
+  .mmenu__request {
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  .mmenu__request:hover {
+    background: var(--navy-700);
+    color: var(--yellow-500);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mmenu,
+    .mmenu[open] {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const menu = document.querySelector<HTMLDialogElement>('[data-mobile-menu]');
+  const toggles = document.querySelectorAll<HTMLButtonElement>('[data-mobile-toggle]');
+
+  if (menu) {
+    const setExpanded = (open: boolean) =>
+      toggles.forEach((t) => t.setAttribute('aria-expanded', String(open)));
+
+    toggles.forEach((toggle) =>
+      toggle.addEventListener('click', () => {
+        document.dispatchEvent(new CustomEvent('sedco:menu-open'));
+        menu.showModal();
+        setExpanded(true);
+      }),
+    );
+
+    menu.addEventListener('close', () => {
+      setExpanded(false);
+      document.documentElement.style.overflow = '';
+    });
+    menu.addEventListener('toggle', () => {
+      if (menu.open) document.documentElement.style.overflow = 'hidden';
+    });
+
+    menu.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      // The dialog itself is only the click target on its backdrop.
+      if (target === menu || target.closest('[data-mobile-close]') || target.closest('a')) menu.close();
+    });
+
+    // Back on a desktop-width screen, the full nav takes over.
+    window.matchMedia('(min-width: 1280px)').addEventListener('change', (event) => {
+      if (event.matches && menu.open) menu.close();
+    });
+  }
+</script>
