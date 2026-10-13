@@ -1,4 +1,4 @@
-import { defineMarkdocConfig, component } from '@astrojs/markdoc/config';
+import { defineMarkdocConfig, component, nodes } from '@astrojs/markdoc/config';
 
 /**
  * Markdoc config for Keystatic-edited blog bodies.
@@ -9,6 +9,11 @@ import { defineMarkdocConfig, component } from '@astrojs/markdoc/config';
  * SEO structure.
  */
 export default defineMarkdocConfig({
+  nodes: {
+    // Render the post body without Markdoc's default <article> wrapper: the
+    // page template already puts the whole post inside an <article>.
+    document: { ...nodes.document, render: null },
+  },
   tags: {
     /**
      * {% note %}...{% /note %} — a visible editorial callout, used for

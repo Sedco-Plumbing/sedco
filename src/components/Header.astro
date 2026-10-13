@@ -656,6 +656,14 @@ const isCurrent = (href: string) => current === href || (href !== '/' && current
     }
   }
 
+  /* Small phones: the sticky bottom bar already has Call, so the header
+     keeps the logo, search and menu. */
+  @media (max-width: 420px) {
+    .icon-btn--call {
+      display: none;
+    }
+  }
+
   @media (max-width: 768px) {
     .brand {
       gap: 10px;

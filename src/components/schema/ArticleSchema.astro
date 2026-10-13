@@ -14,10 +14,13 @@ interface Props {
   published: Date;
   updated?: Date;
   author: string;
+  /** Absolute image URL (Google requires an image for article rich results) */
   image?: string;
+  section?: string;
+  wordCount?: number;
 }
 
-const { headline, description, path, published, updated, author, image } = Astro.props;
+const { headline, description, path, published, updated, author, image, section, wordCount } = Astro.props;
 
 const data: Record<string, unknown> = {
   '@context': 'https://schema.org',
@@ -26,13 +29,16 @@ const data: Record<string, unknown> = {
   description: t(description),
   url: absolute(path),
   mainEntityOfPage: { '@type': 'WebPage', '@id': absolute(path) },
+  inLanguage: 'en-US',
   datePublished: published.toISOString(),
-  author: { '@type': 'Organization', name: author || site.business.name },
+  dateModified: (updated ?? published).toISOString(),
+  author: { '@type': 'Organization', name: author || site.business.name, url: absolute('/about/') },
   publisher: { '@id': BUSINESS_ID },
 };
 
-if (updated) data.dateModified = updated.toISOString();
-if (image) data.image = absolute(image);
+if (image) data.image = image.startsWith('http') ? image : absolute(image);
+if (section) data.articleSection = section;
+if (wordCount) data.wordCount = wordCount;
 ---
 
 <JsonLd data={data} />

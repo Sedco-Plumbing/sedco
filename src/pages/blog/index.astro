@@ -1,291 +1,405 @@
 ---
 /**
- * BLOG INDEX — 2026 design language (the handoff has no blog design): page
- * hero → featured post → card grid of the rest → contact section.
- * Posts are Keystatic-managed (src/content/blog).
+ * BLOG INDEX — editorial layout: a light header (breadcrumb, H1, intro),
+ * the newest post as a wide featured card, every other post in a card grid,
+ * "Popular services" links, and a call-to-action band.
+ *
+ * Schema: Blog with each BlogPosting (headline, URL, dates, image), plus
+ * BreadcrumbList from the layout. Posts are Keystatic-managed.
  */
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import { paths } from '@config/site';
+import { getImage } from 'astro:assets';
+import { site, paths, absolute, BUSINESS_ID } from '@config/site';
+import { catalogService, serviceHref } from '@config/catalog';
 import { images } from '@lib/images';
-
+import { getPublishedPosts, isoDate } from '@lib/blog';
+import { phoneHref, t } from '@lib/tokens';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import PageHero from '@components/PageHero.astro';
-import ContactSection from '@components/ContactSection.astro';
+import PostCard from '@components/blog/PostCard.astro';
+import JsonLd from '@components/schema/JsonLd.astro';
 import Icon from '@components/ui/Icon.astro';
-import { PAGE_HERO_SIZES, HERO_PHOTO_MEDIA } from '@lib/media';
-import PageSchema from '@components/schema/PageSchema.astro';
 
 const title = 'Plumbing Tips & Local Guides | Sedco Plumbing Blog';
 const description =
   'Practical plumbing advice for El Cajon and East County homeowners — hard water, slab leaks, water heaters, and local costs. Call [PHONE].';
 const path = paths.blog;
-
 const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Blog' }];
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
-);
-
+const posts = await getPublishedPosts();
 const [featured, ...rest] = posts;
 
-const dateFormat = new Intl.DateTimeFormat('en-US', {
-  month: 'long',
-  day: 'numeric',
-  year: 'numeric',
-});
+// Absolute image URLs for the Blog schema.
+const postImages = await Promise.all(
+  posts.map(async (post) =>
+    absolute((await getImage({ src: post.data.featuredImage ?? images.blogDefault.src, width: 1200 })).src),
+  ),
+);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  '@id': `${absolute(path)}#blog`,
+  name: 'Sedco Plumbing Blog',
+  description: t(description),
+  url: absolute(path),
+  inLanguage: 'en-US',
+  publisher: { '@id': BUSINESS_ID },
+  blogPost: posts.map((post, index) => ({
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    url: absolute(paths.post(post.id)),
+    datePublished: isoDate(post.data.publishDate),
+    dateModified: isoDate(post.data.updatedDate ?? post.data.publishDate),
+    image: postImages[index],
+    author: { '@type': 'Organization', name: post.data.author || site.business.name, url: absolute(paths.about) },
+  })),
+};
+
+// P1 focus services first, as recommended in the SEO keyword map.
+const popular = ['drain-cleaning', 'water-heater', 'slab-leak-repair', 'sewer-lines', 'water-lines', 'water-filtration'].map(
+  catalogService,
+);
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  path={path}
-  crumbs={crumbs}
-  preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: PAGE_HERO_SIZES, media: HERO_PHOTO_MEDIA }}
->
+<BaseLayout title={title} description={description} path={path} crumbs={crumbs}>
   <Fragment slot="head">
-    <PageSchema type="Blog" name={title} description={description} path={path} />
+    <JsonLd data={schema} />
   </Fragment>
 
-  <PageHero
-    crumbs={crumbs}
-    eyebrow="Plumbing tips & local guides"
-    heading="Plumbing Advice for East County Homes"
-    intro="Local, practical answers from the plumbers who work on these houses every day: hard water, slab leaks, aging pipes, water heaters and what things actually cost in San Diego County."
-  />
+  <header class="blog-head">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <ol>
+          <li><a href={paths.home}>Home</a><Icon name="chevron-right" size={14} /></li>
+          <li><span aria-current="page">Blog</span></li>
+        </ol>
+      </nav>
+      <p class="eyebrow">Plumbing tips & local guides</p>
+      <h1 class="blog-head__title">Plumbing Advice for East County Homes</h1>
+      <p class="blog-head__intro">
+        Practical answers from the licensed plumbers who work on El Cajon and San Diego County homes
+        every day: hard water, slab leaks, aging pipes, water heaters and what repairs actually cost.
+      </p>
+    </div>
+  </header>
 
-  {
-    posts.length === 0 ? (
-      <section class="blog">
-        <div class="container">
-          <p class="empty-note">
-            No posts yet. Publish the first post through the <a href="/keystatic">Keystatic admin</a> and
-            it will appear here automatically.
+  <section class="blog-list" aria-label="Articles">
+    <div class="container">
+      {
+        posts.length === 0 ? (
+          <p class="empty">
+            No articles yet. Publish the first post in the <a href="/keystatic">Keystatic admin</a> and it
+            will appear here.
           </p>
-        </div>
-      </section>
-    ) : (
-      <section class="blog" aria-label="Articles">
-        <div class="container">
-          <a class="featured" href={paths.post(featured.id)}>
-            <div class="featured__media">
-              <Image
-                src={featured.data.featuredImage ?? images.blogDefault.src}
-                alt={featured.data.featuredImageAlt || images.blogDefault.alt}
-                widths={[480, 900]}
-                sizes="(max-width: 900px) calc(100vw - 48px), 560px"
-              />
-              <span class="featured__pill">Featured</span>
-            </div>
-            <div class="featured__body">
-              <span class="cat">{featured.data.category}</span>
-              <h2 class="featured__title">{featured.data.title}</h2>
-              <p class="featured__excerpt">{featured.data.excerpt}</p>
-              <span class="meta">{dateFormat.format(featured.data.publishDate)} · {featured.data.author}</span>
-              <span class="more" aria-hidden="true">Read the article<Icon name="arrow-right" size={16} /></span>
-            </div>
-          </a>
+        ) : (
+          <>
+            <PostCard post={featured} featured as="h2" eager />
 
-          {rest.length > 0 && (
-            <>
-              <h2 class="all-title">All Articles</h2>
-              <ul class="posts">
-                {rest.map((post) => (
-                  <li>
-                    <a class="post-card" href={paths.post(post.id)}>
-                      <span class="cat">{post.data.category}</span>
-                      <h3 class="post-card__title">{post.data.title}</h3>
-                      <p class="post-card__excerpt">{post.data.excerpt}</p>
-                      <span class="meta">{dateFormat.format(post.data.publishDate)}</span>
-                      <span class="more" aria-hidden="true">Read more<Icon name="arrow-right" size={16} /></span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-        </div>
-      </section>
-    )
-  }
+            {rest.length > 0 && (
+              <>
+                <div class="blog-list__head">
+                  <h2 class="blog-list__title">Latest articles</h2>
+                  <span class="blog-list__count">{posts.length} articles</span>
+                </div>
+                <ul class="blog-list__grid">
+                  {rest.map((post) => (
+                    <li>
+                      <PostCard post={post} />
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </>
+        )
+      }
+    </div>
+  </section>
 
-  <ContactSection
-    heading="Have a Plumbing Question We Haven't Covered?"
-    intro="Call Sedco Plumbing at {phone} and ask. We'd rather explain your options over the phone than sell you a visit you don't need."
-  />
+  <section class="popular" aria-labelledby="popular-heading">
+    <div class="container">
+      <div class="popular__panel">
+        <div class="popular__text">
+          <h2 class="popular__title" id="popular-heading">Need a plumber instead of an article?</h2>
+          <p>Free estimates, no trip charge, and a 30-day guarantee on all work. Open 24 hours, Monday to Saturday.</p>
+          <div class="popular__actions on-navy">
+            <a class="btn btn--call btn--md" href={phoneHref()}><Icon name="phone" size={18} />Call {site.business.phone}</a>
+            <a class="btn btn--outline-dark btn--md" href={`${paths.contact}#request`} data-open-request>Request Service</a>
+          </div>
+        </div>
+        <div class="popular__links">
+          <p class="popular__label">Popular services</p>
+          <ul>
+            {
+              popular.map((service) => (
+                <li>
+                  <a href={serviceHref(service)}>
+                    <span class="popular__icon" aria-hidden="true"><Icon name={service.icon} size={18} /></span>
+                    {service.name}
+                    <Icon name="arrow-right" size={16} class="popular__arrow" />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .blog {
-    padding: 72px 0 24px;
+  .blog-head {
+    padding: 48px 0 40px;
   }
 
-  .empty-note {
-    font-size: 17px;
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    list-style: none;
+    font-size: 14px;
+  }
+
+  .crumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     color: var(--slate-600);
   }
 
-  .featured {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: var(--r-2xl);
-    background: var(--white);
-    color: inherit;
+  .crumbs a {
+    color: var(--slate-600);
     text-decoration: none;
-    transition:
-      box-shadow var(--t-base) ease,
-      transform var(--t-base) ease;
   }
 
-  .featured:hover {
-    box-shadow: var(--shadow-card);
-    transform: translateY(-2px);
+  .crumbs a:hover {
+    color: var(--blue-700);
+    text-decoration: underline;
   }
 
-  .featured__media {
-    position: relative;
-    min-height: 320px;
-  }
-
-  .featured__media :global(img) {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .featured__pill {
-    position: absolute;
-    top: 18px;
-    left: 18px;
-    padding: 6px 12px;
-    border-radius: var(--r-pill);
-    background: var(--yellow-500);
-    font-size: 13px;
-    font-weight: 700;
+  .crumbs [aria-current] {
+    font-weight: 600;
     color: var(--navy-800);
   }
 
-  .featured__body {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 40px;
+  .blog-head .eyebrow {
+    margin-top: 36px;
   }
 
-  .cat {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--blue-600);
-  }
-
-  .featured__title {
+  .blog-head__title {
+    max-width: 820px;
+    margin-top: 12px;
     font-weight: 800;
-    font-size: 32px;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    font-size: 56px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
   }
 
-  .featured__excerpt,
-  .post-card__excerpt {
-    font-size: 16px;
+  .blog-head__intro {
+    max-width: 680px;
+    margin-top: 18px;
+    font-size: 19px;
     line-height: 1.6;
     color: var(--slate-600);
   }
 
-  .meta {
-    font-size: 14px;
-    color: var(--slate-500);
+  .blog-list {
+    padding: 8px 0 72px;
   }
 
-  .more {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: auto;
-    font-weight: 600;
-    color: var(--blue-600);
-  }
-
-  .all-title {
+  .blog-list__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
     margin-top: 64px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .blog-list__title {
     font-weight: 800;
-    font-size: 32px;
+    font-size: 28px;
     letter-spacing: -0.02em;
   }
 
-  .posts {
+  .blog-list__count {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--slate-600);
+  }
+
+  .blog-list__grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-    margin-top: 24px;
+    gap: 24px;
+    margin-top: 28px;
     list-style: none;
   }
 
-  .post-card {
+  .empty {
+    font-size: 17px;
+    color: var(--slate-600);
+  }
+
+  /* ---- CTA + popular services ---- */
+
+  .popular {
+    padding: 0 0 88px;
+  }
+
+  .popular__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: center;
+    padding: 48px;
+    border-radius: var(--r-2xl);
+    background:
+      radial-gradient(90% 120% at 100% 0%, rgba(55, 133, 201, 0.25) 0%, rgba(11, 37, 69, 0) 60%),
+      var(--navy-800);
+    color: var(--blue-200);
+  }
+
+  .popular__title {
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--white);
+  }
+
+  .popular__text p {
+    margin-top: 12px;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .popular__actions {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .popular__label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-300);
+  }
+
+  .popular__links ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 14px;
+    list-style: none;
+  }
+
+  .popular__links a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     height: 100%;
-    padding: 28px;
-    border: 1px solid var(--line);
-    border-top: 4px solid var(--yellow-500);
-    border-radius: var(--r-xl);
-    background: var(--white);
-    color: inherit;
+    padding: 10px 12px;
+    border: 1px solid rgba(150, 198, 245, 0.18);
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--white);
     text-decoration: none;
     transition:
-      box-shadow var(--t-base) ease,
-      transform var(--t-base) ease;
+      background-color var(--t-fast) ease,
+      border-color var(--t-fast) ease,
+      color var(--t-fast) ease;
   }
 
-  .post-card:hover {
-    box-shadow: var(--shadow-card);
-    transform: translateY(-2px);
+  .popular__links a:hover {
+    border-color: var(--yellow-500);
+    color: var(--yellow-500);
   }
 
-  .post-card__title {
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 1.3;
+  .popular__icon {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--r-sm);
+    background: var(--navy-700);
+    color: var(--yellow-500);
   }
 
-  @media (max-width: 959px) {
-    .featured {
-      grid-template-columns: minmax(0, 1fr);
-    }
+  .popular__links :global(.popular__arrow) {
+    flex: none;
+    margin-left: auto;
+    color: var(--blue-300);
+  }
 
-    .featured__media {
-      min-height: 220px;
-      aspect-ratio: 16 / 9;
-    }
-
-    .posts {
+  @media (max-width: 1099px) {
+    .blog-list__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .popular__panel {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 
   @media (max-width: 768px) {
-    .blog {
-      padding: 40px 0 8px;
+    .blog-head {
+      padding: 28px 0 28px;
     }
 
-    .featured__body {
-      padding: 24px;
+    .blog-head .eyebrow {
+      margin-top: 24px;
     }
 
-    .featured__title {
+    .blog-head__title {
+      font-size: 36px;
+    }
+
+    .blog-head__intro {
+      font-size: 17px;
+    }
+
+    .blog-list__head {
+      margin-top: 48px;
+    }
+
+    .blog-list__title {
       font-size: 24px;
     }
 
-    .posts {
+    .blog-list__grid {
       grid-template-columns: minmax(0, 1fr);
+    }
+
+    .popular {
+      padding-bottom: 56px;
+    }
+
+    .popular__panel {
+      padding: 28px 22px;
+      border-radius: var(--r-xl);
+    }
+
+    .popular__title {
+      font-size: 26px;
+    }
+
+    .popular__links ul {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .popular__actions .btn {
+      width: 100%;
     }
   }
 </style>

@@ -1,79 +1,83 @@
 ---
 /**
- * BLOG POST TEMPLATE — design BlogPost.dc.html.
+ * BLOG POST — editorial layout.
  *
- * 2026 design language (the handoff has no blog design): navy article head
- * with breadcrumb, category, H1 and byline → lead image → prose column with a
- * sticky call card and "Keep reading" → contact section. The article opens
- * with the highlighted answer box the guide's Part 8 specifies, which also
- * emits FAQPage schema.
+ * Header: breadcrumb, category, H1, the excerpt as a standfirst, and a byline
+ * (author, published / updated dates as <time>, reading time). Then the lead
+ * image (the LCP image, preloaded), and a two-column body: the article and a
+ * sticky sidebar with "In this article" (built from the post's H2s, with
+ * scroll-spy) and a call card. The article opens with the guide's answer box
+ * and ends with share links, an author box, related services and "Keep
+ * reading".
+ *
+ * Schema: BlogPosting (image, dates, section, word count, author, publisher),
+ * FAQPage from the answer box, BreadcrumbList from the layout.
  */
 import type { GetStaticPaths } from 'astro';
-import { Image } from 'astro:assets';
-import { getCollection, getEntry, render } from 'astro:content';
-import { paths, site } from '@config/site';
+import { getImage, Image } from 'astro:assets';
+import { getEntry, render } from 'astro:content';
+import { paths, site, absolute } from '@config/site';
+import { catalogServices, serviceHref } from '@config/catalog';
 import { images } from '@lib/images';
-
+import { getPublishedPosts, formatDate, isoDate, readingMinutes, wordCount } from '@lib/blog';
+import { phoneHref } from '@lib/tokens';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import ContactSection from '@components/ContactSection.astro';
+import PostCard from '@components/blog/PostCard.astro';
 import Icon from '@components/ui/Icon.astro';
-import { phoneHref } from '@lib/tokens';
 import FaqSchema from '@components/schema/FaqSchema.astro';
 import ArticleSchema from '@components/schema/ArticleSchema.astro';
 
 export const getStaticPaths = (async () => {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
-  }));
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
 }) satisfies GetStaticPaths;
 
 const { post } = Astro.props;
 const data = post.data;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 
 const path = paths.post(post.id);
-
+const url = absolute(path);
 const crumbs = [
   { name: 'Home', href: paths.home },
   { name: 'Blog', href: paths.blog },
   { name: data.title },
 ];
 
-const dateFormat = new Intl.DateTimeFormat('en-US', {
-  month: 'long',
-  day: 'numeric',
-  year: 'numeric',
-});
+const minutes = readingMinutes(post);
+const words = wordCount(post);
+const toc = headings.filter((h) => h.depth === 2);
 
-// Roughly 200 words per minute, for the byline's read-time estimate.
-const readMinutes = Math.max(1, Math.round(post.body!.split(/\s+/).length / 200));
+// Lead image: one optimized srcset shared by the <img> and its preload.
+const leadSrc = data.featuredImage ?? images.blogDefault.src;
+const leadAlt = data.featuredImageAlt || images.blogDefault.alt;
+const LEAD_SIZES = '(max-width: 1230px) calc(100vw - 30px), 1200px';
+const lead = await getImage({ src: leadSrc, widths: [640, 960, 1200, 1600], sizes: LEAD_SIZES, format: 'webp' });
+const shareImage = await getImage({ src: leadSrc, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
 
-// "Keep Reading" — the post's own related list, or the newest other posts.
-const relatedEntries = await Promise.all(
-  data.related.map((ref) => getEntry('blog', ref.id)),
-);
-const related = relatedEntries.filter(
+// "Keep reading": the post's own related list, else the newest other posts.
+const chosen = (await Promise.all(data.related.map((ref) => getEntry('blog', ref.id)))).filter(
   (entry): entry is NonNullable<typeof entry> => Boolean(entry) && !entry!.data.draft,
 );
+const keepReading = (chosen.length ? chosen : (await getPublishedPosts()).filter((p) => p.id !== post.id)).slice(0, 3);
 
-const fallbackRelated =
-  related.length > 0
-    ? related
-    : (await getCollection('blog', ({ data: d }) => !d.draft))
-        .filter((entry) => entry.id !== post.id)
-        .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-        .slice(0, 3);
+// Related services: the post's internal links that point at a service page.
+const relatedServices = data.internalLinks
+  .map((link) => ({ link, service: catalogServices.find((s) => link.href.startsWith(serviceHref(s))) }))
+  .filter((r) => r.service);
+const otherLinks = data.internalLinks.filter((link) => !relatedServices.some((r) => r.link === link));
 
-const keepReading = fallbackRelated.map((entry) => ({
-  href: paths.post(entry.id),
-  anchor: entry.data.title,
-}));
+const faqs = data.answerBox ? [{ question: data.answerBox.question, answer: data.answerBox.answer }] : [];
 
-const faqs = data.answerBox
-  ? [{ question: data.answerBox.question, answer: data.answerBox.answer }]
-  : [];
+const shareText = encodeURIComponent(data.title);
+const shareUrl = encodeURIComponent(url);
+const shares = [
+  { label: 'Share on Facebook', icon: 'facebook' as const, href: `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}` },
+  { label: 'Share on X', icon: 'x-logo' as const, href: `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}` },
+  { label: 'Share on LinkedIn', icon: 'linkedin' as const, href: `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}` },
+  { label: 'Share by email', icon: 'mail' as const, href: `mailto:?subject=${shareText}&body=${shareUrl}` },
+];
 ---
 
 <BaseLayout
@@ -81,10 +85,11 @@ const faqs = data.answerBox
   description={data.metaDescription}
   path={path}
   crumbs={crumbs}
-  ogImage={data.featuredImage?.src}
+  ogImage={shareImage.src}
   publishedTime={data.publishDate}
 >
   <Fragment slot="head">
+    <link rel="preload" as="image" type="image/webp" imagesrcset={lead.srcSet.attribute} imagesizes={LEAD_SIZES} fetchpriority="high" />
     <ArticleSchema
       headline={data.title}
       description={data.metaDescription}
@@ -92,12 +97,14 @@ const faqs = data.answerBox
       published={data.publishDate}
       updated={data.updatedDate}
       author={data.author}
-      image={data.featuredImage?.src}
+      image={absolute(shareImage.src)}
+      section={data.category}
+      wordCount={words}
     />
     {faqs.length > 0 && <FaqSchema faqs={faqs} />}
   </Fragment>
 
-  <article>
+  <article class="post">
     <header class="post-head">
       <div class="post-head__inner">
         <nav class="crumbs" aria-label="Breadcrumb">
@@ -109,85 +116,186 @@ const faqs = data.answerBox
         </nav>
         <p class="post-head__cat">{data.category}</p>
         <h1 class="post-head__title">{data.title}</h1>
+        <p class="post-head__dek">{data.excerpt}</p>
         <div class="byline">
-          <img src="/images/brand/sedco-plumbing-logo-84w.webp" alt="" width="44" height="44" />
-          <span>
-            <strong>{data.author}</strong>
-            <span>
-              {dateFormat.format(data.publishDate)} · {readMinutes} min read
-              {data.updatedDate && <> · Updated {dateFormat.format(data.updatedDate)}</>}
-            </span>
-          </span>
+          <img class="byline__avatar" src="/images/brand/sedco-plumbing-logo-84w.webp" alt="" width="48" height="48" />
+          <div class="byline__text">
+            <p class="byline__name">{data.author || site.business.name}</p>
+            <p class="byline__meta">
+              <span>Published <time datetime={isoDate(data.publishDate)}>{formatDate(data.publishDate)}</time></span>
+              {data.updatedDate && <span>Updated <time datetime={isoDate(data.updatedDate)}>{formatDate(data.updatedDate)}</time></span>}
+              <span>{minutes} min read</span>
+            </p>
+          </div>
         </div>
       </div>
     </header>
 
-    <div class="lead-image">
-      <Image
-        src={data.featuredImage ?? images.blogDefault.src}
-        alt={data.featuredImageAlt || images.blogDefault.alt}
-        widths={[720, 1200, 1600]}
-        sizes="(max-width: 1230px) calc(100vw - 30px), 1200px"
+    <figure class="post-lead">
+      <img
+        src={lead.src}
+        srcset={lead.srcSet.attribute}
+        sizes={LEAD_SIZES}
+        width={lead.attributes.width ?? 1600}
+        height={lead.attributes.height ?? 1067}
+        alt={leadAlt}
         loading="eager"
+        decoding="sync"
         fetchpriority="high"
       />
-    </div>
+    </figure>
 
     <div class="post-body">
       <div class="post-body__grid">
-        <div class="prose">
+        <div class="post-main">
+          {
+            toc.length > 2 && (
+              <details class="toc-mobile">
+                <summary>
+                  <Icon name="list" size={18} />
+                  In this article
+                  <Icon name="chevron-down" size={18} class="toc-mobile__chev" />
+                </summary>
+                <ol>
+                  {toc.map((h) => (
+                    <li>
+                      <a href={`#${h.slug}`}>{h.text}</a>
+                    </li>
+                  ))}
+                </ol>
+              </details>
+            )
+          }
+
           {
             data.answerBox && (
-              <aside class="answer-box">
-                <h2>{data.answerBox.question}</h2>
-                {data.answerBox.answer.map((paragraph) => (
-                  <p>{paragraph}</p>
-                ))}
+              <aside class="answer" aria-labelledby="quick-answer">
+                <p class="answer__label">
+                  <Icon name="check" size={16} strokeWidth={3} />
+                  Quick answer
+                </p>
+                <h2 class="answer__q" id="quick-answer">{data.answerBox.question}</h2>
+                {data.answerBox.answer.map((paragraph) => <p>{paragraph}</p>)}
               </aside>
             )
           }
-          <Content />
-          {
-            data.internalLinks.length > 0 && (
-              <aside class="related-callout">
-                <h2>Related From {site.business.name}</h2>
-                <ul>
-                  {data.internalLinks.map((link) => (
+
+          <div class="post-content">
+            <Content />
+          </div>
+
+          <footer class="post-foot">
+            <div class="share">
+              <p class="share__label">Share this article</p>
+              <ul class="share__list">
+                {
+                  shares.map((s) => (
                     <li>
-                      <a href={link.href}>{link.anchor}</a>
+                      <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} title={s.label}>
+                        <Icon name={s.icon} size={18} />
+                      </a>
                     </li>
-                  ))}
-                </ul>
-              </aside>
-            )
-          }
+                  ))
+                }
+                <li>
+                  <button type="button" aria-label="Copy link" title="Copy link" data-copy-link={url}>
+                    <Icon name="link" size={18} />
+                    <span class="share__copied" data-copied hidden>Link copied</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="author">
+              <img src="/images/brand/sedco-plumbing-logo-84w.webp" alt="" width="64" height="64" loading="lazy" />
+              <div>
+                <p class="author__label">Written by</p>
+                <p class="author__name">{site.business.name}</p>
+                <p class="author__bio">
+                  A licensed CA {site.business.licenseClass} plumbing contractor based in {site.business.locality}, with
+                  20 years of experience on homes, rentals and businesses across {site.business.county}.{' '}
+                  <a href={paths.about}>About us</a>
+                </p>
+              </div>
+            </div>
+
+            {
+              relatedServices.length > 0 && (
+                <section class="services" aria-labelledby="services-heading">
+                  <h2 class="post-foot__title" id="services-heading">Services mentioned in this article</h2>
+                  <ul class="services__list">
+                    {relatedServices.map(({ link, service }) => (
+                      <li>
+                        <a href={link.href}>
+                          <span class="services__icon" aria-hidden="true"><Icon name={service!.icon} size={20} /></span>
+                          <span>{link.anchor.charAt(0).toUpperCase() + link.anchor.slice(1)}</span>
+                          <Icon name="arrow-right" size={16} class="services__arrow" />
+                        </a>
+                      </li>
+                    ))}
+                    {otherLinks.map((link) => (
+                      <li>
+                        <a href={link.href}>
+                          <span class="services__icon" aria-hidden="true"><Icon name="map-pin" size={20} /></span>
+                          <span>{link.anchor.charAt(0).toUpperCase() + link.anchor.slice(1)}</span>
+                          <Icon name="arrow-right" size={16} class="services__arrow" />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )
+            }
+          </footer>
         </div>
 
-        <aside class="post-aside" aria-label="Call or keep reading">
-          <div class="post-call on-navy">
-            <p class="post-call__title">Need a plumber in East County?</p>
-            <p class="post-call__text">Free estimate, no trip charge. Open 24 hours, Monday to Saturday.</p>
-            <a class="btn btn--call btn--block" href={phoneHref()}><Icon name="phone" size={18} />{site.business.phone}</a>
-            <a class="btn btn--request btn--block" href={`${paths.contact}#request`} data-open-request>Request Service</a>
-          </div>
+        <aside class="post-aside" aria-label="Article tools">
           {
-            keepReading.length > 0 && (
-              <nav class="keep-reading" aria-label="Keep reading">
-                <p class="keep-reading__title">Keep reading</p>
-                <ul>
-                  {keepReading.map((link) => (
+            toc.length > 0 && (
+              <nav class="toc" aria-label="In this article" data-toc>
+                <p class="toc__title">In this article</p>
+                <ol>
+                  {toc.map((h, index) => (
                     <li>
-                      <a href={link.href}>{link.anchor}</a>
+                      <a href={`#${h.slug}`} aria-current={index === 0 ? 'true' : undefined}>
+                        {h.text}
+                      </a>
                     </li>
                   ))}
-                </ul>
+                </ol>
               </nav>
             )
           }
+          <div class="aside-call on-navy">
+            <p class="aside-call__title">Need a plumber now?</p>
+            <p class="aside-call__text">Free estimate, no trip charge. Open 24 hours, Monday to Saturday.</p>
+            <a class="btn btn--call btn--block" href={phoneHref()}><Icon name="phone" size={18} />{site.business.phone}</a>
+            <a class="btn btn--outline-dark btn--block" href={`${paths.contact}#request`} data-open-request>Request Service</a>
+          </div>
         </aside>
       </div>
     </div>
   </article>
+
+  {
+    keepReading.length > 0 && (
+      <section class="more" aria-labelledby="more-heading">
+        <div class="container">
+          <div class="more__head">
+            <h2 class="more__title" id="more-heading">Keep reading</h2>
+            <a href={paths.blog}>All articles<Icon name="arrow-right" size={16} /></a>
+          </div>
+          <ul class="more__grid">
+            {keepReading.map((entry) => (
+              <li>
+                <PostCard post={entry} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
 
   <ContactSection
     heading="Need a Plumber in East County?"
@@ -196,25 +304,26 @@ const faqs = data.answerBox
 </BaseLayout>
 
 <style>
+  /* ---- header ---- */
+
   .post-head {
-    margin: 0 var(--section-inset);
-    padding: 56px clamp(24px, 5.5vw, 105px) 120px;
-    border-radius: var(--r-section);
-    background: var(--navy-800);
+    padding: 44px var(--gutter) 40px;
   }
 
   .post-head__inner {
-    max-width: 820px;
+    max-width: 860px;
     margin: 0 auto;
+    text-align: center;
   }
 
   .crumbs ol {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
     gap: 6px 10px;
     list-style: none;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .crumbs li {
@@ -222,255 +331,733 @@ const faqs = data.answerBox
     align-items: center;
     gap: 10px;
     min-width: 0;
-    color: var(--blue-200);
+    color: var(--slate-600);
   }
 
   .crumbs a {
-    color: var(--blue-200);
+    color: var(--slate-600);
     text-decoration: none;
   }
 
   .crumbs a:hover {
-    color: var(--white);
+    color: var(--blue-700);
     text-decoration: underline;
   }
 
   .crumbs [aria-current] {
+    overflow: hidden;
+    max-width: 46ch;
     font-weight: 600;
-    color: var(--white);
-  }
-
-  .crumbs :global(svg) {
-    color: var(--blue-300);
+    color: var(--navy-800);
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .post-head__cat {
-    margin-top: 36px;
-    font-size: 14px;
+    display: inline-block;
+    margin-top: 32px;
+    padding: 6px 14px;
+    border-radius: var(--r-pill);
+    background: var(--blue-50);
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--yellow-500);
+    color: var(--blue-700);
   }
 
   .post-head__title {
-    margin-top: 12px;
+    margin-top: 18px;
     font-weight: 800;
-    font-size: 50px;
+    font-size: 52px;
     line-height: 1.08;
-    letter-spacing: -0.025em;
-    color: var(--white);
+    letter-spacing: -0.03em;
+  }
+
+  .post-head__dek {
+    max-width: 720px;
+    margin: 20px auto 0;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--slate-600);
   }
 
   .byline {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 14px;
     margin-top: 28px;
+    text-align: left;
   }
 
-  .byline img {
-    border-radius: var(--r-sm);
+  .byline__avatar {
+    flex: none;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--white), 0 0 0 4px var(--line);
   }
 
-  .byline > span {
+  .byline__name {
+    font-weight: 700;
+    color: var(--navy-800);
+  }
+
+  .byline__meta {
     display: flex;
-    flex-direction: column;
-    font-size: 15px;
-    color: var(--blue-200);
+    flex-wrap: wrap;
+    gap: 2px 14px;
+    font-size: 14px;
+    color: var(--slate-600);
   }
 
-  .byline strong {
-    font-weight: 600;
-    color: var(--white);
+  .byline__meta span + span::before {
+    content: '·';
+    margin-right: 14px;
   }
 
-  .lead-image {
+  /* ---- lead image ---- */
+
+  .post-lead {
     max-width: 1200px;
-    margin: -80px auto 0;
+    margin: 0 auto;
     padding: 0 var(--section-inset);
   }
 
-  .lead-image :global(img) {
+  .post-lead img {
     width: 100%;
     height: auto;
-    max-height: 560px;
+    max-height: 600px;
+    aspect-ratio: 16 / 8;
     object-fit: cover;
     border-radius: var(--r-2xl);
-    box-shadow: var(--shadow-card);
   }
 
+  /* ---- body ---- */
+
   .post-body {
-    padding: 64px var(--gutter) 24px;
+    padding: 64px var(--gutter) 40px;
   }
 
   .post-body__grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 320px;
-    gap: 72px;
-    align-items: start;
+    grid-template-columns: minmax(0, 720px) 300px;
+    justify-content: space-between;
+    gap: 64px;
     max-width: var(--container);
     margin: 0 auto;
   }
 
-  .answer-box {
-    margin-bottom: 40px;
-    padding: 28px;
-    border-left: 4px solid var(--yellow-500);
-    border-radius: var(--r-lg);
+  .post-main {
+    min-width: 0;
+  }
+
+  /* quick answer */
+  .answer {
+    margin-bottom: 44px;
+    padding: 28px 30px;
+    border: 1px solid var(--yellow-200);
+    border-radius: var(--r-xl);
     background: var(--yellow-50);
   }
 
-  .answer-box h2 {
-    margin-top: 0;
-    font-size: 22px;
+  .answer__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-text);
   }
 
-  .answer-box p {
+  .answer__q {
+    margin-top: 10px;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.3;
+  }
+
+  .answer p {
+    margin-top: 10px;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--slate-700);
+  }
+
+  /* article typography */
+  .post-content {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--slate-700);
+  }
+
+  /* Markdoc wraps the body in its own <article>, so space its children. */
+  .post-content :global(> * + *),
+  .post-content :global(> article > * + *) {
+    margin-top: 22px;
+  }
+
+  .post-content :global(h2) {
+    margin-top: 56px;
+    font-weight: 800;
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .post-content :global(h3) {
+    margin-top: 36px;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.3;
+  }
+
+  .post-content :global(h2 + *),
+  .post-content :global(h3 + *) {
+    margin-top: 14px;
+  }
+
+  .post-content :global(ul),
+  .post-content :global(ol) {
+    padding-left: 24px;
+  }
+
+  .post-content :global(li + li) {
+    margin-top: 10px;
+  }
+
+  .post-content :global(li::marker) {
+    color: var(--blue-600);
+    font-weight: 700;
+  }
+
+  .post-content :global(strong) {
+    font-weight: 700;
     color: var(--navy-800);
   }
 
-  .related-callout {
-    margin-top: 48px;
-    padding: 28px;
+  .post-content :global(a) {
+    font-weight: 600;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .post-content :global(blockquote) {
+    margin-left: 0;
+    padding: 4px 0 4px 22px;
+    border-left: 3px solid var(--yellow-500);
+    font-style: italic;
+    color: var(--navy-800);
+  }
+
+  .post-content :global(table) {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+
+  .post-content :global(th),
+  .post-content :global(td) {
+    min-width: 140px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .post-content :global(thead th) {
+    background: var(--sky-50);
+    font-weight: 700;
+    color: var(--navy-800);
+  }
+
+  .post-content :global(tr:last-child td) {
+    border-bottom: 0;
+  }
+
+  .post-content :global(img) {
+    border-radius: var(--r-lg);
+  }
+
+  /* mobile table of contents */
+  .toc-mobile {
+    display: none;
+  }
+
+  /* ---- article footer ---- */
+
+  .post-foot {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+
+  .share {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .share__label {
+    font-weight: 700;
+    color: var(--navy-800);
+  }
+
+  .share__list {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+  }
+
+  .share__list a,
+  .share__list button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--navy-800);
+    cursor: pointer;
+    transition:
+      background-color var(--t-fast) ease,
+      color var(--t-fast) ease,
+      border-color var(--t-fast) ease;
+  }
+
+  .share__list a:hover,
+  .share__list button:hover {
+    border-color: var(--navy-800);
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  .share__copied {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    right: 0;
+    padding: 4px 10px;
+    border-radius: var(--r-sm);
+    background: var(--navy-800);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--white);
+    white-space: nowrap;
+  }
+
+  .author {
+    display: flex;
+    gap: 18px;
+    margin-top: 28px;
+    padding: 24px;
     border: 1px solid var(--line);
     border-radius: var(--r-xl);
     background: var(--white);
   }
 
-  .related-callout h2 {
-    margin-top: 0;
-    font-size: 22px;
+  .author img {
+    flex: none;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
   }
 
-  .related-callout ul {
-    margin-top: 12px;
-  }
-
-  .prose :global(table) {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 15px;
-  }
-
-  .prose :global(th),
-  .prose :global(td) {
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--line);
-    text-align: left;
-  }
-
-  .prose :global(th) {
-    color: var(--navy-800);
-    font-weight: 600;
-  }
-
-  .prose :global(img) {
-    border-radius: var(--r-lg);
-  }
-
-  .post-aside {
-    position: sticky;
-    top: calc(var(--header-h) + 24px);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .post-call {
-    padding: 24px;
-    border-radius: var(--r-2xl);
-    background: var(--navy-800);
-  }
-
-  .post-call__title {
-    font-family: var(--font-title);
-    font-weight: 800;
-    font-size: 21px;
-    line-height: 1.2;
-    color: var(--white);
-  }
-
-  .post-call__text {
-    margin: 8px 0 18px;
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--blue-200);
-  }
-
-  .post-call .btn {
-    height: 50px;
-    font-size: 16px;
-  }
-
-  .post-call .btn + .btn {
-    margin-top: 10px;
-  }
-
-  .keep-reading {
-    padding: 22px 24px;
-    border: 1px solid var(--line);
-    border-radius: var(--r-2xl);
-    background: var(--white);
-  }
-
-  .keep-reading__title {
-    font-size: 13px;
+  .author__label {
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--slate-500);
   }
 
-  .keep-reading ul {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 12px;
+  .author__name {
+    margin-top: 2px;
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 19px;
+    color: var(--navy-800);
+  }
+
+  .author__bio {
+    margin-top: 6px;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--slate-600);
+  }
+
+  .author__bio a {
+    font-weight: 600;
+  }
+
+  .post-foot__title {
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+
+  .services {
+    margin-top: 40px;
+  }
+
+  .services__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 16px;
     list-style: none;
   }
 
-  .keep-reading a {
+  .services__list a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--white);
+    font-size: 15.5px;
     font-weight: 600;
+    line-height: 1.35;
+    color: var(--navy-800);
+    text-decoration: none;
+    transition:
+      background-color var(--t-fast) ease,
+      color var(--t-fast) ease,
+      border-color var(--t-fast) ease;
+  }
+
+  .services__list a:hover {
+    border-color: var(--navy-800);
+    background: var(--navy-800);
+    color: var(--yellow-500);
+  }
+
+  .services__icon {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--blue-50);
+    color: var(--blue-600);
+  }
+
+  .services__list a:hover .services__icon {
+    background: var(--navy-700);
+    color: var(--yellow-500);
+  }
+
+  .services__list :global(.services__arrow) {
+    flex: none;
+    margin-left: auto;
+  }
+
+  /* ---- sidebar ---- */
+
+  .post-aside {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .toc {
+    padding: 22px 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    background: var(--white);
+  }
+
+  .toc__title {
+    padding: 0 12px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate-500);
+  }
+
+  .toc ol {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    list-style: none;
+  }
+
+  .toc a {
+    display: block;
+    padding: 8px 12px;
+    border-left: 2px solid transparent;
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    font-size: 14.5px;
     line-height: 1.4;
+    color: var(--slate-600);
+    text-decoration: none;
+    transition:
+      background-color var(--t-fast) ease,
+      color var(--t-fast) ease,
+      border-color var(--t-fast) ease;
+  }
+
+  .toc a:hover {
+    background: var(--blue-50);
+    color: var(--navy-800);
+  }
+
+  .toc a[aria-current] {
+    border-left-color: var(--yellow-500);
+    background: var(--navy-800);
+    font-weight: 600;
+    color: var(--yellow-500);
+  }
+
+  .aside-call {
+    padding: 24px;
+    border-radius: var(--r-xl);
+    background: var(--navy-800);
+  }
+
+  .aside-call__title {
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--white);
+  }
+
+  .aside-call__text {
+    margin: 8px 0 16px;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--blue-200);
+  }
+
+  .aside-call .btn {
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .aside-call .btn + .btn {
+    margin-top: 8px;
+  }
+
+  /* ---- keep reading ---- */
+
+  .more {
+    padding: 48px 0 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  .more__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .more__head a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
     text-decoration: none;
   }
 
-  .keep-reading a:hover {
-    text-decoration: underline;
+  .more__title {
+    font-weight: 800;
+    font-size: 30px;
+    letter-spacing: -0.02em;
   }
+
+  .more__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+    list-style: none;
+  }
+
+  /* ---- reflow ---- */
 
   @media (max-width: 1099px) {
     .post-body__grid {
       grid-template-columns: minmax(0, 1fr);
+      max-width: 760px;
     }
 
     .post-aside {
       position: static;
     }
+
+    .toc {
+      display: none;
+    }
+
+    .toc-mobile {
+      display: block;
+      margin-bottom: 32px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      background: var(--white);
+    }
+
+    .toc-mobile summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 18px;
+      font-weight: 700;
+      color: var(--navy-800);
+      cursor: pointer;
+    }
+
+    .toc-mobile summary :global(.toc-mobile__chev) {
+      margin-left: auto;
+      transition: transform 200ms ease;
+    }
+
+    .toc-mobile[open] summary :global(.toc-mobile__chev) {
+      transform: rotate(180deg);
+    }
+
+    .toc-mobile ol {
+      padding: 4px 18px 16px 40px;
+    }
+
+    .toc-mobile li + li {
+      margin-top: 8px;
+    }
+
+    .toc-mobile a {
+      color: var(--slate-700);
+      text-decoration: none;
+    }
+
+    .more__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   @media (max-width: 768px) {
     .post-head {
-      padding: 28px 20px 96px;
+      padding: 24px 24px 28px;
+    }
+
+    .crumbs [aria-current] {
+      max-width: 22ch;
     }
 
     .post-head__cat {
-      margin-top: 24px;
-      font-size: 12px;
+      margin-top: 22px;
     }
 
     .post-head__title {
       font-size: 32px;
+      line-height: 1.12;
+    }
+
+    .post-head__dek {
+      font-size: 17px;
+    }
+
+    .byline__meta {
+      font-size: 13px;
+    }
+
+    .post-lead img {
+      aspect-ratio: 4 / 3;
+      border-radius: var(--r-xl);
     }
 
     .post-body {
-      padding: 40px 24px 8px;
+      padding: 36px 24px 24px;
     }
 
-    .answer-box,
-    .related-callout {
-      padding: 22px;
+    .answer {
+      padding: 22px 20px;
+    }
+
+    .post-content {
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    .post-content :global(h2) {
+      margin-top: 44px;
+      font-size: 25px;
+    }
+
+    .services__list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .author {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .more__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .more__title {
+      font-size: 24px;
     }
   }
 </style>
+
+<script>
+  // Copy-link button
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-link]').forEach((button) => {
+    const note = button.querySelector<HTMLElement>('[data-copied]');
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copyLink ?? location.href);
+        if (note) {
+          note.hidden = false;
+          setTimeout(() => (note.hidden = true), 1800);
+        }
+      } catch {
+        window.prompt('Copy this link:', button.dataset.copyLink ?? location.href);
+      }
+    });
+  });
+
+  // "In this article" scroll-spy: the last heading that has passed 180px.
+  const toc = document.querySelector<HTMLElement>('[data-toc]');
+  if (toc) {
+    const links = [...toc.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')];
+    const targets = links
+      .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+      .filter((el): el is HTMLElement => el !== null);
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      let active = 0;
+      targets.forEach((el, index) => {
+        if (el.getBoundingClientRect().top < 180) active = index;
+      });
+      links.forEach((link, index) => {
+        if (index === active) link.setAttribute('aria-current', 'true');
+        else link.removeAttribute('aria-current');
+      });
+    };
+    window.addEventListener('scroll', () => (frame ||= requestAnimationFrame(update)), { passive: true });
+    update();
+  }
+</script>
