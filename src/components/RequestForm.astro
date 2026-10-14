@@ -9,7 +9,9 @@
  * happening?
  *  - variant="standard"  drawer and contact sections; two columns when the
  *                        form is at least 520px wide
- *  - variant="compact"   homepage hero card; one column, tighter inputs
+ *  - variant="compact"   homepage hero card; tighter inputs, and from 340px
+ *                        wide: Name / Phone + Email / City + Service /
+ *                        Preferred time / What's happening
  *
  * `service` / `city` pre-select the dropdowns (service and town pages). The
  * Request drawer sets them again each time it opens, from the button clicked
@@ -62,7 +64,7 @@ const tel = phoneHref();
     <!-- Web3Forms honeypot: real visitors never see or fill it -->
     <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" aria-hidden="true" />
 
-    <div class="field">
+    <div class="field" data-field="name">
       <label class="field__label" for={`${id}-name`}>
         Name <span class="field__hint">Required</span>
       </label>
@@ -78,7 +80,7 @@ const tel = phoneHref();
       <p class="field__error" id={`${id}-name-error`}>Please enter your name.</p>
     </div>
 
-    <div class="field">
+    <div class="field" data-field="phone">
       <label class="field__label" for={`${id}-phone`}>
         Phone <span class="field__hint">Required</span>
       </label>
@@ -95,7 +97,7 @@ const tel = phoneHref();
       <p class="field__error" id={`${id}-phone-error`}>Please enter a phone number we can call you back on.</p>
     </div>
 
-      <div class="field">
+      <div class="field" data-field="email">
         <label class="field__label" for={`${id}-email`}>
           Email <span class="field__hint">Optional</span>
         </label>
@@ -111,7 +113,7 @@ const tel = phoneHref();
         <p class="field__error" id={`${id}-email-error`}>Please enter a valid email address, or leave it blank.</p>
       </div>
 
-      <div class="field">
+      <div class="field" data-field="city">
         <label class="field__label" for={`${id}-city`}>
           City <span class="field__hint">Required</span>
         </label>
@@ -134,7 +136,7 @@ const tel = phoneHref();
         <p class="field__error" id={`${id}-city-error`}>Please choose the city the job is in.</p>
       </div>
 
-      <div class="field">
+      <div class="field" data-field="service">
         <label class="field__label" for={`${id}-service`}>Service needed</label>
         <div class="select">
           <select class="input" id={`${id}-service`} name="service">
@@ -147,7 +149,7 @@ const tel = phoneHref();
         </div>
       </div>
 
-      <div class="field">
+      <div class="field" data-field="time">
         <label class="field__label" for={`${id}-time`}>
           Preferred day &amp; time <span class="field__hint">Optional</span>
         </label>
@@ -161,7 +163,7 @@ const tel = phoneHref();
         />
       </div>
 
-    <div class="field field--wide">
+    <div class="field field--wide" data-field="details">
       <label class="field__label" for={`${id}-details`}>
         What's happening? <span class="field__hint">Optional</span>
       </label>
@@ -169,7 +171,7 @@ const tel = phoneHref();
         class="input"
         id={`${id}-details`}
         name="details"
-        rows={compact ? 3 : 4}></textarea>
+        rows={compact ? 2 : 4}></textarea>
     </div>
 
     <div class="form-alert field--wide" role="alert" data-form-error hidden>
@@ -272,12 +274,28 @@ const tel = phoneHref();
     gap: 12px;
   }
 
+  /* Hero card: contact details and job details in pairs when there is room. */
+  @container (min-width: 340px) {
+    .request-form--compact .request-form__form {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 12px;
+    }
+
+    .request-form--compact :global([data-field='name']),
+    .request-form--compact :global([data-field='time']),
+    .request-form--compact .field--wide {
+      grid-column: 1 / -1;
+    }
+  }
+
   .request-form--compact :global(.field__label) {
     margin-bottom: 6px;
   }
 
   .request-form--compact :global(.input) {
-    height: 50px;
+    height: 46px;
+    padding: 0 14px;
+    font-size: 16px;
     border: 1.5px solid var(--slate-500);
     border-radius: 10px;
     background: var(--white);
@@ -287,9 +305,17 @@ const tel = phoneHref();
     outline-color: var(--blue-300);
   }
 
+  .request-form--compact :global(.select .input) {
+    padding-right: 36px;
+  }
+
+  .request-form--compact :global(.select svg) {
+    right: 12px;
+  }
+
   .request-form--compact :global(textarea.input) {
-    min-height: 72px;
-    padding: 12px 16px;
+    min-height: 64px;
+    padding: 10px 14px;
   }
 
   .request-form--compact .request-form__submit {
@@ -297,7 +323,7 @@ const tel = phoneHref();
   }
 
   .request-form--compact .request-form__button {
-    height: 56px;
+    height: 52px;
     border-radius: var(--r-md);
     font-size: 19px;
   }
