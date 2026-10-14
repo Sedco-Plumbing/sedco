@@ -4,10 +4,12 @@
  * Used by the Request drawer, the contact section on every page and the
  * homepage hero estimate card.
  *
- *  - variant="standard"  Name*, Phone*, Email, City*, Service needed, Preferred
- *                        time, What's happening? (two columns when the form is
- *                        at least 520px wide)
- *  - variant="compact"   Name*, Phone*, City*, Service*, Brief description (hero card)
+ * Both variants ask the same questions, with the same labels and order:
+ * Name*, Phone*, Email, City*, Service needed, Preferred day & time, What's
+ * happening?
+ *  - variant="standard"  drawer and contact sections; two columns when the
+ *                        form is at least 520px wide
+ *  - variant="compact"   homepage hero card; one column, tighter inputs
  *
  * `service` / `city` pre-select the dropdowns (service and town pages). The
  * Request drawer sets them again each time it opens, from the button clicked
@@ -62,7 +64,7 @@ const tel = phoneHref();
 
     <div class="field">
       <label class="field__label" for={`${id}-name`}>
-        Name {!compact && <span class="field__hint">Required</span>}
+        Name <span class="field__hint">Required</span>
       </label>
       <input
         class="input"
@@ -78,7 +80,7 @@ const tel = phoneHref();
 
     <div class="field">
       <label class="field__label" for={`${id}-phone`}>
-        Phone {!compact && <span class="field__hint">Required</span>}
+        Phone <span class="field__hint">Required</span>
       </label>
       <input
         class="input"
@@ -93,118 +95,81 @@ const tel = phoneHref();
       <p class="field__error" id={`${id}-phone-error`}>Please enter a phone number we can call you back on.</p>
     </div>
 
-    {
-      compact ? (
-        <>
-          <div class="field">
-            <label class="field__label" for={`${id}-city`}>Service address city</label>
-            <div class="select">
-              <select class="input" id={`${id}-city`} name="city" required aria-describedby={`${id}-city-error`}>
-                <option value="">Your city...</option>
-                {requestCityOptions.map((option) => (
-                  <option selected={option === city}>{option}</option>
-                ))}
-              </select>
-              <Icon name="chevron-down" size={18} />
-            </div>
-            <p class="field__error" id={`${id}-city-error`}>Please choose the city the job is in.</p>
-          </div>
+      <div class="field">
+        <label class="field__label" for={`${id}-email`}>
+          Email <span class="field__hint">Optional</span>
+        </label>
+        <input
+          class="input"
+          id={`${id}-email`}
+          name="email"
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+          aria-describedby={`${id}-email-error`}
+        />
+        <p class="field__error" id={`${id}-email-error`}>Please enter a valid email address, or leave it blank.</p>
+      </div>
 
-          <div class="field">
-            <label class="field__label" for={`${id}-service`}>What do you need help with?</label>
-            <div class="select">
-              <select class="input" id={`${id}-service`} name="service" required aria-describedby={`${id}-service-error`}>
-                <option value="">Choose a service...</option>
-                {requestServiceOptions
-                  .filter((option) => option !== 'Not sure')
-                  .map((option) => <option selected={option === service}>{option}</option>)}
-              </select>
-              <Icon name="chevron-down" size={18} />
-            </div>
-            <p class="field__error" id={`${id}-service-error`}>Please choose a service.</p>
-          </div>
-        </>
-      ) : (
-        <>
-          <div class="field">
-            <label class="field__label" for={`${id}-email`}>
-              Email <span class="field__hint">Optional</span>
-            </label>
-            <input
-              class="input"
-              id={`${id}-email`}
-              name="email"
-              type="email"
-              inputmode="email"
-              autocomplete="email"
-              aria-describedby={`${id}-email-error`}
-            />
-            <p class="field__error" id={`${id}-email-error`}>Please enter a valid email address, or leave it blank.</p>
-          </div>
+      <div class="field">
+        <label class="field__label" for={`${id}-city`}>
+          City <span class="field__hint">Required</span>
+        </label>
+        <div class="select">
+          <select
+            class="input"
+            id={`${id}-city`}
+            name="city"
+            required
+            autocomplete="address-level2"
+            aria-describedby={`${id}-city-error`}
+          >
+            <option value="">Select your city</option>
+            {requestCityOptions.map((option) => (
+              <option selected={option === city}>{option}</option>
+            ))}
+          </select>
+          <Icon name="chevron-down" size={18} />
+        </div>
+        <p class="field__error" id={`${id}-city-error`}>Please choose the city the job is in.</p>
+      </div>
 
-          <div class="field">
-            <label class="field__label" for={`${id}-city`}>
-              City <span class="field__hint">Required</span>
-            </label>
-            <div class="select">
-              <select
-                class="input"
-                id={`${id}-city`}
-                name="city"
-                required
-                autocomplete="address-level2"
-                aria-describedby={`${id}-city-error`}
-              >
-                <option value="">Select your city</option>
-                {requestCityOptions.map((option) => (
-                  <option selected={option === city}>{option}</option>
-                ))}
-              </select>
-              <Icon name="chevron-down" size={18} />
-            </div>
-            <p class="field__error" id={`${id}-city-error`}>Please choose the city the job is in.</p>
-          </div>
+      <div class="field">
+        <label class="field__label" for={`${id}-service`}>Service needed</label>
+        <div class="select">
+          <select class="input" id={`${id}-service`} name="service">
+            <option value="">Select a service</option>
+            {requestServiceOptions.map((option) => (
+              <option selected={option === service}>{option}</option>
+            ))}
+          </select>
+          <Icon name="chevron-down" size={18} />
+        </div>
+      </div>
 
-          <div class="field">
-            <label class="field__label" for={`${id}-service`}>Service needed</label>
-            <div class="select">
-              <select class="input" id={`${id}-service`} name="service">
-                <option value="">Select a service</option>
-                {requestServiceOptions.map((option) => (
-                  <option selected={option === service}>{option}</option>
-                ))}
-              </select>
-              <Icon name="chevron-down" size={18} />
-            </div>
-          </div>
-
-          <div class="field">
-            <label class="field__label" for={`${id}-time`}>
-              Preferred day &amp; time <span class="field__hint">Optional</span>
-            </label>
-            <input
-              class="input"
-              id={`${id}-time`}
-              name="preferred_time"
-              type="text"
-              maxlength="80"
-              placeholder="e.g. Tuesday after 3pm"
-            />
-          </div>
-        </>
-      )
-    }
+      <div class="field">
+        <label class="field__label" for={`${id}-time`}>
+          Preferred day &amp; time <span class="field__hint">Optional</span>
+        </label>
+        <input
+          class="input"
+          id={`${id}-time`}
+          name="preferred_time"
+          type="text"
+          maxlength="80"
+          placeholder="e.g. Tuesday after 3pm"
+        />
+      </div>
 
     <div class="field field--wide">
       <label class="field__label" for={`${id}-details`}>
-        {compact ? 'Brief description' : "What's happening?"}
-        {!compact && <span class="field__hint">Optional</span>}
+        What's happening? <span class="field__hint">Optional</span>
       </label>
       <textarea
         class="input"
         id={`${id}-details`}
         name="details"
-        rows={compact ? 2 : 4}></textarea>
+        rows={compact ? 3 : 4}></textarea>
     </div>
 
     <div class="form-alert field--wide" role="alert" data-form-error hidden>
@@ -218,7 +183,7 @@ const tel = phoneHref();
     <div class="request-form__submit field--wide">
       <button class="btn btn--call btn--block request-form__button" type="submit">
         <span data-submit-label>Send Request</span>
-        {!compact && <Icon name="arrow-right" size={18} strokeWidth={2.25} />}
+        <Icon name="arrow-right" size={18} strokeWidth={2.25} />
       </button>
       <p class="form-privacy">
         {!compact && <Icon name="lock" size={15} />}
