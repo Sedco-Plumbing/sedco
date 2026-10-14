@@ -194,6 +194,8 @@ const blog = defineCollection({
           answer: z.array(z.string()).min(1),
         })
         .optional(),
+      /** Closing call-to-action paragraph, unique to this post; falls back to a generic one */
+      closingCta: z.string().optional(),
       /** The 2-3 deliberate internal links each post must carry */
       internalLinks: z.array(internalLink).default([]),
       /** Related posts for the "Keep Reading" sidebar */

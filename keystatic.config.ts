@@ -237,6 +237,13 @@ export default config({
           },
         ),
 
+        closingCta: fields.text({
+          label: 'Closing call-to-action (optional)',
+          description:
+            'The paragraph in the contact section at the end of the post. Write one for this post so it is not the same on every post; leave empty to use the generic one. Include the phone number as (619) 714-0027.',
+          multiline: true,
+        }),
+
         internalLinks: fields.array(
           fields.object({
             href: fields.text({

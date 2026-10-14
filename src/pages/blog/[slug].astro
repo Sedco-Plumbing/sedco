@@ -35,6 +35,12 @@ export const getStaticPaths = (async () => {
 
 const { post } = Astro.props;
 const data = post.data;
+
+// Each post can carry its own closing CTA (Duplicate Content fix); the phone
+// number in it becomes the linked {phone} token ContactSection understands.
+const closingCta =
+  data.closingCta?.trim().replace(site.business.phone, '{phone}') ||
+  'Call Sedco Plumbing at {phone} for an honest assessment and an upfront price, anywhere in San Diego County.';
 const { Content, headings } = await render(post);
 
 const path = paths.post(post.id);
@@ -299,7 +305,7 @@ const shares = [
 
   <ContactSection
     heading="Need a Plumber in East County?"
-    intro="Call Sedco Plumbing at {phone} for an honest assessment and an upfront price, anywhere in San Diego County."
+    intro={closingCta}
   />
 </BaseLayout>
 
