@@ -2,13 +2,11 @@
 /**
  * PRIVACY POLICY — linked from the footer (guide Part 2).
  *
- * NOT CLIENT-APPROVED YET. The text below accurately describes what this
- * website collects (contact form submissions via Web3Forms, analytics if
- * enabled), but nobody has confirmed how the business handles that data off the
- * website — retention, subcontractors, and any CCPA obligations. The client
- * needs to review and approve it, with legal advice, before launch. SETUP.md
- * tracks it and `npm run verify` warns until `legal.privacyPolicyApproved` is
- * set in src/config/site.ts.
+ * Client-approved (legal.privacyPolicyApproved in src/config/site.ts). It
+ * describes what this website collects: contact form submissions via
+ * Web3Forms, and analytics. Indexable and in the sitemap, like any public page
+ * (SEO implementation sheet, Technical Fix #5). If the policy changes, bump
+ * legal.privacyPolicyUpdated so the "Last updated" date stays accurate.
  */
 import { site, paths } from '@config/site';
 import { th, emailHref } from '@lib/tokens';
@@ -25,7 +23,7 @@ const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Privacy Policy' }];
 const updated = site.legal.privacyPolicyUpdated;
 ---
 
-<BaseLayout title={title} description={description} path={path} crumbs={crumbs} noindex>
+<BaseLayout title={title} description={description} path={path} crumbs={crumbs}>
   <header class="legal-head">
     <div class="legal-head__inner">
       <nav class="crumbs" aria-label="Breadcrumb">

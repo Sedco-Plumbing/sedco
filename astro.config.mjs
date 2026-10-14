@@ -81,9 +81,9 @@ export default defineConfig({
     react(),
     keystatic(),
     sitemap({
-      // Exclude the Keystatic admin and the noindex privacy page, so the
+      // Exclude the Keystatic admin, so the
       // sitemap lists exactly the public pages we want crawled.
-      filter: (page) => !page.includes('/keystatic') && !page.includes('/privacy-policy'),
+      filter: (page) => !page.includes('/keystatic'),
     }),
   ],
 
