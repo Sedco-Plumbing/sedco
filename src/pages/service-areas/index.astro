@@ -2,7 +2,7 @@
 /**
  * SERVICE AREAS HUB — design "Sedco Service Areas".
  * Hero with the ten town pills → "Towns We Serve" grid → service-area map →
- * FAQ → contact. Every town links to its /service-areas/[town]/ page.
+ * extra copy (SEO sheet "Thin Content") → FAQ (sheet questions first) → contact. Every town links to its /service-areas/[town]/ page.
  */
 import { site, paths } from '@config/site';
 import { commonFaqs } from '@config/faqs';
@@ -14,12 +14,17 @@ import Faq from '@components/Faq.astro';
 import ContactSection from '@components/ContactSection.astro';
 import Icon from '@components/ui/Icon.astro';
 import PageSchema from '@components/schema/PageSchema.astro';
+import { pageCopy } from '../../data/page-copy';
+import { parsePageCopy } from '@lib/page-copy';
+import PageCopy from '@components/PageCopy.astro';
 
 const title = 'Plumbing Service Areas in San Diego County | Sedco Plumbing';
 const description =
   'Sedco Plumbing serves El Cajon, La Mesa, Santee, Lakeside, Spring Valley, Lemon Grove, Alpine, Rancho San Diego, Jamul & San Diego. Call [PHONE].';
 const path = paths.areasHub;
 const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Service Areas' }];
+
+const copy = parsePageCopy(pageCopy.serviceAreas);
 ---
 
 <BaseLayout
@@ -70,7 +75,9 @@ const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Service Areas' }];
 
   <ServiceAreasSection />
 
-  <Faq faqs={commonFaqs} mobileCall />
+  <PageCopy sections={copy.sections} label="About our service areas" />
+
+  <Faq faqs={[...copy.faqs, ...commonFaqs]} mobileCall />
 
   <ContactSection />
 </BaseLayout>

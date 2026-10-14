@@ -1,0 +1,205 @@
+---
+/**
+ * Extra written sections on the hub and info pages (SEO sheet "Thin Content"
+ * tab): a grid of white cards, each with an H2 and its paragraphs, checklist
+ * bullets or numbered steps. Two per row on desktop; an odd last card spans
+ * the full width. Copy comes from src/data/page-copy.ts via parsePageCopy().
+ */
+import Icon from '@components/ui/Icon.astro';
+import { inlineHtml, type CopySection } from '@lib/page-copy';
+
+interface Props {
+  sections: CopySection[];
+  /** Accessible name for the block */
+  label: string;
+}
+
+const { sections, label } = Astro.props;
+---
+
+{
+  sections.length > 0 && (
+    <section class="page-copy" aria-label={label}>
+      <div class="container page-copy__grid">
+        {sections.map((section) => (
+          <article class="page-copy__card">
+            <h2 class="page-copy__title">{section.heading}</h2>
+            {section.blocks.map((block) =>
+              block.type === 'p' ? (
+                <p class="page-copy__p" set:html={inlineHtml(block.text)} />
+              ) : block.type === 'ul' ? (
+                <ul class="page-copy__list">
+                  {block.items.map((item) => (
+                    <li>
+                      <span class="page-copy__tick" aria-hidden="true">
+                        <Icon name="check" size={14} strokeWidth={3} />
+                      </span>
+                      <span set:html={inlineHtml(item)} />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <ol class="page-copy__steps">
+                  {block.items.map((item, index) => (
+                    <li>
+                      <span class="page-copy__num" aria-hidden="true">{index + 1}</span>
+                      <span set:html={inlineHtml(item)} />
+                    </li>
+                  ))}
+                </ol>
+              ),
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .page-copy {
+    padding: 72px 0 8px;
+  }
+
+  .page-copy__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .page-copy__card {
+    padding: 32px 36px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-2xl);
+    background: var(--white);
+  }
+
+  /* An odd last card takes the full row */
+  .page-copy__card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .page-copy__title {
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--navy-800);
+  }
+
+  .page-copy__p {
+    margin-top: 14px;
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: var(--slate-700);
+  }
+
+  .page-copy__p :global(a),
+  .page-copy__list :global(a),
+  .page-copy__steps :global(a) {
+    font-weight: 600;
+    color: var(--blue-600);
+    text-underline-offset: 3px;
+  }
+
+  .page-copy__p :global(a:hover) {
+    color: var(--blue-700);
+  }
+
+  .page-copy__p :global(strong),
+  .page-copy__list :global(strong) {
+    font-weight: 700;
+    color: var(--navy-800);
+  }
+
+  .page-copy__list {
+    display: grid;
+    gap: 12px;
+    margin-top: 18px;
+    list-style: none;
+  }
+
+  .page-copy__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 16.5px;
+    line-height: 1.55;
+    color: var(--slate-700);
+  }
+
+  .page-copy__tick {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-top: 1px;
+    border-radius: 50%;
+    background: var(--yellow-100);
+    color: var(--gold-check);
+  }
+
+  .page-copy__steps {
+    display: grid;
+    gap: 14px;
+    margin-top: 18px;
+    list-style: none;
+  }
+
+  .page-copy__steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 16.5px;
+    line-height: 1.55;
+    color: var(--slate-700);
+  }
+
+  .page-copy__num {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--navy-800);
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--yellow-500);
+  }
+
+  @media (max-width: 899px) {
+    .page-copy__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .page-copy {
+      padding-top: 48px;
+    }
+
+    .page-copy__grid {
+      gap: 14px;
+    }
+
+    .page-copy__card {
+      padding: 24px 20px;
+      border-radius: var(--r-xl);
+    }
+
+    .page-copy__title {
+      font-size: 21px;
+    }
+
+    .page-copy__p,
+    .page-copy__list li,
+    .page-copy__steps li {
+      font-size: 16px;
+    }
+  }
+</style>

@@ -1,7 +1,8 @@
 ---
 /**
  * SERVICES HUB — design "Sedco All Services".
- * Hero (with the four group pills) → services grid → FAQ → contact.
+ * Hero (with the four group pills) → services grid → extra copy (SEO sheet
+ * "Thin Content") → FAQ (sheet questions first) → contact.
  * Every card links to its live service URL (keyword map).
  */
 import { paths } from '@config/site';
@@ -14,12 +15,17 @@ import ServicesGrid from '@components/ServicesGrid.astro';
 import Faq from '@components/Faq.astro';
 import ContactSection from '@components/ContactSection.astro';
 import PageSchema from '@components/schema/PageSchema.astro';
+import { pageCopy } from '../../data/page-copy';
+import { parsePageCopy } from '@lib/page-copy';
+import PageCopy from '@components/PageCopy.astro';
 
 const title = 'Plumbing Services in El Cajon & San Diego County | Sedco';
 const description =
   'Plumbing for San Diego County homes and businesses: drains, water heaters, slab leaks, sewer & gas lines. Upfront pricing. Call [PHONE].';
 const path = paths.servicesHub;
 const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Services' }];
+
+const copy = parsePageCopy(pageCopy.services);
 ---
 
 <BaseLayout
@@ -51,7 +57,9 @@ const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Services' }];
 
   <ServicesGrid />
 
-  <Faq faqs={commonFaqs} mobileCall />
+  <PageCopy sections={copy.sections} label="Choosing a plumbing service" />
+
+  <Faq faqs={[...copy.faqs, ...commonFaqs]} mobileCall />
 
   <ContactSection />
 </BaseLayout>

@@ -2,7 +2,9 @@
 /**
  * BLOG INDEX — editorial layout: a light header (breadcrumb, H1, intro),
  * the newest post as a wide featured card, every other post in a card grid,
- * "Popular services" links, and a call-to-action band.
+ * extra copy (SEO sheet "Thin Content"), and a call-to-action band with
+ * "Popular services" links. The sheet's "Need Help Now?" section is that band's
+ * heading and text.
  *
  * Schema: Blog with each BlogPosting (headline, URL, dates, image), plus
  * BreadcrumbList from the layout. Posts are Keystatic-managed.
@@ -17,12 +19,19 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import PostCard from '@components/blog/PostCard.astro';
 import JsonLd from '@components/schema/JsonLd.astro';
 import Icon from '@components/ui/Icon.astro';
+import PageCopy from '@components/PageCopy.astro';
+import { pageCopy } from '../../data/page-copy';
+import { parsePageCopy, takeSection, inlineHtml } from '@lib/page-copy';
 
 const title = 'Plumbing Tips & Local Guides | Sedco Plumbing Blog';
 const description =
   'Plumbing tips and local guides for East County homes: water heater care, preventing clogged drains, slab leaks and hard water. From Sedco Plumbing.';
 const path = paths.blog;
 const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Blog' }];
+
+const copy = parsePageCopy(pageCopy.blog);
+const { section: helpNow, rest: blogSections } = takeSection(copy.sections, 'Need Help Now?');
+const helpText = helpNow?.blocks.find((block) => block.type === 'p');
 
 const posts = await getPublishedPosts();
 const [featured, ...rest] = posts;
@@ -114,12 +123,20 @@ const popular = ['drain-cleaning', 'water-heater', 'slab-leak-repair', 'sewer-li
     </div>
   </section>
 
+  <PageCopy sections={blogSections} label="About the Sedco Plumbing blog" />
+
   <section class="popular" aria-labelledby="popular-heading">
     <div class="container">
       <div class="popular__panel">
         <div class="popular__text">
-          <h2 class="popular__title" id="popular-heading">Need a plumber instead of an article?</h2>
-          <p>Free estimates, no trip charge, and a 30-day guarantee on all work. Open 24 hours, Monday to Saturday.</p>
+          <h2 class="popular__title" id="popular-heading">{helpNow?.heading ?? 'Need a plumber instead of an article?'}</h2>
+          {
+            helpText?.type === 'p' ? (
+              <p set:html={inlineHtml(helpText.text)} />
+            ) : (
+              <p>Free estimates, no trip charge, and a 30-day guarantee on all work. Open 24 hours, Monday to Saturday.</p>
+            )
+          }
           <div class="popular__actions on-navy">
             <a class="btn btn--call btn--md" href={phoneHref()}><Icon name="phone" size={18} />Call {site.business.phone}</a>
             <a class="btn btn--outline-dark btn--md" href={`${paths.contact}#request`} data-open-request>Request Service</a>
@@ -245,7 +262,7 @@ const popular = ['drain-cleaning', 'water-heater', 'slab-leak-repair', 'sewer-li
   /* ---- CTA + popular services ---- */
 
   .popular {
-    padding: 0 0 88px;
+    padding: 56px 0 88px;
   }
 
   .popular__panel {
@@ -273,6 +290,16 @@ const popular = ['drain-cleaning', 'water-heater', 'slab-leak-repair', 'sewer-li
     margin-top: 12px;
     font-size: 17px;
     line-height: 1.6;
+  }
+
+  .popular__text p :global(a) {
+    font-weight: 600;
+    color: var(--white);
+    text-underline-offset: 3px;
+  }
+
+  .popular__text p :global(a:hover) {
+    color: var(--yellow-500);
   }
 
   .popular__actions {

@@ -2,8 +2,9 @@
 /**
  * CONTACT — a single "contact desk": compact hero with three quick facts, then
  * the ContactDesk panel overlapping it (request form left, navy contact
- * details right; the same panel ContactSection uses on other pages). Then what
- * happens after a request, the FAQ and the service-area map.
+ * details right; the same panel ContactSection uses on other pages). Then the
+ * SEO sheet's "Thin Content" sections (how to contact us, what happens next,
+ * when to call right away, areas we serve), the FAQ and the service-area map.
  *
  * The form panel carries id="request", the no-JS target of every "Request
  * Service" link on the site.
@@ -18,6 +19,9 @@ import ContactDesk from '@components/ContactDesk.astro';
 import Faq from '@components/Faq.astro';
 import ServiceAreasSection from '@components/ServiceAreasSection.astro';
 import Icon from '@components/ui/Icon.astro';
+import PageCopy from '@components/PageCopy.astro';
+import { pageCopy } from '../data/page-copy';
+import { parsePageCopy } from '@lib/page-copy';
 import PageSchema from '@components/schema/PageSchema.astro';
 
 const title = 'Contact Sedco Plumbing | El Cajon Plumber — [PHONE]';
@@ -29,20 +33,7 @@ const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Contact' }];
 const phone = site.business.phone;
 const tel = phoneHref();
 
-const steps = [
-  {
-    title: 'We call you back',
-    text: 'Within 30 minutes, Monday to Saturday, to talk about the problem and schedule plumbing service in El Cajon or wherever you are in San Diego County.',
-  },
-  {
-    title: 'A plumber comes to you',
-    text: 'Same-day visits are available, and there is no trip charge for coming out to see the problem.',
-  },
-  {
-    title: 'You get a free estimate',
-    text: 'A clear price before any work starts. Nothing goes ahead until you say yes, and the work is guaranteed for 30 days.',
-  },
-];
+const copy = parsePageCopy(pageCopy.contact);
 ---
 
 <BaseLayout
@@ -79,23 +70,7 @@ const steps = [
     <ContactDesk id="contact" source="contact-page" mobileForm />
   </section>
 
-  <section class="next" aria-labelledby="next-heading">
-    <div class="container">
-      <p class="eyebrow">What happens next</p>
-      <h2 class="next__title" id="next-heading">After You Send a Request</h2>
-      <ol class="next__steps">
-        {
-          steps.map((step, index) => (
-            <li>
-              <span class="next__num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-              <h3 class="next__step-title">{step.title}</h3>
-              <p class="next__step-text">{step.text}</p>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-  </section>
+  <PageCopy sections={copy.sections} label="How to contact us and what happens next" />
 
   <Faq faqs={commonFaqs} mobileCall />
 
@@ -144,68 +119,7 @@ const steps = [
     display: none;
   }
 
-  /* ---- what happens next ---- */
-
-  .next {
-    padding: 88px 0 24px;
-  }
-
-  .next__title {
-    margin-top: 10px;
-    font-weight: 800;
-    font-size: 36px;
-    letter-spacing: -0.02em;
-  }
-
-  .next__steps {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-    margin-top: 32px;
-    list-style: none;
-  }
-
-  .next__steps li {
-    padding: 28px;
-    border: 1px solid var(--line);
-    border-radius: var(--r-xl);
-    background: var(--white);
-  }
-
-  .next__num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--yellow-500);
-    font-family: var(--font-title);
-    font-weight: 800;
-    font-size: 15px;
-    color: var(--navy-800);
-  }
-
-  .next__step-title {
-    margin-top: 18px;
-    font-weight: 700;
-    font-size: 20px;
-  }
-
-  .next__step-text {
-    margin-top: 8px;
-    font-size: 15.5px;
-    line-height: 1.6;
-    color: var(--slate-600);
-  }
-
   /* ---- reflow ---- */
-
-  @media (max-width: 959px) {
-    .next__steps {
-      grid-template-columns: minmax(0, 1fr);
-    }
-  }
 
   @media (max-width: 768px) {
     .facts {
@@ -224,16 +138,5 @@ const steps = [
       margin-bottom: 16px;
     }
 
-    .next {
-      padding: 56px 0 8px;
-    }
-
-    .next__title {
-      font-size: 28px;
-    }
-
-    .next__steps li {
-      padding: 22px;
-    }
   }
 </style>
