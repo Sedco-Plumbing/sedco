@@ -1,7 +1,9 @@
 service: property-management-plumbing
 
 title: "Property Management Plumbing Services | Sedco Plumbing"
-description: "Property management plumbing services for rentals in El Cajon, East County and San Diego. 24/7, free estimates, no trip fee. Call (619) 714-0027."
+description: >-
+  Property management plumbing services for San Diego County landlords, HOAs & managers. Rental
+  property repairs with clear invoicing. Call [PHONE].
 primaryKeyword: "property management plumbing services"
 supportingKeywords:
   - "property management plumbing"
@@ -17,6 +19,11 @@ heroPoints:
   - "Licensed California C-36 plumbing contractor"
 
 h1: "Property Management Plumbing Services"
+heroLead: >-
+  Sedco Plumbing provides property management plumbing services for landlords, HOAs and managed
+  properties. As a plumber for property managers in San Diego County, we coordinate access with
+  tenants, send clear invoices and handle rental property plumbing services from turnovers to
+  emergencies, including HOA plumbing services in San Diego.
 intro:
   - "Rental plumbing doesn’t have office hours. We don't either. Sedco Plumbing provides property management plumbing services to landlords, property managers and HOAs throughout El Cajon, East County and the City of San Diego. Call at any time and you will receive an instant answer. Our pricing is affordable and straightforward. Free estimate, no trip charge, price in writing before we start. We’ve been doing plumbing out here for 20 years and we guarantee our work for 30 days."
 

@@ -1,7 +1,9 @@
 service: gas-lines
 
-title: 'Gas Line Repair & Installation in El Cajon | Sedco Plumbing'
-description: 'Licensed C-36 gas line repair and installation in El Cajon, CA: BBQ, fire pit and range lines plus earthquake shutoff valves. Call [PHONE].'
+title: 'Gas Line Repair & Installation in El Cajon | Sedco'
+description: >-
+  Gas line repair and installation in El Cajon by a licensed plumber. Gas leak repair in San Diego
+  plus stove, dryer & BBQ hookups. Call [PHONE].
 primaryKeyword: gas line repair El Cajon
 supportingKeywords:
   - Gas Line Installation in El Cajon
@@ -18,7 +20,12 @@ heroPoints:
   - Total demand calculated before we quote
   - Permits pulled and inspections scheduled for you
 
-h1: Gas Line Repair and Installation in El Cajon
+h1: 'Gas Line Repair and Installation in El Cajon'
+heroLead: >-
+  Sedco Plumbing handles gas line repair and installation in El Cajon, including gas leak repair in
+  San Diego and new gas line for stove installation, dryers and outdoor BBQs. If you smell gas, leave
+  the home and call your gas utility first. Once it is safe, our licensed team repairs or runs the
+  line and tests it before we leave.
 intro:
   - >-
     Gas lines require careful planning, proper connections, and thorough safety checks. Whether

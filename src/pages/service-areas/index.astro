@@ -17,7 +17,7 @@ import PageSchema from '@components/schema/PageSchema.astro';
 
 const title = 'Plumbing Service Areas in San Diego County | Sedco Plumbing';
 const description =
-  'Based in El Cajon, serving La Mesa, Santee, Lakeside, Spring Valley, Lemon Grove, Alpine, Rancho San Diego, Jamul and San Diego. Call [PHONE].';
+  'Sedco Plumbing serves El Cajon, La Mesa, Santee, Lakeside, Spring Valley, Lemon Grove, Alpine, Rancho San Diego, Jamul & San Diego. Call [PHONE].';
 const path = paths.areasHub;
 const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Service Areas' }];
 ---
@@ -35,8 +35,8 @@ const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Service Areas' }];
 
   <PageHero
     crumbs={crumbs}
-    heading="Plumbing Service Areas Across San Diego County"
-    intro="Sedco Plumbing is based in El Cajon, and our plumbers drive out to homes and businesses across San Diego County, with most of our work in the East County towns close to home. Every visit starts with a free estimate, with no trip charge."
+    heading="Where We Work: San Diego County Plumbing Service Areas"
+    intro="Where we work: Sedco Plumbing is based in El Cajon and covers plumbing service areas across San Diego County, with most of our calls coming from East County. Find your city below to see the local plumbing issues we handle there, or call us to confirm we cover your address."
   >
     <ul class="town-pills" slot="below" aria-label="Towns we serve">
       {

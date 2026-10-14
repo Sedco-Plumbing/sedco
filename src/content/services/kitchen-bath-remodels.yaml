@@ -1,7 +1,9 @@
 service: kitchen-bath-remodels
 
-title: Kitchen & Bath Remodel Plumbing in El Cajon | Sedco Plumbing
-description: 'Remodel plumbing for El Cajon kitchens and baths: rough-in, fixture setting and CA low-flow compliance, with your contractor. Call [PHONE].'
+title: 'Remodel Plumbing in El Cajon | Kitchen & Bath | Sedco'
+description: >-
+  Remodel plumbing in El Cajon & San Diego. Bathroom remodel plumber, kitchen remodel plumbing &
+  rough-in for remodels. Call [PHONE].
 primaryKeyword: remodel plumbing El Cajon
 supportingKeywords:
   - Kitchen Remodel Plumbing in El Cajon
@@ -18,7 +20,12 @@ heroPoints:
   - Accessible shutoffs at every fixture
   - License, bonding, and insurance docs on request
 
-h1: Kitchen & Bathroom Remodel Plumbing in El Cajon
+h1: 'Remodel Plumbing in El Cajon for Kitchens and Baths'
+heroLead: >-
+  Sedco Plumbing handles remodel plumbing in El Cajon for kitchens and baths. We work as the bathroom
+  remodel plumber in San Diego for homeowners and contractors, from plumbing rough-in for a remodel to
+  final fixture hookups, and we handle kitchen remodel plumbing in San Diego when sinks, dishwashers
+  or gas lines move.
 intro:
   - >-
     When you remodel a kitchen or bathroom, the plumbing needs to be planned just as carefully as

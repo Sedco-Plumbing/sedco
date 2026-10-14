@@ -1,9 +1,9 @@
 city: alpine
 
-title: Plumber in Alpine, CA | Sedco Plumbing
+title: 'Plumber in Alpine, CA | Sedco Plumbing'
 description: >-
-  A plumber who actually comes to Alpine — wells, propane, gas lines, and everyday repairs, straight up I-8
-  from El Cajon. Call [PHONE] for service.
+  An East County plumber who actually comes to Alpine. Alpine plumbing services, water heater repair &
+  drain cleaning. Call [PHONE].
 primaryKeyword: plumber Alpine
 supportingKeywords:
   - Alpine plumbing company
@@ -21,7 +21,11 @@ heroPoints:
   - Propane and natural gas lines, pressure-tested
   - Emergency dispatch prioritized, same as in town
 
-h1: An East County Plumber Who Actually Comes to Alpine
+h1: 'Alpine Plumber: An East County Pro Who Actually Comes to Alpine'
+heroLead: >-
+  Looking for an Alpine plumber? Sedco Plumbing is an East County pro who actually comes to Alpine,
+  not one that turns down the drive. Our Alpine plumbing services include water heater repair in
+  Alpine, drain cleaning in Alpine and repairs for homes on larger lots.
 intro:
   - >-
     Ask around Alpine and you’ll hear the same complaint: plumbers from the city either won’t make the drive or

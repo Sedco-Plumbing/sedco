@@ -1,9 +1,9 @@
 service: water-heater
 
-title: Water Heater Repair & Install El Cajon | Sedco Plumbing
+title: 'Water Heater Repair & Installation El Cajon | Sedco'
 description: >-
-  Water heater repair, replacement & tankless installation in El Cajon. Code-compliant work with
-  seismic straps and expansion tanks. Call [PHONE].
+  Water heater repair, installation & replacement in El Cajon. Tank and tankless water heaters,
+  emergency repair across San Diego. Call [PHONE].
 primaryKeyword: water heater repair El Cajon
 supportingKeywords:
   - Water Heater Installation in El Cajon
@@ -21,8 +21,10 @@ heroPoints:
 
 # ---- 2026 design blocks (added on top of the SEO copy; see content.config.ts) ----
 heroLead: >-
-  Water heater repair and replacement in El Cajon, from emergency water heater repair to tankless
-  water heater installation in San Diego County.
+  No hot water? Sedco Plumbing handles water heater repair and installation in El Cajon for tank and
+  tankless systems. We offer emergency water heater repair in El Cajon, water heater replacement in El
+  Cajon when repair no longer makes sense, tankless water heater repair in El Cajon and tankless water
+  heater installation in San Diego, all priced upfront.
 asideHeading: No hot water right now?
 asideText: Same-day visits across San Diego County, 24 hours Monday to Saturday.
 covers:
@@ -47,7 +49,7 @@ covers:
     - title: Rentals and businesses
       text: Water heater service for landlords, property managers and commercial buildings.
 
-h1: Water Heater Repair and Installation in El Cajon
+h1: 'Water Heater Repair and Installation in El Cajon'
 intro:
   - >-
     A reliable water heater keeps your home comfortable, from morning showers to everyday cleaning

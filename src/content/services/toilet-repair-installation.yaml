@@ -1,9 +1,9 @@
 service: toilet-repair-installation
 
-title: Toilet Repair & Installation in El Cajon | Sedco Plumbing
+title: 'Toilet Repair & Installation in El Cajon | Sedco Plumbing'
 description: >-
-  Running, leaking, or clogged toilet in El Cajon? Fast repairs and clean installs from a licensed
-  local plumber. Upfront flat pricing. Call [PHONE].
+  Toilet repair and installation in El Cajon. Running toilets, leaks, clogs & toilet replacement
+  across San Diego. Upfront pricing. Call [PHONE].
 primaryKeyword: toilet repair El Cajon
 supportingKeywords:
   - Toilet Repair in El Cajon
@@ -20,7 +20,12 @@ heroPoints:
   - Old fixture hauled away
   - Leaks checked and flush tested before we finish
 
-h1: Toilet Repair and Installation in El Cajon
+h1: 'Toilet Repair and Installation in El Cajon'
+heroLead: >-
+  Sedco Plumbing handles toilet repair and installation in El Cajon, from a running toilet repair to a
+  full toilet replacement in San Diego homes. A toilet that runs, rocks or leaks at the base wastes
+  water and can damage your floor, so we fix the cause, not just the symptom, and quote the price
+  upfront.
 intro:
   - >-
     A toilet that keeps running, won’t flush properly, or constantly clogs can quickly become more

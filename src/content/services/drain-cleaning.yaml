@@ -1,7 +1,9 @@
 service: drain-cleaning
 
-title: Drain Cleaning in El Cajon, CA | Sedco Plumbing
-description: 'Clogged drain in El Cajon? We clear kitchen, bath and main line drains across San Diego County, 24 hours Mon–Sat. Free estimate. Call [PHONE].'
+title: 'Drain Cleaning in El Cajon | Clogged Drain Repair | Sedco'
+description: >-
+  Fast drain cleaning in El Cajon & San Diego. Clogged drain repair, kitchen drain clogs, main line
+  cleaning & emergency service. Call [PHONE].
 primaryKeyword: drain cleaning El Cajon
 supportingKeywords:
   - Drain Cleaning in El Cajon
@@ -20,8 +22,10 @@ heroPoints:
 
 # ---- 2026 design blocks (added on top of the SEO copy; see content.config.ts) ----
 heroLead: >-
-  Slow or blocked drains cleared by a local, licensed plumber, from a kitchen drain clog in El
-  Cajon to main line drain cleaning in San Diego County.
+  Sedco Plumbing provides drain cleaning in El Cajon and across San Diego for slow sinks, backed-up
+  showers and kitchen drain clogs. From clogged drain repair in El Cajon to main line drain cleaning
+  in San Diego, we clear the blockage and find out why it formed. Need emergency drain cleaning in El
+  Cajon? Same-day appointments are usually available.
 asideHeading: Blocked drain right now?
 asideText: Same-day visits across San Diego County.
 howHeading: Call Us to Clear Your Drain
@@ -79,7 +83,7 @@ tips:
     - title: Call early.
       text: A drain that is starting to slow down is usually quicker to clear than a full blockage.
 
-h1: Drain Cleaning in El Cajon, CA
+h1: 'Drain Cleaning in El Cajon and San Diego'
 intro:
   - >-
     A slow drain may seem like a minor inconvenience until water stops moving altogether. Sedco

@@ -145,6 +145,8 @@ const serviceAreas = defineCollection({
     heroPoints: z.array(z.string()).default([]),
     /** Closing "Also serving nearby:" sentence, verbatim from the guide */
     alsoServing: z.string().optional(),
+    /** Opening paragraph directly under the H1 in the hero (SEO implementation sheet) */
+    heroLead: z.string().optional(),
   }),
 });
 

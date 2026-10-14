@@ -2,7 +2,9 @@ service: property-management-plumbing
 city: el-cajon
 
 title: "Property Management Plumbing in El Cajon | Sedco Plumbing"
-description: "Property management plumbing in El Cajon. 24/7 response, low prices, free estimates, and no travel fees. Call (619) 714-0027."
+description: >-
+  Property management plumbing in El Cajon for landlords, HOAs & property managers. Tenant-friendly
+  scheduling and clear invoices. Call [PHONE].
 primaryKeyword: "property management plumbing El Cajon"
 supportingKeywords:
   - "property management plumbing services El Cajon"
@@ -17,7 +19,12 @@ heroPoints:
   - "No trip charge"
   - "Licensed California C-36 plumbing contractor"
 
-h1: "Property Management Plumbing in El Cajon, CA"
+h1: "Property Management Plumbing in El Cajon"
+heroLead: >-
+  Sedco Plumbing provides property management plumbing in El Cajon for landlords, HOAs and property
+  managers. As a local property management plumber in El Cajon, we schedule around tenants, report
+  what we find and keep your units running. Our property management plumbing services in El Cajon
+  cover routine repairs, turnovers and emergencies.
 intro:
   - "Sedco Plumbing does property management plumbing in El Cajon for landlords, property managers and HOAs. Feel free to call at 2 in the afternoon or 2 in the morning, and you'll definitely get a response. The estimate is completely free, there’s no trip fee, and you’ll receive the price in writing beforehand."
 

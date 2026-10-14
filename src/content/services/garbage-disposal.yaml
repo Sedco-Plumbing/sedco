@@ -1,7 +1,9 @@
 service: garbage-disposal
 
-title: Garbage Disposal Repair El Cajon, CA | Sedco Plumbing
-description: 'Garbage disposal jammed, leaking or humming? We repair and install disposals across El Cajon and East County, often same day. Call [PHONE].'
+title: 'Garbage Disposal Repair & Installation El Cajon | Sedco'
+description: >-
+  Garbage disposal repair and installation in El Cajon. Disposal not working or leaking? We repair or
+  replace it across San Diego. Call [PHONE].
 primaryKeyword: garbage disposal repair El Cajon
 supportingKeywords:
   - Garbage Disposal Repair in El Cajon
@@ -18,7 +20,12 @@ heroPoints:
   - Dishwasher drain connected the way code requires
   - Tested under load before we leave
 
-h1: Garbage Disposal Repair in El Cajon
+h1: 'Garbage Disposal Repair and Installation in El Cajon'
+heroLead: >-
+  Is your garbage disposal not working, humming or leaking under the sink? Sedco Plumbing offers
+  garbage disposal repair and installation in El Cajon, plus garbage disposal replacement in San Diego
+  when a unit is past saving. We check the wiring, drain connection and mounting so your new or
+  repaired disposal runs quietly.
 intro:
   - >-
     A garbage disposal that hums, leaks, or suddenly stops working can quickly make everyday kitchen

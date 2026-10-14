@@ -1,7 +1,9 @@
 service: grease-trap
 
-title: 'Grease Trap Services in San Diego County | Sedco Plumbing'
-description: 'Grease trap services in San Diego County: pumping, cleaning, installation and repair for El Cajon restaurants and commercial kitchens. Call [PHONE].'
+title: 'Grease Trap Services in San Diego | Sedco Plumbing'
+description: >-
+  Grease trap services for San Diego restaurants and commercial kitchens: installation, repair &
+  maintenance from a licensed plumber. Call [PHONE].
 primaryKeyword: grease trap services San Diego
 supportingKeywords:
   - Grease Trap Pumping in El Cajon
@@ -19,7 +21,12 @@ heroPoints:
   - Every visit documented for inspectors
   - Repairs, replacements, and new interceptors
 
-h1: Grease Trap Services in El Cajon
+h1: 'Grease Trap Services in San Diego and El Cajon'
+heroLead: >-
+  Sedco Plumbing provides grease trap services in San Diego and El Cajon for restaurants, cafes and
+  commercial kitchens. We handle grease trap installation in El Cajon, commercial grease trap repair
+  and the plumbing around it. If you need a restaurant grease trap plumber who understands health
+  inspections and downtime, call us before a backup closes your kitchen.
 intro:
   - >-
     For restaurants and commercial kitchens, a properly maintained grease trap is an important part

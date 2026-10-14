@@ -20,9 +20,9 @@ import Stars from '@components/ui/Stars.astro';
 import GoogleReviewButton from '@components/ui/GoogleReviewButton.astro';
 import PageSchema from '@components/schema/PageSchema.astro';
 
-const title = 'Sedco Plumbing Reviews | El Cajon & San Diego County';
+const title = 'Sedco Plumbing Reviews | Top Rated Plumber in El Cajon';
 const description =
-  'Read reviews from Sedco Plumbing customers across El Cajon, La Mesa, Santee and San Diego County. Licensed, upfront-priced plumbing. Call [PHONE].';
+  'Read what El Cajon and East County customers say about Sedco Plumbing. See why homeowners call us the best plumber in El Cajon. Call [PHONE].';
 const path = paths.reviews;
 const crumbs = [{ name: 'Home', href: paths.home }, { name: 'Reviews' }];
 
@@ -43,8 +43,8 @@ const sources = [...new Set(reviews.map((r) => r.source))];
   <PageHero
     crumbs={crumbs}
     eyebrow="Customer reviews"
-    heading="What Our Customers Say About Sedco Plumbing"
-    intro="Reviews from homeowners, landlords and businesses we've worked for across El Cajon and San Diego County."
+    heading="Sedco Plumbing Reviews From El Cajon and East County Customers"
+    intro="These Sedco Plumbing reviews come from customers in El Cajon and East County who called us for drain cleaning, water heaters, leaks and everyday repairs. If you are looking for the best plumber in El Cajon, hearing from real neighbours is a good place to start, and it is why so many call us a top rated plumber in El Cajon."
   >
     <div class="rating-card" slot="aside">
       <div class="rating-card__top">

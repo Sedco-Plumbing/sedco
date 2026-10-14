@@ -1,9 +1,9 @@
 service: faucet-services
 
-title: Faucet Repair & Installation in El Cajon | Sedco Plumbing
+title: 'Faucet Repair & Installation in El Cajon | Sedco Plumbing'
 description: >-
-  Dripping or stuck faucet? Sedco Plumbing repairs and installs faucets across El Cajon with upfront
-  pricing. Licensed C-36. Call [PHONE].
+  Faucet repair and installation in El Cajon. Leaky faucet repair & kitchen faucet replacement across
+  San Diego, priced upfront. Call [PHONE].
 primaryKeyword: faucet repair El Cajon
 supportingKeywords:
   - Faucet Repair in El Cajon
@@ -20,7 +20,12 @@ heroPoints:
   - Static pressure checked while we are there
   - A straight answer on repair versus replacement
 
-h1: Faucet Repair & Installation in El Cajon
+h1: 'Faucet Repair and Installation in El Cajon'
+heroLead: >-
+  Sedco Plumbing offers faucet repair and installation in El Cajon for kitchens, bathrooms and laundry
+  rooms. A leaky faucet repair can save hundreds of gallons a month, and when a fixture is worn out we
+  handle kitchen faucet replacement in San Diego and faucet installation in El Cajon with the fixture
+  of your choice.
 intro:
   - >-
     A dripping faucet may seem like a small problem, but even a slow leak can waste water and become

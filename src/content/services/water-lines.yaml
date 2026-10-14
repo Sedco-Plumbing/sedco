@@ -1,7 +1,9 @@
 service: water-lines
 
-title: Water Line Repair & Repiping in El Cajon | Sedco Plumbing
-description: 'Repiping and water line repair in El Cajon, CA. Sedco Plumbing replaces aging galvanized pipe, with pricing explained up front. Call [PHONE].'
+title: 'Repiping & Water Line Repair in El Cajon | Sedco Plumbing'
+description: >-
+  Repiping and water line repair in El Cajon. Whole house repipe in San Diego and main water line
+  replacement, priced upfront. Call [PHONE].
 primaryKeyword: repiping El Cajon
 supportingKeywords:
   - Water Line Repair Service in El Cajon
@@ -17,7 +19,11 @@ heroPoints:
   - Planned access openings, patched afterward
   - 'CA C-36 licensed and insured'
 
-h1: Water Line Repair & Repiping in El Cajon
+h1: 'Repiping and Water Line Repair in El Cajon'
+heroLead: >-
+  Sedco Plumbing provides repiping and water line repair in El Cajon homes with aging or leaking
+  pipes. From a single water line repair to a whole house repipe in San Diego or a main water line
+  replacement from the street, we explain the options, the timeline and the price before work begins.
 intro:
   - >-
     Your home’s water lines work every day, but older pipes can eventually develop leaks, corrosion,

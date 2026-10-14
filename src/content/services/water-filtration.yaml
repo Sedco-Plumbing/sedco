@@ -1,7 +1,9 @@
 service: water-filtration
 
-title: 'Water Filtration Systems in El Cajon, CA | Sedco Plumbing'
-description: 'Hard water is tough on East County homes. Whole-house water filtration systems installed in El Cajon by a licensed local plumber. Call [PHONE].'
+title: 'Water Filtration Systems in El Cajon | Sedco Plumbing'
+description: >-
+  Water filtration system installation in El Cajon & San Diego: whole house water filters, under-sink
+  filters and water softeners. Call [PHONE].
 primaryKeyword: water filtration system El Cajon
 supportingKeywords:
   - Water Filtration Systems in El Cajon
@@ -17,7 +19,12 @@ heroPoints:
   - Proper bypass valve and code-compliant drain
   - Local follow-up service and filter changes
 
-h1: Water Filtration Systems in El Cajon
+h1: 'Water Filtration Systems in El Cajon'
+heroLead: >-
+  Sedco Plumbing installs water filtration systems in El Cajon homes, from simple under-sink units to
+  whole house water filter installation in San Diego. We handle water filter installation in El Cajon
+  and water softener installation in El Cajon, and help you choose the system that matches your water
+  and your budget.
 intro:
   - >-
     If you’re dealing with hard water, mineral buildup, or water that doesn’t taste quite right, the

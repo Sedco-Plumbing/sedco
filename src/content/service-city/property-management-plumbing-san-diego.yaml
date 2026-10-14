@@ -2,7 +2,9 @@ service: property-management-plumbing
 city: san-diego
 
 title: "Property Management Plumbing in San Diego | Sedco Plumbing"
-description: "Property management plumbing in San Diego. 24/7 response, affordable pricing, free estimates, and no trip fee. Call (619) 714-0027."
+description: >-
+  Property management plumbing in San Diego for landlords, HOAs & management companies. Repairs,
+  turnovers & emergencies. Call [PHONE].
 primaryKeyword: "property management plumbing San Diego"
 supportingKeywords:
   - "property management plumbing services San Diego"
@@ -17,7 +19,12 @@ heroPoints:
   - "No transportation costs anywhere in San Diego"
   - "California C-36 licensed plumbing contractor"
 
-h1: "Property Management Plumbing in San Diego, CA"
+h1: "Property Management Plumbing in San Diego"
+heroLead: >-
+  Sedco Plumbing provides property management plumbing in San Diego for landlords, HOAs and management
+  companies. As a property management plumber in San Diego, we coordinate access, document each job
+  and keep invoicing simple. Our property management plumbing services in San Diego cover routine
+  repairs, unit turnovers and emergency calls.
 intro:
   - "Sedco Plumbing provides San Diego property management plumbing services to HOAs, landlords, and property managers. We'll always be honest about when we can arrive because we're situated in El Cajon and handle rentals throughout the City of San Diego. No matter the time of day or night, someone will answer the phone. Before any work begins, you will receive the pricing in writing, the estimate is free, and there is no trip cost for the drive."
 

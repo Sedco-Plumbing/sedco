@@ -61,7 +61,10 @@ const asideText = 'Same-day visits, a free estimate and no trip charge.';
   crumbs={crumbs}
   eyebrow={data.heroBadge ?? `Serving ${city.name}, CA`}
   heading={t(data.h1)}
-  intro={`Local, licensed plumbers for ${city.name} homes, rentals and businesses — ${city.descriptor}. Free estimate, no trip charge.`}
+  intro={
+    data.heroLead ??
+    `Local, licensed plumbers for ${city.name} homes, rentals and businesses — ${city.descriptor}. Free estimate, no trip charge.`
+  }
 >
   <div class="town-hero-below" slot="below">
     {

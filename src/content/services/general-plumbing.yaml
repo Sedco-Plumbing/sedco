@@ -1,7 +1,9 @@
 service: general-plumbing
 
-title: 'Plumbing Services in El Cajon, CA | Sedco Plumbing'
-description: 'Plumbing services in El Cajon for repairs, installations and inspections. A licensed residential plumber with upfront pricing. Call [PHONE].'
+title: 'Plumbing Services & Repair in El Cajon | Sedco Plumbing'
+description: >-
+  Plumbing services and repair in El Cajon from a licensed residential plumber. Leaks, fixtures &
+  inspections, priced upfront. Call [PHONE].
 primaryKeyword: plumbing services El Cajon
 supportingKeywords:
   - General Plumbing Supply in El Cajon
@@ -17,7 +19,12 @@ heroPoints:
   - Contact us to check same-day availability
   - Practical fixes, not unnecessary repairs
 
-h1: Plumbing Services in El Cajon, CA
+h1: 'Plumbing Services and Repair in El Cajon'
+heroLead: >-
+  Sedco Plumbing handles everyday plumbing services and repair in El Cajon, from leaking pipes and
+  noisy fixtures to full plumbing inspections in El Cajon before you buy or sell a home. As a licensed
+  residential plumber in El Cajon, we explain what we find and give you an upfront price before any
+  plumbing repair begins.
 intro:
   - >-
     When a pipe leaks, a drain backs up, or your water heater stops working, you want a plumber who
