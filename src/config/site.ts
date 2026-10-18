@@ -65,6 +65,8 @@ export interface CityDef {
   slug: string;
   /** City name without state */
   name: string;
+  /** Residential ZIP codes served, emitted in the Plumber schema's areaServed */
+  zips: string[];
   /** Proximity/priority tier (guide Part 1) */
   tier: CityTier;
   /** One distinct descriptive line for the Service Areas hub card grid */
@@ -398,6 +400,7 @@ export const site = {
     {
       slug: 'el-cajon',
       name: 'El Cajon',
+      zips: ['92019', '92020', '92021'],
       tier: 1,
       descriptor: 'our hometown and home base',
       neighborhoods: ['Fletcher Hills', 'Bostonia', 'Granite Hills', 'Downtown El Cajon'],
@@ -407,6 +410,7 @@ export const site = {
     {
       slug: 'la-mesa',
       name: 'La Mesa',
+      zips: ['91941', '91942'],
       tier: 2,
       descriptor: 'Mount Helix to La Mesa Village',
       neighborhoods: ['La Mesa Village', 'Mount Helix', 'Grossmont'],
@@ -417,6 +421,7 @@ export const site = {
     {
       slug: 'santee',
       name: 'Santee',
+      zips: ['92071'],
       tier: 2,
       descriptor: 'Carlton Hills, Sky Ranch, and beyond',
       neighborhoods: ['Carlton Hills', 'Sky Ranch'],
@@ -427,6 +432,7 @@ export const site = {
     {
       slug: 'lakeside',
       name: 'Lakeside',
+      zips: ['92040'],
       tier: 2,
       descriptor: 'including Winter Gardens and Eucalyptus Hills',
       neighborhoods: ['Eucalyptus Hills', 'Winter Gardens'],
@@ -436,6 +442,7 @@ export const site = {
     {
       slug: 'spring-valley',
       name: 'Spring Valley',
+      zips: ['91977', '91978'],
       tier: 2,
       descriptor: 'Casa de Oro, La Presa, Dictionary Hill',
       neighborhoods: ['Casa de Oro', 'La Presa', 'Dictionary Hill'],
@@ -445,6 +452,7 @@ export const site = {
     {
       slug: 'lemon-grove',
       name: 'Lemon Grove',
+      zips: ['91945'],
       tier: 3,
       descriptor: "East County's classic bungalow neighborhoods",
       neighborhoods: [],
@@ -455,6 +463,7 @@ export const site = {
     {
       slug: 'alpine',
       name: 'Alpine',
+      zips: ['91901'],
       tier: 3,
       descriptor: 'rural East County properties, large lots, wells',
       neighborhoods: [],
@@ -464,6 +473,7 @@ export const site = {
     {
       slug: 'rancho-san-diego',
       name: 'Rancho San Diego',
+      zips: ['92019'],
       tier: 3,
       descriptor: "Jamacha Valley's master-planned communities",
       neighborhoods: ['Jamacha Valley', 'Cuyamaca College area'],
@@ -473,6 +483,7 @@ export const site = {
     {
       slug: 'jamul',
       name: 'Jamul',
+      zips: ['91935'],
       tier: 3,
       descriptor: 'rural homes, septic systems, long private drives',
       neighborhoods: [],
@@ -482,6 +493,7 @@ export const site = {
     {
       slug: 'san-diego',
       name: 'San Diego',
+      zips: ['92105', '92114', '92115', '92119', '92120', '92124'],  // East San Diego ZIPs nearest the service base
       tier: 4,
       descriptor: 'San Carlos, Del Cerro, Allied Gardens, College Area, Rolando',
       neighborhoods: ['San Carlos', 'Del Cerro', 'Allied Gardens', 'College Area', 'Rolando'],

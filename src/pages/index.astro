@@ -21,7 +21,6 @@ import ServiceAreasSection from '@components/ServiceAreasSection.astro';
 import AboutSplit from '@components/AboutSplit.astro';
 import Faq from '@components/Faq.astro';
 import ContactSection from '@components/ContactSection.astro';
-import LocalBusinessSchema from '@components/schema/LocalBusinessSchema.astro';
 import FaqSchema from '@components/schema/FaqSchema.astro';
 
 const title = 'Plumber in El Cajon & San Diego County | Sedco Plumbing';
@@ -38,7 +37,6 @@ const faqs = commonFaqs;
   preloadImage={{ name: 'hero/sedco-plumber-el-cajon', sizes: HOME_HERO_SIZES, media: HERO_PHOTO_MEDIA }}
 >
   <Fragment slot="head">
-    <LocalBusinessSchema />
     <FaqSchema faqs={faqs} />
   </Fragment>
 

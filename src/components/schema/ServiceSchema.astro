@@ -3,46 +3,46 @@
  * Service schema for service pages and service x city pages
  * (guide Part 7.1 template B).
  *
- * On the 16 main service pages areaServed is El Cajon plus San Diego County.
+ * On the 16 main service pages areaServed is San Diego County.
  * On a service x city page it is that city.
  */
 import { site, absolute, BUSINESS_ID } from '@config/site';
+import { t } from '@lib/tokens';
 import JsonLd from './JsonLd.astro';
 
 interface Props {
-  /** Service name, used verbatim as serviceType and name */
+  /** Service name, used verbatim as serviceType */
   serviceType: string;
   /** Site-relative path of this page */
   path: string;
   /** City name for a combo page; omit for a main service page */
   city?: string;
-  /** SEO team's Service schema description; omitted on combo pages, which the doc doesn't cover */
+  /** SEO team's Service schema description on main pages; the meta description on combo pages */
   description?: string;
 }
 
 const { serviceType, path, city, description } = Astro.props;
-
-const areaServed = city
-  ? { '@type': 'City', name: city }
-  : [
-      { '@type': 'City', name: site.business.locality },
-      { '@type': 'AdministrativeArea', name: site.business.county },
-    ];
+const { region, county } = site.business;
+const url = absolute(path);
 
 const data: Record<string, unknown> = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: serviceType,
+  '@id': `${url}#service`,
+  name: city ? `${serviceType} in ${city}, ${region}` : serviceType,
   serviceType,
-  // Reference only. The page renders the full Plumber entity alongside this
-  // (LocalBusinessSchema). A typed stub here would be a second, incomplete
-  // Plumber with no address, which validators flag as an error.
+  // Reference only. BaseLayout renders the full Plumber entity on every page;
+  // a typed stub here would be a second, incomplete Plumber with no address,
+  // which validators flag as an error.
   provider: { '@id': BUSINESS_ID },
-  areaServed,
-  url: absolute(path),
+  areaServed: city
+    ? { '@type': 'City', name: `${city}, ${region}` }
+    : { '@type': 'AdministrativeArea', name: `${county}, ${region}` },
+  url,
 };
 
-if (description) data.description = description;
+// t() fills tokens such as [PHONE], as the page's own meta description does.
+if (description) data.description = t(description);
 ---
 
 <JsonLd data={data} />

@@ -4,7 +4,8 @@
  * persistent mobile click-to-call bar.
  *
  * JSON-LD is passed in through the `head` slot so it lands in <head> as the
- * guide specifies (Part 7.1).
+ * guide specifies (Part 7.1). The Plumber entity is rendered here, once per
+ * page, so every page's schema can reference it by @id.
  */
 import '../styles/tokens.css';
 import '../styles/global.css';
@@ -16,6 +17,7 @@ import Seo from '@components/Seo.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import BreadcrumbSchema from '@components/schema/BreadcrumbSchema.astro';
+import LocalBusinessSchema from '@components/schema/LocalBusinessSchema.astro';
 import PreloadImage from '@components/ui/PreloadImage.astro';
 import RequestDrawer from '@components/RequestDrawer.astro';
 import MobileCallBar from '@components/MobileCallBar.astro';
@@ -147,6 +149,7 @@ const googleSiteVerification = site.integrations.googleSiteVerification;
       canonical={canonical}
     />
 
+    <LocalBusinessSchema />
     {crumbs && crumbs.length > 1 && <BreadcrumbSchema crumbs={crumbs} />}
     <slot name="head" />
   </head>

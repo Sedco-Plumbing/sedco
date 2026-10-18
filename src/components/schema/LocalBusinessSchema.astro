@@ -2,11 +2,10 @@
 /**
  * Site-wide business entity (guide Part 7.1 template A).
  *
- * Lives on the homepage, every city page (which the guide specifies as
- * "LocalBusiness (Plumber) with areaServed") and every service and
- * service x city page, where the Service schema's provider points to it by
- * `@id`. The same `@id` and data are emitted everywhere, so the entity is
- * referenced consistently rather than published with conflicting data.
+ * Rendered once on every page by BaseLayout, so the Service, AboutPage and
+ * other schema on any page can reference it by `@id` and always find it in
+ * full. One component, one `@id`, so the entity is never published with
+ * conflicting data.
  *
  * Service-area business: no street address, locality/region/ZIP only.
  */
@@ -28,29 +27,73 @@ const address: Record<string, unknown> = {
 };
 if (!isPlaceholder(business.postalCode)) address.postalCode = business.postalCode;
 
+/** "(619) 714-0027" -> "+1-619-714-0027" (E.164-style, as schema validators prefer) */
+const phone = t('[PHONE]');
+const digits = phone.replace(/\D/g, '').replace(/^1(?=\d{10}$)/, '');
+const telephone =
+  digits.length === 10 ? `+1-${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}` : phone;
+
+/**
+ * "Mo-Sa 00:00-23:59" -> OpeningHoursSpecification. Days left out are closed.
+ * Anything this can't parse falls back to the plain `openingHours` string.
+ */
+const DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const hoursSpec = (value: string) => {
+  const specs = [];
+  for (const part of value.split(',').map((p) => p.trim())) {
+    const m = part.match(/^(Mo|Tu|We|Th|Fr|Sa|Su)(?:-(Mo|Tu|We|Th|Fr|Sa|Su))? (\d\d:\d\d)-(\d\d:\d\d)$/);
+    if (!m) return null;
+    const from = DAYS.indexOf(m[1]);
+    const to = m[2] ? DAYS.indexOf(m[2]) : from;
+    if (to < from) return null;
+    specs.push({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: DAY_NAMES.slice(from, to + 1),
+      opens: m[3],
+      closes: m[4],
+    });
+  }
+  return specs;
+};
+
 const data: Record<string, unknown> = {
   '@context': 'https://schema.org',
   '@type': 'Plumber',
   '@id': BUSINESS_ID,
   name: business.name,
   url: absolute('/'),
-  telephone: t('[PHONE]'),
+  telephone,
   email: t('[EMAIL]'),
-  // SEO team's LocalBusiness schema description, composed from config so it stays correct per client.
-  description: `${business.name} is a locally owned plumbing company based in ${business.locality}, ${business.regionName}, serving homeowners and businesses throughout ${business.county}.`,
-  // 512px square logo (Google asks for at least 112px).
-  image: absolute('/images/brand/sedco-plumbing-logo-512.png'),
+  // SEO team's (Her Brand Bureau) business description, composed from config.
+  description: `Licensed ${business.licenseClass} plumbing contractor based in ${business.locality}, ${business.region}, serving homes and businesses across ${business.county}.`,
+  // Social share photo (1200x630); the logo stays the 512px square Google asks for.
+  image: absolute('/images/social/sedco-plumbing-el-cajon-1200x630.jpg'),
   logo: absolute('/images/brand/sedco-plumbing-logo-512.png'),
   address,
   areaServed: [
-    ...site.cities.map((city) => ({ '@type': 'City', name: city.name })),
-    { '@type': 'AdministrativeArea', name: business.county },
+    ...site.cities.map((city) => ({
+      '@type': 'City',
+      name: `${city.name}, ${business.region}`,
+      address: city.zips.map((zip) => ({
+        '@type': 'PostalAddress',
+        addressLocality: city.name,
+        addressRegion: business.region,
+        postalCode: zip,
+        addressCountry: business.country,
+      })),
+    })),
+    { '@type': 'AdministrativeArea', name: `${business.county}, ${business.region}` },
   ],
   priceRange: business.priceRange,
 };
 
 if (sameAs.length > 0) data.sameAs = sameAs;
-if (!isPlaceholder(business.hoursSchema)) data.openingHours = business.hoursSchema;
+if (!isPlaceholder(business.hoursSchema)) {
+  const spec = hoursSpec(business.hoursSchema);
+  if (spec) data.openingHoursSpecification = spec;
+  else data.openingHours = business.hoursSchema;
+}
 ---
 
 <JsonLd data={data} />
