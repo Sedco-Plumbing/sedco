@@ -2,10 +2,11 @@
 /**
  * Site-wide business entity (guide Part 7.1 template A).
  *
- * Lives on the homepage and on every city page (which the guide specifies as
- * "LocalBusiness (Plumber) with areaServed"). The same `@id` and the same
- * areaServed list are emitted in both places, so the entity is referenced
- * consistently rather than published with conflicting data.
+ * Lives on the homepage, every city page (which the guide specifies as
+ * "LocalBusiness (Plumber) with areaServed") and every service and
+ * service x city page, where the Service schema's provider points to it by
+ * `@id`. The same `@id` and data are emitted everywhere, so the entity is
+ * referenced consistently rather than published with conflicting data.
  *
  * Service-area business: no street address, locality/region/ZIP only.
  */

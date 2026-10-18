@@ -19,6 +19,7 @@ import { SERVICE_HERO_PHOTO_SIZES, SERVICE_HERO_ART_SIZES } from '@lib/media';
 import ServicePage from '@components/service/ServicePage.astro';
 
 import BaseLayout from '@layouts/BaseLayout.astro';
+import LocalBusinessSchema from '@components/schema/LocalBusinessSchema.astro';
 import ServiceSchema from '@components/schema/ServiceSchema.astro';
 import FaqSchema from '@components/schema/FaqSchema.astro';
 
@@ -59,6 +60,7 @@ const item = catalogService(service.slug);
   ]}
 >
   <Fragment slot="head">
+    <LocalBusinessSchema />
     <ServiceSchema serviceType={service.name} path={path} city={city.name} />
     {data.faqs.length > 0 && <FaqSchema faqs={data.faqs} />}
   </Fragment>

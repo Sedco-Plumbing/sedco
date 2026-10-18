@@ -7,7 +7,6 @@
  * On a service x city page it is that city.
  */
 import { site, absolute, BUSINESS_ID } from '@config/site';
-import { t } from '@lib/tokens';
 import JsonLd from './JsonLd.astro';
 
 interface Props {
@@ -35,15 +34,10 @@ const data: Record<string, unknown> = {
   '@type': 'Service',
   name: serviceType,
   serviceType,
-  // The Plumber entity is only published in full on Home and the town pages,
-  // so the provider carries its own name, phone and URL as well as the @id.
-  provider: {
-    '@type': 'Plumber',
-    '@id': BUSINESS_ID,
-    name: site.business.name,
-    telephone: t('[PHONE]'),
-    url: absolute('/'),
-  },
+  // Reference only. The page renders the full Plumber entity alongside this
+  // (LocalBusinessSchema). A typed stub here would be a second, incomplete
+  // Plumber with no address, which validators flag as an error.
+  provider: { '@id': BUSINESS_ID },
   areaServed,
   url: absolute(path),
 };
