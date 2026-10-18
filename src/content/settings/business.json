@@ -9,11 +9,11 @@
   "hoursSchema": "Mo-Sa 00:00-23:59",
   "warranty": "30-day guarantee on all work",
   "estimatePolicy": "Free estimates, no trip charge",
-  "postalCode": "[ZIP]",
+  "postalCode": "92020",
   "profiles": {
     "google": "https://www.google.com/maps?cid=12129761970006114260",
     "googleReview": "https://maps.app.goo.gl/t2xymWfQC2dsq2W2A",
-    "yelp": "[YELP URL]",
+    "yelp": "https://www.yelp.com/biz/sedco-plumbing-el-cajon",
     "facebook": "[FACEBOOK URL]"
   }
 }
