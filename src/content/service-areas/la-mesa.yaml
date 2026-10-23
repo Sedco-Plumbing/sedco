@@ -1,16 +1,16 @@
 city: la-mesa
 
-title: 'Plumber in La Mesa, CA | Sedco Plumbing'
+title: 'Plumber in La Mesa, CA | 24-Hour Emergency Plumbing | Sedco'
 description: >-
-  Local plumber in La Mesa for older homes and hillside properties. La Mesa plumbing services, water
-  heater repair & drain cleaning. Call [PHONE].
-primaryKeyword: plumber La Mesa
+  Plumber in La Mesa, CA for older homes & Mount Helix properties. Emergency plumbing 24 hours Mon–Sat,
+  free estimates. Call [PHONE].
+primaryKeyword: plumber La Mesa CA
 supportingKeywords:
   - La Mesa plumbing company
-  - sewer line repair La Mesa
-  - drain cleaning La Mesa
-  - Mount Helix plumber
   - emergency plumber La Mesa
+  - 24 hour plumber La Mesa
+  - plumber Mount Helix
+  - plumber Grossmont
 
 heroBadge: One town over from our El Cajon shop
 heroStat: 10–15 min
@@ -21,10 +21,11 @@ heroPoints:
   - Trenchless options where the lateral allows
   - Flat-rate price approved before work starts
 
-h1: 'La Mesa Plumber for Older Homes and Hillside Views'
+h1: 'La Mesa Plumber for Older Homes, Mount Helix & Grossmont'
 heroLead: >-
   Sedco Plumbing is a La Mesa plumber for older homes and hillside views, just minutes from our El
-  Cajon shop. Our La Mesa plumbing services cover aging pipes and fixtures, water heater repair in La
+  Cajon shop. As a local La Mesa plumbing company, we answer emergency calls 24 hours Monday to
+  Saturday. Our La Mesa plumbing services cover aging pipes and fixtures, water heater repair in La
   Mesa and drain cleaning in La Mesa, all with upfront pricing.
 intro:
   - >-
@@ -35,6 +36,17 @@ intro:
     understands these houses is rarely more than a short drive away.
 
 sections:
+  - heading: Emergency Plumber in La Mesa, 24 Hours Mon–Sat
+    paragraphs:
+      - >-
+        A root-blocked sewer line in La Mesa Village or a failed pressure regulator on Mount Helix can turn
+        into a flooded floor fast. Our phone is answered 24 hours a day, Monday to Saturday, and we're a 10–15
+        minute drive away in El Cajon.
+      - >-
+        We handle sewer backups, burst and leaking pipes, failed water heaters and pressure problems. While you
+        wait, close your main water shutoff. If you smell gas, leave the home and call SDG&E or 911 first.
+        We're closed on Sundays.
+
   - heading: Mature Trees, Clay Pipes, and the Roots Between Them
     paragraphs:
       - >-
@@ -46,7 +58,7 @@ sections:
         repair or trenchless replacement when the lateral has genuinely failed. Guessing is expensive; we’d
         rather show you the footage and price the real problem.
 
-  - heading: Mount Helix Homes Have Their Own Physics
+  - heading: Plumber for Mount Helix & Grossmont Hillside Homes
     paragraphs:
       - >-
         Elevation changes on Mount Helix and the surrounding hillsides mean street pressure varies dramatically
@@ -59,7 +71,7 @@ sections:
   - heading: Plumbing Services We Provide in La Mesa
     paragraphs:
       - >-
-        The jobs we run most in this zip code have their own dedicated pages: [drain cleaning in La
+        The jobs we run most in La Mesa's 91941 and 91942 ZIP codes have their own dedicated pages: [drain cleaning in La
         Mesa](/services/drain-cleaning/la-mesa/), [sewer line repair in La
         Mesa](/services/sewer-lines/la-mesa/), [water heater service in La
         Mesa](/services/water-heater/la-mesa/), [slab leak repair in La
@@ -69,6 +81,11 @@ sections:
         [our services page](/services/).
 
 faqs:
+  - question: Is there a 24-hour emergency plumber in La Mesa?
+    answer:
+      - >-
+        Yes. Sedco Plumbing answers calls 24 hours a day, Monday to Saturday, and La Mesa, Mount Helix and
+        Grossmont are usually a 10–15 minute drive from our El Cajon base. We're closed on Sundays.
   - question: How quickly can you reach La Mesa from El Cajon?
     answer:
       - >-

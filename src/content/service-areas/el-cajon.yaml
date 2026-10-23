@@ -1,17 +1,16 @@
 city: el-cajon
 
-title: 'El Cajon Plumber – Local & Licensed | Sedco Plumbing'
+title: 'El Cajon Plumber – Local, Licensed & 24-Hr Emergency'
 description: >-
-  Your local El Cajon plumber. Plumbing services, water heater repair & drain cleaning in El Cajon
-  from a licensed team based here. Call [PHONE].
-primaryKeyword: plumber El Cajon
+  Your local El Cajon plumber for emergency & same-day plumbing, 24 hrs Mon–Sat. Water heater repair &
+  drain cleaning by a licensed team. Call [PHONE].
+primaryKeyword: emergency plumber El Cajon
 supportingKeywords:
-  - El Cajon plumbing company
-  - emergency plumber El Cajon
-  - slab leak repair El Cajon
-  - water heater repair El Cajon
-  - drain cleaning El Cajon
-  - licensed plumber 92020
+  - 24 hour plumber El Cajon
+  - same day plumber El Cajon
+  - licensed plumber El Cajon CA
+  - plumber Fletcher Hills
+  - plumber Granite Hills
 
 heroBadge: Our hometown and home base
 heroStat: 10–15 min
@@ -22,9 +21,10 @@ heroPoints:
   - Flat-rate quote before any work begins
   - Workmanship warranty on every job
 
-h1: Your El Cajon Plumber, Based Right Here in El Cajon
+h1: Emergency & Same-Day Plumber in El Cajon, Based Right Here
 heroLead: >-
-  Sedco Plumbing is your El Cajon plumber, based right here in El Cajon. Because our shop is local, we
+  Sedco Plumbing is a licensed El Cajon plumber, available 24 hours Monday to Saturday for emergency and
+  same-day plumbing. Because our shop is local, we
   can usually reach you quickly for El Cajon plumbing services, from water heater repair in El Cajon
   to drain cleaning in El Cajon and everything in between.
 intro:
@@ -35,7 +35,22 @@ intro:
     company, and help is usually only minutes from your door.
 
 sections:
-  - heading: A Hometown Company, Not a Franchise
+  - heading: 24-Hour Emergency Plumber in El Cajon (Mon–Sat)
+    paragraphs:
+      - >-
+        Plumbing emergencies don't wait for business hours, and neither do we. From Monday to Saturday, a real
+        person answers [PHONE] around the clock, and because our trucks are based in El Cajon, help is usually
+        only a 10–15 minute drive away.
+      - >-
+        We handle the calls that can't wait: burst or leaking pipes, sewer backups and overflowing toilets, no
+        hot water or a leaking water heater, and sudden drops in water pressure. While you wait, turn off your
+        main water shutoff valve to limit damage. If you smell gas, leave the house first and call SDG&E or 911,
+        then call us for the repair.
+      - >-
+        Need a same-day plumber in El Cajon for something less urgent? Most calls booked in the morning are seen
+        the same day. Please note we're closed on Sundays.
+
+  - heading: Licensed Local Plumber in El Cajon, Not a Franchise
     paragraphs:
       - >-
         Sedco Plumbing is locally owned and operated, holds a California C-36 plumbing contractor
@@ -80,16 +95,26 @@ sections:
         Gas lines, garbage disposals, faucets, sinks, and remodel plumbing — [browse all
         services](/services/)
 
-  - heading: From Downtown to the Hills
+  - heading: Plumber for Fletcher Hills, Granite Hills, Bostonia & Downtown El Cajon
     paragraphs:
       - >-
         We work everywhere in the city: [condos and
         apartments](/services/property-management-plumbing/el-cajon/) near downtown El Cajon, ranch homes across
         Bostonia, and hillside properties in Fletcher Hills and Granite Hills. The restaurants and shops along
         Main Street count on us for grease trap service and commercial repairs too. Residential or commercial,
-        the same trucks and the same standards show up.
+        the same trucks and the same standards show up. Serving every El Cajon ZIP code: 92019, 92020 and 92021.
 
 faqs:
+  - question: Do you offer 24-hour emergency plumbing in El Cajon?
+    answer:
+      - >-
+        Yes. Monday to Saturday, our phone is answered 24 hours a day and we dispatch from El Cajon, so most
+        addresses are only a 10–15 minute drive away. We're closed on Sundays.
+  - question: Can you come out the same day?
+    answer:
+      - >-
+        In most cases, yes. Same-day appointments are usually available across El Cajon, including Fletcher
+        Hills, Bostonia and Granite Hills. Call [PHONE] and we'll give you a time window.
   - question: How fast can you get to my El Cajon home?
     answer:
       - >-

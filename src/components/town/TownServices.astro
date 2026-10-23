@@ -4,7 +4,7 @@
  * "[service] in [Town]". A card links to the service × town page where one
  * exists (and says so), otherwise to the main service page.
  */
-import { paths, type CityDef, type ServiceDef } from '@config/site';
+import { paths, site, type CityDef, type ServiceDef } from '@config/site';
 import { catalogServices, serviceHref } from '@config/catalog';
 import Icon from '@components/ui/Icon.astro';
 
@@ -34,8 +34,12 @@ cards.sort((a, b) => Number(b.local) - Number(a.local));
 <section class="article-section town-services" id={id} aria-labelledby={`${id}-heading`}>
   <h2 class="article-h2" id={`${id}-heading`}>{city.name} Plumbing Services</h2>
   <p class="article-lead">
-    Every service below is available in {city.name}, with the same free estimate and the same
-    prices you'd get in El Cajon.
+    {
+      // On the home-base page, "the same prices you'd get in El Cajon" makes no sense.
+      city.name === site.business.locality
+        ? `Every service below is available across ${city.name}, with a free estimate and upfront pricing.`
+        : `Every service below is available in ${city.name}, with the same free estimate and the same prices you'd get in ${site.business.locality}.`
+    }
   </p>
   <ul class="town-services__grid">
     {

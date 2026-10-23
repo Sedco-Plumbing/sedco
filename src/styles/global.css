@@ -693,17 +693,9 @@ textarea.input {
 }
 
 /* ---------------------------------------------------------------------------
- * Below-the-fold sections: the browser skips their layout and paint until
- * they come near the viewport (faster first render on phones). `auto` in
- * contain-intrinsic-size remembers each section's real height once rendered.
+ * No `content-visibility: auto` on below-the-fold sections. It skipped their
+ * paint until scrolled near, which full-page captures (SEO audit tools, Search
+ * Console's rendered screenshot) recorded as blank or overlapping sections:
+ * the FAQ looked cut off and the footer looked duplicated. Lighthouse showed
+ * no measurable speed difference without it.
  * ------------------------------------------------------------------------- */
-
-.reviews,
-.areas-section,
-.faq,
-.contact,
-.how,
-.footer {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 900px;
-}
