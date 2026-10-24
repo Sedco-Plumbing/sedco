@@ -58,7 +58,13 @@ const faqs = commonFaqs;
 
   <HowItWorks />
 
-  <ServiceAreasSection />
+  <ServiceAreasSection>
+    {/* Exact anchor text requested by HBB's Location Page SEO Review. */}
+    <Fragment slot="after-first">
+      {' '}Looking for a <a href={paths.city('santee')}>plumber in Santee</a> or a{' '}
+      <a href={paths.city('la-mesa')}>plumber in La Mesa</a>? Both are a short drive from our El Cajon base.
+    </Fragment>
+  </ServiceAreasSection>
 
   <AboutSplit
     heading="An El Cajon Plumbing Company With 20 Years of Experience"

@@ -38,7 +38,15 @@ const mapLabel = `Map of East County San Diego with Sedco Plumbing's service are
   <div class="areas-section__text">
     <p class="eyebrow">Service areas</p>
     <h2 class="areas-section__title" id={`${id}-heading`}>{heading}</h2>
-    {paragraphs.map((paragraph) => <p class="areas-section__p">{paragraph}</p>)}
+    {
+      // Optional "after-first" slot appends linked text to the first paragraph (Home only).
+      paragraphs.map((paragraph, i) => (
+        <p class="areas-section__p">
+          {paragraph}
+          {i === 0 && <slot name="after-first" />}
+        </p>
+      ))
+    }
 
     {
       showTowns && (
